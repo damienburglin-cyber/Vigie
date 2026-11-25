@@ -153,7 +153,7 @@ legend.h{font:600 17px/1.2 var(--font-display);margin-bottom:4px;padding:0}
       <h2 class="sec-title">Cette semaine</h2>
       <p class="sec-sub">Touchez une case pour voir le détail du jour.</p>
       <div class="week" id="week" role="group" aria-label="Les 7 prochains jours : gel, chaleur et vent"></div>
-      <p class="week-legend">Case grise : rien à signaler. <b>!</b> vigilance, <b>!!</b> agir (couper l’eau, fermer, rentrer la chatte). Gel : minimum, chaleur : maximum, en °C. Vent : rafales max en km/h.</p>
+      <p class="week-legend">Case grise : rien à signaler. <b>!</b> vigilance (rafales : rentrer la chatte), <b>!!</b> agir (couper l’eau, fermer). Gel : minimum, chaleur : maximum, en °C. Vent : rafales max en km/h.</p>
     </div>
     <h2 class="sec-title">À anticiper</h2>
     <p class="sec-sub" id="horizon">Les 14 prochains jours</p>
@@ -247,7 +247,7 @@ Données horaires Open-Meteo, 14 jours, fuseau Europe/Paris. Pour aujourd'hui, s
 - Chaleur : max ≥ `hot` (28) → « Chaud » ; ≥ `wave` (33) → « Canicule ».
   - Fermer : première heure entre 6 h et 14 h où il fait ≥ `fresh` (22) dehors.
   - Ouvrir : de 17 h jusqu'à 7 h le lendemain, première heure où il fait < `fresh` ; refermer à la première heure du lendemain matin (après 4 h) où il repasse ≥ `fresh`. Si la nuit ne descend jamais sous `fresh` : nuit chaude, rester fermé.
-- Vent : rafales ≥ `gust` (40) ou vent moyen ≥ `wind` (20) → « Venteux » ; rafales ≥ `strong` (60) → « Fortes rafales » ; ≥ `storm` (80) → « Tempête ». On donne la plage horaire et l'heure du pic.
+- Vent : rafales ≥ `gust` (40) ou vent moyen ≥ `wind` (20) → « Venteux » ; rafales ≥ `strong` (60) → « Fortes rafales » ; ≥ `storm` (80) → « Tempête ». On donne la plage horaire et l'heure du pic. Dès que les rafales atteignent `gust` (40), la carte conseille de rentrer la chatte (choix de Damien, 25/11/2026).
 - Épisode : jours consécutifs de même type fusionnés en une carte. Niveau et valeur extrême = le pire jour.
 - Confiance : J0-J2 fiable, J3-J6 probable, J7+ tendance.
 
@@ -276,7 +276,7 @@ Données horaires Open-Meteo, 14 jours, fuseau Europe/Paris. Pour aujourd'hui, s
 ## 6. Journal
 
 - 0.1.0 · 25/11/2026 · première version : alertes gel, chaleur, vent, graphique 14 jours, détail horaire, seuils réglables, cache hors ligne.
-- 0.1.1 · 25/11/2026 · passe design : grille « Cette semaine » (7 jours × gel/chaleur/vent, couleur + symbole + valeur, ouvre le jour), libellés clarifiés, étiquette de fiabilité explicite, chevron sur les jours, clavier avec signe moins pour les seuils de gel, « Annuler » après retour aux seuils d'origine, état sans données, graphique plus lisible, toast et barre d'état lisibles en sombre. Règles de calcul inchangées.
+- 0.1.1 · 25/11/2026 · passe design : grille « Cette semaine » (7 jours × gel/chaleur/vent, couleur + symbole + valeur, ouvre le jour), libellés clarifiés, étiquette de fiabilité explicite, chevron sur les jours, clavier avec signe moins pour les seuils de gel, « Annuler » après retour aux seuils d'origine, état sans données, graphique plus lisible, toast et barre d'état lisibles en sombre. Règles de calcul inchangées. Conseil « rentrer la chatte » dès les rafales de vigilance (40 km/h), plus seulement à 60.
 </script>
 
 <script>
@@ -452,7 +452,7 @@ Données horaires Open-Meteo, 14 jours, fuseau Europe/Paris. Pour aujourd'hui, s
         const eve = prevDay(first.d.date);
         ul.append(el("li", {}, el("b", { text: "Couper l’eau " + (dayDiff(eve) < 0 ? "dès maintenant" : dayDiff(eve) === 0 ? "ce soir" : fmtDay(eve, { weekday: "long", day: "numeric" }) + " soir") + "." }), " Rouvrir quand le minimum repasse au-dessus de " + S.cut + " °C."));
       }
-      if (e.fam === "wind" && e.lvl >= 2) ul.append(el("li", {}, el("b", { text: "Rentrer la chatte avant les rafales" }), " et lui préparer son coin calme."));
+      if (e.fam === "wind" && e.value >= S.gust) ul.append(el("li", {}, el("b", { text: "Rentrer la chatte avant les rafales" }), " et lui préparer son coin calme."));
       e.days.slice(0, 5).forEach(({ d, a }) => ul.append(el("li", {}, el("b", { text: fmtDay(d.date) + " : " }), a.line)));
       if (e.days.length > 5) ul.append(el("li", { text: "… et " + (e.days.length - 5) + " autres jours, voir l’onglet Jours." }));
       const tags = el("div", { class: "tags" }, el("span", { class: "tag tag--conf", text: "Fiabilité : " + conf(e.start).toLowerCase() }));
