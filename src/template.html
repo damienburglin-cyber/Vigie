@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="vigie-version" content="0.1.1">
+<meta name="vigie-version" content="0.1.2">
 <meta name="vigie-updated" content="2026-11-25">
 <meta name="theme-color" content="#f2ede3" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#1c1915" media="(prefers-color-scheme: dark)">
@@ -112,11 +112,16 @@ legend.h{font:600 17px/1.2 var(--font-display);margin-bottom:4px;padding:0}
 .toast button{margin-left:4px;font-weight:800}
 
 /* Semaine en un coup d'œil : jours × critères */
-.week{background:var(--card);border-radius:var(--radius-l);box-shadow:var(--shadow-card);padding:10px 8px 8px;display:grid;grid-template-columns:50px repeat(7,minmax(0,1fr));gap:3px;align-items:stretch}
+.week{background:var(--card);border-radius:var(--radius-l);box-shadow:var(--shadow-card);padding:10px 6px 8px;display:grid;grid-template-columns:22px repeat(10,minmax(0,1fr));gap:3px 2px;align-items:stretch}
 .week__d{text-align:center;font:700 12px/1.2 var(--font-body);color:var(--muted);padding-bottom:2px;font-variant-numeric:tabular-nums}
 .week__d b{display:block;color:var(--ink);font-size:13px}
 .week__d.is-today b{text-decoration:underline;text-decoration-color:var(--gold);text-decoration-thickness:2px;text-underline-offset:3px}
-.week__r{display:flex;align-items:center;font:700 12px/1.1 var(--font-body);color:var(--ink)}
+.week__r{display:flex;align-items:center;justify-content:center;color:var(--muted)}
+.week__r svg{width:18px;height:18px}
+.week .is-trend{opacity:.62}
+.week button.is-trend{box-shadow:inset 0 0 0 1px var(--edge)}
+.week button.is-trend[data-l="1"]{box-shadow:inset 0 0 0 1.5px var(--k)}
+.week__d.is-trend b{font-style:italic}
 .week button{all:unset;box-sizing:border-box;min-height:var(--tap-min);border-radius:var(--radius-s);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0;cursor:pointer;background:var(--card2);box-shadow:var(--shadow-inset);color:var(--muted);font:700 13px/1.15 var(--font-body);font-variant-numeric:tabular-nums;letter-spacing:-.02em;-webkit-tap-highlight-color:transparent}
 .week button i{font:800 12px/1 var(--font-body);font-style:normal;letter-spacing:0;min-height:12px}
 .week button[data-l="1"]{background:var(--k-bg);color:var(--k);box-shadow:inset 0 0 0 1.5px var(--k)}
@@ -150,10 +155,10 @@ legend.h{font:600 17px/1.2 var(--font-display);margin-bottom:4px;padding:0}
   <!-- ANTICIPER -->
   <section class="page" id="p-home" data-tab="home">
     <div class="weekbox" id="weekBox" hidden>
-      <h2 class="sec-title">Cette semaine</h2>
-      <p class="sec-sub">Touchez une case pour voir le détail du jour.</p>
-      <div class="week" id="week" role="group" aria-label="Les 7 prochains jours : gel, chaleur et vent"></div>
-      <p class="week-legend">Case grise : rien à signaler. <b>!</b> vigilance (rafales : rentrer la chatte), <b>!!</b> agir (couper l’eau, fermer). Gel : minimum, chaleur : maximum, en °C. Vent : rafales max en km/h.</p>
+      <h2 class="sec-title">10 prochains jours</h2>
+      <p class="sec-sub">Touchez une case pour voir le détail du jour. Les 3 derniers jours, plus pâles, sont une tendance.</p>
+      <div class="week" id="week" role="group" aria-label="Les 10 prochains jours : gel, chaleur et vent"></div>
+      <p class="week-legend">Lignes : gel (minimum, °C), chaleur (maximum, °C), vent (rafales max, km/h). Case grise : rien à signaler. <b>!</b> vigilance (rafales : rentrer la chatte), <b>!!</b> agir (couper l’eau, fermer).</p>
     </div>
     <h2 class="sec-title">À anticiper</h2>
     <p class="sec-sub" id="horizon">Les 14 prochains jours</p>
@@ -254,7 +259,7 @@ Données horaires Open-Meteo, 14 jours, fuseau Europe/Paris. Pour aujourd'hui, s
 ## 3. Écrans
 
 - Anticiper :
-  - « Cette semaine » : grille 7 jours × Gel / Chaleur / Vent. Chaque case montre la valeur du jour (heures à venir pour aujourd'hui) : minimum (gel), maximum (chaleur), rafales max (vent). Couleur = pire niveau du jour pour ce critère, lu dans les alertes du jour (aucune règle propre) : gris = rien à signaler, teinte claire + « ! » = niveau 1 (vigilance), aplat foncé + « !! » = niveau 2 et plus (couper l'eau, canicule, fortes rafales, tempête). Chaque case a un aria-label complet ; la toucher ouvre l'onglet Jours avec ce jour déplié. Légende courte dessous.
+  - « 10 prochains jours » : grille 10 jours (les 3 derniers plus pâles = tendance) × Gel / Chaleur / Vent. Chaque case montre la valeur du jour (heures à venir pour aujourd'hui) : minimum (gel), maximum (chaleur), rafales max (vent). Couleur = pire niveau du jour pour ce critère, lu dans les alertes du jour (aucune règle propre) : gris = rien à signaler, teinte claire + « ! » = niveau 1 (vigilance), aplat foncé + « !! » = niveau 2 et plus (couper l'eau, canicule, fortes rafales, tempête). Chaque case a un aria-label complet ; la toucher ouvre l'onglet Jours avec ce jour déplié. Légende courte dessous.
   - Cartes d'épisodes triées par date (quoi, quand, dans combien de jours, chiffre clé, quoi faire, fiabilité), puis graphique min/max sur 14 jours avec les seuils et les jours de rafales (≈).
 - Jours : 14 jours repliables (chevron), heures en tableau, valeurs au-delà des seuils en gras et en couleur.
 - Réglages : seuils (localStorage), retour aux seuils d'origine avec « Annuler » pendant 6 s, source des données, ce dossier.
@@ -276,7 +281,8 @@ Données horaires Open-Meteo, 14 jours, fuseau Europe/Paris. Pour aujourd'hui, s
 ## 6. Journal
 
 - 0.1.0 · 25/11/2026 · première version : alertes gel, chaleur, vent, graphique 14 jours, détail horaire, seuils réglables, cache hors ligne.
-- 0.1.1 · 25/11/2026 · passe design : grille « Cette semaine » (7 jours × gel/chaleur/vent, couleur + symbole + valeur, ouvre le jour), libellés clarifiés, étiquette de fiabilité explicite, chevron sur les jours, clavier avec signe moins pour les seuils de gel, « Annuler » après retour aux seuils d'origine, état sans données, graphique plus lisible, toast et barre d'état lisibles en sombre. Règles de calcul inchangées. Conseil « rentrer la chatte » dès les rafales de vigilance (40 km/h), plus seulement à 60.
+- 0.1.1 · 25/11/2026 · passe design : grille « 10 prochains jours » (10 jours × gel/chaleur/vent, couleur + symbole + valeur, ouvre le jour), libellés clarifiés, étiquette de fiabilité explicite, chevron sur les jours, clavier avec signe moins pour les seuils de gel, « Annuler » après retour aux seuils d'origine, état sans données, graphique plus lisible, toast et barre d'état lisibles en sombre. Règles de calcul inchangées. Conseil « rentrer la chatte » dès les rafales de vigilance (40 km/h), plus seulement à 60.
+- 0.1.2 · 25/11/2026 · grille passée à 10 jours (icônes de ligne, valeurs sans « ° », jours 8 à 10 plus pâles = tendance).
 </script>
 
 <script>
@@ -510,26 +516,27 @@ Données horaires Open-Meteo, 14 jours, fuseau Europe/Paris. Pour aujourd'hui, s
     box.append(s, legend);
   }
 
-  /* Semaine : 7 jours × gel / chaleur / vent, pire niveau du jour d'après d.alerts */
+  /* Grille : 10 jours × gel / chaleur / vent, pire niveau du jour d'après d.alerts */
   const ROWS = [
-    { fam: "cold", name: "Gel", val: d => d.L.tmin, txt: v => r0(v) + "°", say: v => "minimum " + r0(v) + " °C" },
-    { fam: "heat", name: "Chaleur", val: d => d.L.tmax, txt: v => r0(v) + "°", say: v => "maximum " + r0(v) + " °C" },
+    { fam: "cold", name: "Gel", val: d => d.L.tmin, txt: v => String(r0(v)), say: v => "minimum " + r0(v) + " °C" },
+    { fam: "heat", name: "Chaleur", val: d => d.L.tmax, txt: v => String(r0(v)), say: v => "maximum " + r0(v) + " °C" },
     { fam: "wind", name: "Vent", val: d => d.L.gmax, txt: v => String(r0(v)), say: v => "rafales " + r0(v) + " km/h" }
   ];
   function renderWeek(days) {
     const box = $("week"); box.textContent = "";
-    const wk = days.slice(0, 7);
+    const wk = days.slice(0, 10);
+    const trend = i => i >= 7 ? " is-trend" : "";
     box.append(el("span", { "aria-hidden": "true" }));
-    wk.forEach((d, i) => box.append(el("div", { class: "week__d" + (i === 0 ? " is-today" : ""), "aria-hidden": "true" },
+    wk.forEach((d, i) => box.append(el("div", { class: "week__d" + (i === 0 ? " is-today" : "") + trend(i), "aria-hidden": "true" },
       el("b", { text: i === 0 ? "Auj" : fmtDay(d.date, { weekday: "narrow" }).toUpperCase() }), String(asDate(d.date).getDate()))));
     ROWS.forEach(r => {
-      box.append(el("span", { class: "week__r", "aria-hidden": "true", text: r.name }));
+      { const ic = el("span", { class: "week__r", "aria-hidden": "true" }); ic.innerHTML = ICONS[r.fam]; box.append(ic); }
       wk.forEach((d, i) => {
         const a = d.alerts.find(x => x.fam === r.fam);
         const lvl = a ? a.lvl : 0, v = r.val(d);
         const day = (i === 0 ? "aujourd’hui " : "") + fmtDay(d.date, { weekday: "long", day: "numeric" });
-        const label = day + " : " + r.name.toLowerCase() + ", " + (a ? TITLES[a.fam][a.lvl].toLowerCase() : "rien à signaler") + ", " + r.say(v);
-        const b = el("button", { type: "button", "data-k": a ? a.type : r.fam, "data-l": String(Math.min(lvl, 2)), "aria-label": label },
+        const label = day + (i >= 7 ? " (tendance)" : "") + " : " + r.name.toLowerCase() + ", " + (a ? TITLES[a.fam][a.lvl].toLowerCase() : "rien à signaler") + ", " + r.say(v);
+        const b = el("button", { type: "button", class: trend(i).trim(), "data-k": a ? a.type : r.fam, "data-l": String(Math.min(lvl, 2)), "aria-label": label },
           r.txt(v), el("i", { "aria-hidden": "true", text: "!".repeat(Math.min(lvl, 2)) }));
         b.addEventListener("click", () => openDay(d.date));
         box.append(b);
