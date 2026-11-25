@@ -3,9 +3,10 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="vigie-version" content="0.1.0">
+<meta name="vigie-version" content="0.1.1">
 <meta name="vigie-updated" content="2026-11-25">
-<meta name="theme-color" content="#f2ede3">
+<meta name="theme-color" content="#f2ede3" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#1c1915" media="(prefers-color-scheme: dark)">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Vigie">
 <title>Vigie Wolfersdorf</title>
@@ -59,7 +60,8 @@
 /* Graphique 14 jours */
 .chart{background:var(--card);border-radius:var(--radius-l);box-shadow:var(--shadow-card);padding:12px 10px 6px}
 .chart svg{display:block;width:100%;height:auto}
-.chart text{font:600 11px var(--font-body);fill:var(--muted)}
+.chart text{font:600 13px var(--font-body);fill:var(--muted)}
+.chart .gust{font:800 15px var(--font-body);fill:var(--wind)}
 .chart .lbl-day{font-weight:700;fill:var(--ink)}
 .legend{display:flex;flex-wrap:wrap;gap:4px 14px;padding:6px 4px 4px;font-size:12px;color:var(--muted)}
 .legend i{display:inline-block;width:14px;height:0;border-top:2px dashed currentColor;vertical-align:middle;margin-right:5px}
@@ -68,7 +70,11 @@
 /* Liste des jours */
 .days{display:grid;gap:8px}
 .day{background:var(--card);border-radius:var(--radius-m);box-shadow:var(--shadow-card)}
-.day summary{list-style:none;cursor:pointer;display:grid;grid-template-columns:62px minmax(0,1fr) auto;gap:10px;align-items:center;min-height:56px;padding:8px 12px}
+.day{scroll-margin-top:12px}
+.day summary{list-style:none;cursor:pointer;position:relative;display:grid;grid-template-columns:62px minmax(0,1fr) auto;gap:10px;align-items:center;min-height:56px;padding:8px 30px 8px 12px}
+.day summary::after{content:"";position:absolute;right:13px;top:26px;width:7px;height:7px;border-right:2px solid var(--muted);border-bottom:2px solid var(--muted);transform:rotate(45deg);transition:transform .2s}
+.day[open] summary::after{transform:rotate(-135deg);top:30px}
+@media (prefers-reduced-motion:reduce){.day summary::after{transition:none}}
 .day summary::-webkit-details-marker{display:none}
 .day summary:focus-visible{outline:3px solid var(--gold-d);outline-offset:2px;border-radius:var(--radius-m)}
 .day__d b{display:block;font:600 16px/1.1 var(--font-display);text-transform:capitalize}
@@ -101,6 +107,27 @@ fieldset{border:0;margin:0;padding:0;display:grid;gap:10px}
 legend.h{font:600 17px/1.2 var(--font-display);margin-bottom:4px;padding:0}
 .sec-title{margin:6px 2px 0;font:600 21px/1.1 var(--font-display)}
 .sec-sub{margin:-8px 2px 0;font-size:13px;color:var(--muted)}
+.toast{background:var(--todo-bg);color:var(--todo-ink);width:max-content}
+.toast.on{pointer-events:auto}
+.toast button{margin-left:4px;font-weight:800}
+
+/* Semaine en un coup d'œil : jours × critères */
+.week{background:var(--card);border-radius:var(--radius-l);box-shadow:var(--shadow-card);padding:10px 8px 8px;display:grid;grid-template-columns:50px repeat(7,minmax(0,1fr));gap:3px;align-items:stretch}
+.week__d{text-align:center;font:700 12px/1.2 var(--font-body);color:var(--muted);padding-bottom:2px;font-variant-numeric:tabular-nums}
+.week__d b{display:block;color:var(--ink);font-size:13px}
+.week__d.is-today b{text-decoration:underline;text-decoration-color:var(--gold);text-decoration-thickness:2px;text-underline-offset:3px}
+.week__r{display:flex;align-items:center;font:700 12px/1.1 var(--font-body);color:var(--ink)}
+.week button{all:unset;box-sizing:border-box;min-height:var(--tap-min);border-radius:var(--radius-s);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:0;cursor:pointer;background:var(--card2);box-shadow:var(--shadow-inset);color:var(--muted);font:700 13px/1.15 var(--font-body);font-variant-numeric:tabular-nums;letter-spacing:-.02em;-webkit-tap-highlight-color:transparent}
+.week button i{font:800 12px/1 var(--font-body);font-style:normal;letter-spacing:0;min-height:12px}
+.week button[data-l="1"]{background:var(--k-bg);color:var(--k);box-shadow:inset 0 0 0 1.5px var(--k)}
+.week button[data-l="2"]{background:var(--k);color:var(--card);box-shadow:none}
+.week button:focus-visible{outline:3px solid var(--gold-d);outline-offset:1px}
+.week button:active{transform:scale(.96)}
+.week [data-k="cold"]{--k:var(--cold);--k-bg:var(--cold-bg)}.week [data-k="cut"]{--k:var(--cut);--k-bg:var(--cut-bg)}
+.week [data-k="heat"]{--k:var(--heat);--k-bg:var(--heat-bg)}.week [data-k="wind"]{--k:var(--wind);--k-bg:var(--wind-bg)}
+.weekbox{display:grid;gap:14px}
+.week-legend{margin:-6px 2px 0;font-size:12px;color:var(--muted);line-height:1.4}
+.week-legend b{color:var(--ink)}
 </style>
 </head>
 <body>
@@ -122,6 +149,12 @@ legend.h{font:600 17px/1.2 var(--font-display);margin-bottom:4px;padding:0}
 
   <!-- ANTICIPER -->
   <section class="page" id="p-home" data-tab="home">
+    <div class="weekbox" id="weekBox" hidden>
+      <h2 class="sec-title">Cette semaine</h2>
+      <p class="sec-sub">Touchez une case pour voir le détail du jour.</p>
+      <div class="week" id="week" role="group" aria-label="Les 7 prochains jours : gel, chaleur et vent"></div>
+      <p class="week-legend">Case grise : rien à signaler. <b>!</b> vigilance, <b>!!</b> agir (couper l’eau, fermer, rentrer la chatte). Gel : minimum, chaleur : maximum, en °C. Vent : rafales max en km/h.</p>
+    </div>
     <h2 class="sec-title">À anticiper</h2>
     <p class="sec-sub" id="horizon">Les 14 prochains jours</p>
     <div class="alerts" id="alerts">
@@ -129,7 +162,7 @@ legend.h{font:600 17px/1.2 var(--font-display);margin-bottom:4px;padding:0}
     </div>
     <h2 class="sec-title">Températures</h2>
     <div class="chart" id="chart" aria-describedby="chartNote"></div>
-    <p class="ds-note" id="chartNote">Chaque barre va du minimum au maximum du jour. Le détail heure par heure est dans l’onglet Jours.</p>
+    <p class="ds-note" id="chartNote">Chaque barre va du minimum au maximum du jour. Au-delà de 7 jours (barres plus pâles), ce n’est qu’une tendance. Le détail heure par heure est dans l’onglet Jours.</p>
   </section>
 
   <!-- JOURS -->
@@ -142,30 +175,30 @@ legend.h{font:600 17px/1.2 var(--font-display);margin-bottom:4px;padding:0}
   <!-- RÉGLAGES -->
   <section class="page" id="p-settings" data-tab="settings" hidden>
     <form class="panel" id="settings" novalidate>
-      <h2>Mes seuils</h2>
-      <p class="small muted">Gardés sur ce téléphone. Les alertes se recalculent dès qu’un seuil change.</p>
+      <h2>Seuils d’alerte</h2>
+      <p class="small muted">Enregistrés sur ce téléphone. Les alertes se recalculent dès qu’un seuil change.</p>
       <fieldset>
         <legend class="h">Gel</legend>
         <div class="grid2">
-          <label class="ds-field" for="s-cold">Prévenir sous<div class="ds-unit"><input id="s-cold" name="cold" type="number" inputmode="decimal" step="1"><em>°C</em></div></label>
-          <label class="ds-field" for="s-cut">Couper l’eau sous<div class="ds-unit"><input id="s-cut" name="cut" type="number" inputmode="decimal" step="1"><em>°C</em></div></label>
+          <label class="ds-field" for="s-cold">Prévenir sous<div class="ds-unit"><input id="s-cold" name="cold" type="number" step="1"><em>°C</em></div></label>
+          <label class="ds-field" for="s-cut">Couper l’eau sous<div class="ds-unit"><input id="s-cut" name="cut" type="number" step="1"><em>°C</em></div></label>
         </div>
       </fieldset>
       <fieldset>
         <legend class="h">Chaleur</legend>
         <div class="grid2">
-          <label class="ds-field" for="s-hot">Chaud au-dessus de<div class="ds-unit"><input id="s-hot" name="hot" type="number" inputmode="decimal" step="1"><em>°C</em></div></label>
-          <label class="ds-field" for="s-wave">Canicule au-dessus de<div class="ds-unit"><input id="s-wave" name="wave" type="number" inputmode="decimal" step="1"><em>°C</em></div></label>
-          <label class="ds-field" for="s-fresh">Air frais dehors sous<div class="ds-unit"><input id="s-fresh" name="fresh" type="number" inputmode="decimal" step="1"><em>°C</em></div><small>Sous ce seuil on ouvre, au-dessus on ferme.</small></label>
+          <label class="ds-field" for="s-hot">Chaud au-dessus de<div class="ds-unit"><input id="s-hot" name="hot" type="number" inputmode="numeric" step="1" min="0"><em>°C</em></div></label>
+          <label class="ds-field" for="s-wave">Canicule au-dessus de<div class="ds-unit"><input id="s-wave" name="wave" type="number" inputmode="numeric" step="1" min="0"><em>°C</em></div></label>
+          <label class="ds-field" for="s-fresh">Air frais dehors sous<div class="ds-unit"><input id="s-fresh" name="fresh" type="number" inputmode="numeric" step="1" min="0"><em>°C</em></div><small>Sous ce seuil on ouvre, au-dessus on ferme.</small></label>
         </div>
       </fieldset>
       <fieldset>
         <legend class="h">Vent (pour la chatte)</legend>
         <div class="grid2">
-          <label class="ds-field" for="s-wind">Vent moyen dès<div class="ds-unit"><input id="s-wind" name="wind" type="number" inputmode="decimal" step="1"><em>km/h</em></div></label>
-          <label class="ds-field" for="s-gust">Rafales dès<div class="ds-unit"><input id="s-gust" name="gust" type="number" inputmode="decimal" step="1"><em>km/h</em></div></label>
-          <label class="ds-field" for="s-strong">Fortes rafales dès<div class="ds-unit"><input id="s-strong" name="strong" type="number" inputmode="decimal" step="1"><em>km/h</em></div></label>
-          <label class="ds-field" for="s-storm">Tempête dès<div class="ds-unit"><input id="s-storm" name="storm" type="number" inputmode="decimal" step="1"><em>km/h</em></div></label>
+          <label class="ds-field" for="s-wind">Vent moyen dès<div class="ds-unit"><input id="s-wind" name="wind" type="number" inputmode="numeric" step="1" min="0"><em>km/h</em></div></label>
+          <label class="ds-field" for="s-gust">Rafales dès<div class="ds-unit"><input id="s-gust" name="gust" type="number" inputmode="numeric" step="1" min="0"><em>km/h</em></div></label>
+          <label class="ds-field" for="s-strong">Fortes rafales dès<div class="ds-unit"><input id="s-strong" name="strong" type="number" inputmode="numeric" step="1" min="0"><em>km/h</em></div></label>
+          <label class="ds-field" for="s-storm">Tempête dès<div class="ds-unit"><input id="s-storm" name="storm" type="number" inputmode="numeric" step="1" min="0"><em>km/h</em></div></label>
         </div>
       </fieldset>
       <div class="actions">
@@ -220,9 +253,12 @@ Données horaires Open-Meteo, 14 jours, fuseau Europe/Paris. Pour aujourd'hui, s
 
 ## 3. Écrans
 
-- Anticiper : cartes d'épisodes triées par date (quoi, quand, dans combien de jours, chiffre clé, quoi faire), puis graphique min/max sur 14 jours avec les seuils.
-- Jours : 14 jours repliables, heures en tableau, valeurs au-delà des seuils en gras et en couleur.
-- Réglages : seuils (localStorage), source des données, ce dossier.
+- Anticiper :
+  - « Cette semaine » : grille 7 jours × Gel / Chaleur / Vent. Chaque case montre la valeur du jour (heures à venir pour aujourd'hui) : minimum (gel), maximum (chaleur), rafales max (vent). Couleur = pire niveau du jour pour ce critère, lu dans les alertes du jour (aucune règle propre) : gris = rien à signaler, teinte claire + « ! » = niveau 1 (vigilance), aplat foncé + « !! » = niveau 2 et plus (couper l'eau, canicule, fortes rafales, tempête). Chaque case a un aria-label complet ; la toucher ouvre l'onglet Jours avec ce jour déplié. Légende courte dessous.
+  - Cartes d'épisodes triées par date (quoi, quand, dans combien de jours, chiffre clé, quoi faire, fiabilité), puis graphique min/max sur 14 jours avec les seuils et les jours de rafales (≈).
+- Jours : 14 jours repliables (chevron), heures en tableau, valeurs au-delà des seuils en gras et en couleur.
+- Réglages : seuils (localStorage), retour aux seuils d'origine avec « Annuler » pendant 6 s, source des données, ce dossier.
+- États : chargement (carte d'attente), hors ligne avec données (bandeau qui donne leur date), hors ligne sans données (bandeau + carte « Pas encore de prévisions »), rien à signaler (carte calme).
 
 ## 4. Technique
 
@@ -240,6 +276,7 @@ Données horaires Open-Meteo, 14 jours, fuseau Europe/Paris. Pour aujourd'hui, s
 ## 6. Journal
 
 - 0.1.0 · 25/11/2026 · première version : alertes gel, chaleur, vent, graphique 14 jours, détail horaire, seuils réglables, cache hors ligne.
+- 0.1.1 · 25/11/2026 · passe design : grille « Cette semaine » (7 jours × gel/chaleur/vent, couleur + symbole + valeur, ouvre le jour), libellés clarifiés, étiquette de fiabilité explicite, chevron sur les jours, clavier avec signe moins pour les seuils de gel, « Annuler » après retour aux seuils d'origine, état sans données, graphique plus lisible, toast et barre d'état lisibles en sombre. Règles de calcul inchangées.
 </script>
 
 <script>
@@ -303,7 +340,14 @@ Données horaires Open-Meteo, 14 jours, fuseau Europe/Paris. Pour aujourd'hui, s
     return list;
   }
 
-  const span = hrs => !hrs.length ? null : hrs.length >= 23 ? "toute la journée" : "de " + h(hrs[0].h) + " à " + (hrs[hrs.length - 1].h >= 23 ? "minuit" : h(hrs[hrs.length - 1].h + 1));
+  // Plages contiguës : "de 0 h à 9 h et de 21 h à minuit"
+  const span = hrs => {
+    if (!hrs.length) return null;
+    if (hrs.length >= 23) return "toute la journée";
+    const rs = [];
+    hrs.forEach(x => { const r = rs[rs.length - 1]; if (r && x.h === r[1] + 1) r[1] = x.h; else rs.push([x.h, x.h]); });
+    return rs.map(([a, b]) => "de " + h(a) + " à " + (b >= 23 ? "minuit" : h(b + 1))).join(" et ");
+  };
 
   function evalDay(d) {
     const out = [], L = d.L;
@@ -392,7 +436,7 @@ Données horaires Open-Meteo, 14 jours, fuseau Europe/Paris. Pour aujourd'hui, s
     if (!eps.length) {
       box.append(el("div", { class: "calm" }, icon("calm"), el("div", {},
         el("b", { text: "Rien à anticiper" }),
-        el("p", { text: "Ni gel sous " + S.cold + " °C, ni chaleur au-dessus de " + S.hot + " °C, ni rafales à " + S.gust + " km/h sur les 14 prochains jours." }))));
+        el("p", { text: "Ni gel sous " + S.cold + " °C, ni chaleur au-dessus de " + S.hot + " °C, ni rafales de " + S.gust + " km/h ou plus sur les 14 prochains jours." }))));
       return;
     }
     eps.forEach(e => {
@@ -406,12 +450,12 @@ Données horaires Open-Meteo, 14 jours, fuseau Europe/Paris. Pour aujourd'hui, s
       if (e.type === "cut") {
         const first = e.days.find(x => x.a.lvl === 2);
         const eve = prevDay(first.d.date);
-        ul.append(el("li", {}, el("b", { text: "Couper l’eau " + (dayDiff(eve) <= 0 ? "ce soir" : fmtDay(eve, { weekday: "long", day: "numeric" }) + " soir") + "." }), " Rouvrir quand le minimum repasse au-dessus de " + S.cut + " °C."));
+        ul.append(el("li", {}, el("b", { text: "Couper l’eau " + (dayDiff(eve) < 0 ? "dès maintenant" : dayDiff(eve) === 0 ? "ce soir" : fmtDay(eve, { weekday: "long", day: "numeric" }) + " soir") + "." }), " Rouvrir quand le minimum repasse au-dessus de " + S.cut + " °C."));
       }
       if (e.fam === "wind" && e.lvl >= 2) ul.append(el("li", {}, el("b", { text: "Rentrer la chatte avant les rafales" }), " et lui préparer son coin calme."));
       e.days.slice(0, 5).forEach(({ d, a }) => ul.append(el("li", {}, el("b", { text: fmtDay(d.date) + " : " }), a.line)));
       if (e.days.length > 5) ul.append(el("li", { text: "… et " + (e.days.length - 5) + " autres jours, voir l’onglet Jours." }));
-      const tags = el("div", { class: "tags" }, el("span", { class: "tag", text: TITLES[e.fam][e.lvl] }), el("span", { class: "tag tag--conf", text: conf(e.start) }));
+      const tags = el("div", { class: "tags" }, el("span", { class: "tag tag--conf", text: "Fiabilité : " + conf(e.start).toLowerCase() }));
       card.append(icon(e.type), el("div", {},
         el("div", { class: "alert__head" }, el("h3", { text: headline(e) }), num), when, ul, tags));
       box.append(card);
@@ -449,13 +493,13 @@ Données horaires Open-Meteo, 14 jours, fuseau Europe/Paris. Pour aujourd'hui, s
       const cx = padL + bw * i + bw / 2, w = Math.min(12, bw * 0.55);
       const col = d.tmin <= S.cut ? "var(--cut)" : d.tmin <= S.cold ? "var(--cold)" : d.tmax >= S.hot ? "var(--heat)" : "var(--muted)";
       const y1 = y(d.tmax), y2 = y(d.tmin);
-      s.append(svg("rect", { x: cx - w / 2, y: y1, width: w, height: Math.max(3, y2 - y1), rx: w / 2, fill: col, opacity: dayDiff(d.date) >= 7 ? 0.55 : 1 }));
+      s.append(svg("rect", { x: cx - w / 2, y: y1, width: w, height: Math.max(3, y2 - y1), rx: w / 2, fill: col, opacity: dayDiff(d.date) >= 7 ? 0.6 : 1 }));
       const lbl = svg("text", { x: cx, y: H - padB + 15, "text-anchor": "middle", class: "lbl-day" });
       lbl.textContent = fmtDay(d.date, { weekday: "narrow" }).toUpperCase(); s.append(lbl);
       const num = svg("text", { x: cx, y: H - padB + 28, "text-anchor": "middle" });
       num.textContent = asDate(d.date).getDate(); s.append(num);
       const gust = d.L.gmax >= S.gust;
-      if (gust) { const g = svg("text", { x: cx, y: Math.max(padT - 2, y1 - 5), "text-anchor": "middle", fill: "var(--wind)", style: "fill:var(--wind);font-weight:800" }); g.textContent = "≈"; s.append(g); }
+      if (gust) { const g = svg("text", { x: cx, y: Math.max(padT + 2, y1 - 5), "text-anchor": "middle", class: "gust" }); g.textContent = "≈"; s.append(g); }
     });
     if (days.length > 7) {
       const x = padL + bw * 7;
@@ -464,6 +508,41 @@ Données horaires Open-Meteo, 14 jours, fuseau Europe/Paris. Pour aujourd'hui, s
     }
     if (days.some(d => d.L.gmax >= S.gust)) legend.append(el("span", { style: "color:var(--wind)" }, el("b", { text: "≈ " }), "rafales ≥ " + S.gust + " km/h"));
     box.append(s, legend);
+  }
+
+  /* Semaine : 7 jours × gel / chaleur / vent, pire niveau du jour d'après d.alerts */
+  const ROWS = [
+    { fam: "cold", name: "Gel", val: d => d.L.tmin, txt: v => r0(v) + "°", say: v => "minimum " + r0(v) + " °C" },
+    { fam: "heat", name: "Chaleur", val: d => d.L.tmax, txt: v => r0(v) + "°", say: v => "maximum " + r0(v) + " °C" },
+    { fam: "wind", name: "Vent", val: d => d.L.gmax, txt: v => String(r0(v)), say: v => "rafales " + r0(v) + " km/h" }
+  ];
+  function renderWeek(days) {
+    const box = $("week"); box.textContent = "";
+    const wk = days.slice(0, 7);
+    box.append(el("span", { "aria-hidden": "true" }));
+    wk.forEach((d, i) => box.append(el("div", { class: "week__d" + (i === 0 ? " is-today" : ""), "aria-hidden": "true" },
+      el("b", { text: i === 0 ? "Auj" : fmtDay(d.date, { weekday: "narrow" }).toUpperCase() }), String(asDate(d.date).getDate()))));
+    ROWS.forEach(r => {
+      box.append(el("span", { class: "week__r", "aria-hidden": "true", text: r.name }));
+      wk.forEach((d, i) => {
+        const a = d.alerts.find(x => x.fam === r.fam);
+        const lvl = a ? a.lvl : 0, v = r.val(d);
+        const day = (i === 0 ? "aujourd’hui " : "") + fmtDay(d.date, { weekday: "long", day: "numeric" });
+        const label = day + " : " + r.name.toLowerCase() + ", " + (a ? TITLES[a.fam][a.lvl].toLowerCase() : "rien à signaler") + ", " + r.say(v);
+        const b = el("button", { type: "button", "data-k": a ? a.type : r.fam, "data-l": String(Math.min(lvl, 2)), "aria-label": label },
+          r.txt(v), el("i", { "aria-hidden": "true", text: "!".repeat(Math.min(lvl, 2)) }));
+        b.addEventListener("click", () => openDay(d.date));
+        box.append(b);
+      });
+    });
+    $("weekBox").hidden = false;
+  }
+  function openDay(date) {
+    go("days");
+    const det = $("day-" + date); if (!det) return;
+    det.open = true;
+    requestAnimationFrame(() => det.scrollIntoView({ block: "start" }));
+    det.querySelector("summary").focus({ preventScroll: true });
   }
 
   function renderDays(days) {
@@ -492,7 +571,7 @@ Données horaires Open-Meteo, 14 jours, fuseau Europe/Paris. Pour aujourd'hui, s
       });
       body.append(el("div", { class: "hours" }, el("table", {},
         el("thead", {}, el("tr", {}, el("th", { scope: "col", text: "Heure" }), el("th", { scope: "col", text: "Temp." }), el("th", { scope: "col", text: "Ressenti" }), el("th", { scope: "col", text: "Vent" }), el("th", { scope: "col", text: "Rafales" }))), tb)));
-      body.append(el("p", { class: "ds-note", text: "Vent et rafales en km/h. En gras : au-delà de vos seuils." }));
+      body.append(el("p", { class: "ds-note", text: "Vent moyen et rafales en km/h. En gras et en couleur : au-delà de vos seuils." }));
       det.append(sum, body);
       box.append(det);
     });
@@ -502,6 +581,7 @@ Données horaires Open-Meteo, 14 jours, fuseau Europe/Paris. Pour aujourd'hui, s
     if (!DATA) return;
     const days = buildDays(DATA.hourly);
     if (!days.length) return;
+    renderWeek(days);
     renderAlerts(episodes(days));
     renderChart(days);
     renderDays(days);
@@ -538,6 +618,10 @@ Données horaires Open-Meteo, 14 jours, fuseau Europe/Paris. Pour aujourd'hui, s
       } else {
         status("Impossible de joindre Open-Meteo. Vérifiez la connexion puis touchez le bouton d’actualisation en haut à droite.", "warn");
         $("updated").textContent = "Pas de données";
+        const box = $("alerts"); box.textContent = "";
+        box.append(el("div", { class: "calm" }, icon("calm"), el("div", {},
+          el("b", { text: "Pas encore de prévisions" }),
+          el("p", { text: "Elles s’afficheront dès que le téléphone aura du réseau." }))));
       }
     } finally { loading = false; $("reload").disabled = false; }
   }
@@ -552,11 +636,19 @@ Données horaires Open-Meteo, 14 jours, fuseau Europe/Paris. Pour aujourd'hui, s
     S[k] = v; store.set(KEY_S, S); render();
   });
   form.addEventListener("submit", e => e.preventDefault());
-  $("resetSettings").addEventListener("click", () => { S = Object.assign({}, DEFAULTS); store.set(KEY_S, S); fillForm(); render(); toast("Seuils d’origine rétablis"); });
+  $("resetSettings").addEventListener("click", () => {
+    const before = Object.assign({}, S);
+    S = Object.assign({}, DEFAULTS); store.set(KEY_S, S); fillForm(); render();
+    toast("Seuils d’origine rétablis", "Annuler", () => { S = before; store.set(KEY_S, S); fillForm(); render(); toast("Seuils précédents rétablis"); });
+  });
 
   /* ---------- Toast ---------- */
   let tt = null;
-  const toast = m => { const t = $("toast"); t.textContent = m; t.classList.add("on"); clearTimeout(tt); tt = setTimeout(() => t.classList.remove("on"), 2600); };
+  const toast = (m, act, fn) => {
+    const t = $("toast"); t.textContent = m;
+    if (act) { const b = el("button", { type: "button", text: act }); b.addEventListener("click", () => { t.classList.remove("on"); fn(); }); t.append(b); }
+    t.classList.add("on"); clearTimeout(tt); tt = setTimeout(() => t.classList.remove("on"), act ? 6000 : 2600);
+  };
 
   /* ---------- Onglets ---------- */
   const bar = $("tabbar");
