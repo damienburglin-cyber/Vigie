@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="vigie-version" content="0.2.0">
+<meta name="vigie-version" content="0.2.1">
 <meta name="vigie-updated" content="2026-11-25">
 <meta name="theme-color" content="#f2ede3" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#1c1915" media="(prefers-color-scheme: dark)">
@@ -405,9 +405,9 @@ Données horaires Open-Meteo, 14 jours, fuseau Europe/Paris. Pour aujourd'hui, s
 
 ## 2 bis. Arrosage (saison : 15 avril → 15 octobre)
 
-Hypothèses à valider par Damien : plantes grasses en pot dehors, albizia en pleine terre et installé, « le reste » = pots et massifs.
+Plantes grasses et albizia en pleine terre (confirmé par Damien le 25/11/2026). À confirmer : albizia installé depuis plus de 3 ans ; « le reste » = pots et massifs.
 - Réserve d'eau du sol par groupe (mm), jour après jour : + pluie − kc × ET0 (évapotranspiration FAO d'Open-Meteo), plafonnée à `cap`. Départ : plein il y a 14 jours (`past_days=14`), ou plein le jour où Damien touche « Arrosé aujourd'hui » (localStorage `vigie-watered`, avec Annuler).
-- Paramètres (estimations de jardinier, pas des mesures) : plantes grasses cap 15, kc 0,35, arroser à ≤ 2 mm, 7 jours mini entre deux arrosages, matin seulement ; albizia cap 60, kc 0,6, à ≤ 15, 5 jours mini, 20 à 30 L au pied ; le reste cap 20, kc 0,8, à ≤ 5, 1 jour mini.
+- Paramètres (estimations de jardinier, pas des mesures) : plantes grasses (pleine terre) cap 25, kc 0,3, arroser à ≤ 3 mm, 10 jours mini entre deux arrosages, matin seulement ; albizia cap 60, kc 0,6, à ≤ 15, 5 jours mini, 20 à 30 L au pied ; le reste cap 20, kc 0,8, à ≤ 5, 1 jour mini.
 - Premier jour (aujourd'hui → J+13) où la réserve passe sous le seuil, sauf si la pluie du lendemain suffit (≥ 3 / 8 / 4 mm) : c'est le prochain arrosage.
 - Heure : entre le lever du soleil et 2 h après ; sauf plantes grasses, aussi le soir dès la première heure ≥ 19 h à ≤ 26 °C. Si max ≥ 28 °C : jamais entre 11 h et 18 h.
 
@@ -442,6 +442,7 @@ Hypothèses à valider par Damien : plantes grasses en pot dehors, albizia en pl
 - 0.1.3 · 25/11/2026 · bascule d'onglet plus rapide (0,26 s sans rebond au lieu de 0,75 s).
 - 0.1.4 · 25/11/2026 · onglet Jours : jour en alerte encadré à la couleur du pire niveau (fond teinté si action), étiquettes « ! / !! », seules les valeurs hors seuil en couleur et en gras.
 - 0.2.0 · 25/11/2026 · arrosage d'été : réserve d'eau par groupe (plantes grasses, albizia, le reste), prochain arrosage et heure idéale, bouton « Arrosé aujourd'hui ».
+- 0.2.1 · 25/11/2026 · plantes grasses en pleine terre : réserve plus grande, 10 jours mini entre deux arrosages.
 </script>
 
 <script>
@@ -603,8 +604,8 @@ Hypothèses à valider par Damien : plantes grasses en pot dehors, albizia en pl
   const KEY_W = "vigie-watered";
   let WATERED = store.get(KEY_W) || {};
   const PLANTS = [
-    { id: "succ", name: "Plantes grasses", cap: 15, kc: 0.35, trigger: 2, minGap: 7, rainWait: 3, morningOnly: true,
-      how: "Arroser à fond au pied, puis laisser sécher complètement. Jamais sur les feuilles, jamais le soir : l’humidité de la nuit les fait pourrir." },
+    { id: "succ", name: "Plantes grasses", cap: 25, kc: 0.3, trigger: 3, minGap: 10, rainWait: 3, morningOnly: true,
+      how: "En pleine terre, elles tiennent longtemps : un arrosage copieux au pied, puis rien jusqu’à ce que la terre soit sèche en profondeur. Jamais sur les feuilles, jamais le soir : l’humidité de la nuit les fait pourrir." },
     { id: "albizia", name: "Albizia", cap: 60, kc: 0.6, trigger: 15, minGap: 5, rainWait: 8,
       how: "Arrosage lent et profond au pied, environ 20 à 30 L, plutôt qu’un peu chaque jour : les racines descendent chercher l’eau." },
     { id: "rest", name: "Le reste (pots, massifs)", cap: 20, kc: 0.8, trigger: 5, minGap: 1, rainWait: 4,
