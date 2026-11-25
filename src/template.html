@@ -3,26 +3,28 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="vigie-version" content="0.2.1">
+<meta name="vigie-version" content="0.3.0">
 <meta name="vigie-updated" content="2026-11-25">
-<meta name="theme-color" content="#f2ede3" media="(prefers-color-scheme: light)">
-<meta name="theme-color" content="#1c1915" media="(prefers-color-scheme: dark)">
+<meta name="theme-color" content="#d3e4ee" media="(prefers-color-scheme: light)">
+<meta name="theme-color" content="#0e151b" media="(prefers-color-scheme: dark)">
 <meta name="apple-mobile-web-app-capable" content="yes">
 <meta name="apple-mobile-web-app-title" content="Vigie">
 <title>Vigie Wolfersdorf</title>
 <link rel="manifest" href="manifest.webmanifest">
 <link rel="icon" href="icon.svg" type="image/svg+xml">
 <link rel="apple-touch-icon" href="apple-touch-icon.png">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Lora:wght@500;600;700&family=Inter:wght@400;600;700;800&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@600;700&family=Inter:wght@400;600;700;800&display=swap">
 <style data-own>
 /* VOICE  : un voisin prévoyant. Dit quoi faire et quand, sans dramatiser.
-   IDEA   : un carnet de bord de la maison, cousin de Route des Vins (design system ivoire).
+   IDEA   : une vigie météo de la maison. L'en-tête est un pan de ciel au-dessus des collines du Sundgau,
+            qui prend la couleur de ce qui arrive (gel, chaleur, vent, arrosage, calme). Papier froid,
+            titres en Barlow Condensed (instrument, signalétique), accent vert sapin.
    LAYOUT : mobile 393 px, une main ; d'abord ce qu'il faut anticiper, puis les 14 jours. */
 /*DS*/
 /* --- Vigie : tokens propres + thème sombre --- */
-:root{--cold:#3f6f97;--cold-bg:#e3edf5;--cut:#8e3b46;--cut-bg:#f5e1e3;--heat:#a24f22;--heat-bg:#f8e6d8;--wind:#6d4a80;--wind-bg:#ece2f1;--calm:#4f7342;--calm-bg:#e2ecdb;--grid:#ddd3c1}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#1c1915;--panel:#24201b;--panel2:#2c2721;--card:#2a251f;--card2:#221e19;--track:#332d25;--edge:#3d362c;--ink:#f0e8db;--muted:#b8ac97;--gold-d:#dcbf85;--green-d:#5e8a50;--wine:#b65563;--sky-d:#5f89ad;--good:#93c483;--bad:#e8899a;--ok-bg:#2c3a26;--ok-ink:#bcd8ae;--todo-bg:#45381f;--todo-ink:#f1dcae;--sage-100:#3c4c33;--sage-200:#2f3e29;--sage-900:#d3e6c6;--field:#1f1c18;--placeholder:#8f846f;--shadow-relief:0 1px 0 rgba(255,255,255,.04) inset,0 8px 18px rgba(0,0,0,.35);--shadow-card:0 0 0 1px rgba(255,255,255,.07),0 4px 12px rgba(0,0,0,.3);--shadow-inset:inset 0 0 0 1px rgba(255,255,255,.07),inset 0 2px 5px rgba(0,0,0,.3);--cold:#8db8dc;--cold-bg:#1f3040;--cut:#ef9aa6;--cut-bg:#45222a;--heat:#f0a274;--heat-bg:#46291b;--wind:#cfa6e2;--wind-bg:#36263f;--calm:#9cc98d;--calm-bg:#263522;--grid:#3a342b;color-scheme:dark}}
-:root[data-theme="dark"]{--bg:#1c1915;--panel:#24201b;--panel2:#2c2721;--card:#2a251f;--card2:#221e19;--track:#332d25;--edge:#3d362c;--ink:#f0e8db;--muted:#b8ac97;--gold-d:#dcbf85;--green-d:#5e8a50;--wine:#b65563;--sky-d:#5f89ad;--good:#93c483;--bad:#e8899a;--ok-bg:#2c3a26;--ok-ink:#bcd8ae;--todo-bg:#45381f;--todo-ink:#f1dcae;--sage-100:#3c4c33;--sage-200:#2f3e29;--sage-900:#d3e6c6;--field:#1f1c18;--placeholder:#8f846f;--shadow-relief:0 1px 0 rgba(255,255,255,.04) inset,0 8px 18px rgba(0,0,0,.35);--shadow-card:0 0 0 1px rgba(255,255,255,.07),0 4px 12px rgba(0,0,0,.3);--shadow-inset:inset 0 0 0 1px rgba(255,255,255,.07),inset 0 2px 5px rgba(0,0,0,.3);--cold:#8db8dc;--cold-bg:#1f3040;--cut:#ef9aa6;--cut-bg:#45222a;--heat:#f0a274;--heat-bg:#46291b;--wind:#cfa6e2;--wind-bg:#36263f;--calm:#9cc98d;--calm-bg:#263522;--grid:#3a342b;color-scheme:dark}
+:root{--cold:#3f6f97;--cold-bg:#e3edf5;--cut:#8e3b46;--cut-bg:#f5e1e3;--heat:#a24f22;--heat-bg:#f8e6d8;--wind:#6d4a80;--wind-bg:#ece2f1;--calm:#2f6b4f;--calm-bg:#dcefe4;--grid:#dbe3e8;--bg:#eef2f4;--panel:#f7f9fa;--panel2:#e6edf1;--card:#ffffff;--card2:#f4f7f9;--track:#dde5ea;--edge:#d3dce2;--ink:#1c2731;--muted:#53616c;--gold:#4f9d8e;--gold-d:#1d5c55;--gold2:#a9d6cc;--green-d:#1d5c55;--sage-100:#e6f3f0;--sage-200:#c3e2db;--sage-900:#15443e;--field:#ffffff;--placeholder:#7a8892;--shadow-relief:0 1px 2px rgba(20,40,60,.06),0 8px 24px rgba(20,40,60,.07);--shadow-card:0 0 0 1px rgba(30,60,80,.08),0 1px 2px rgba(20,40,60,.05),0 6px 16px rgba(20,40,60,.06);--shadow-inset:inset 0 0 0 1px rgba(30,60,80,.10),inset 0 1px 3px rgba(20,40,60,.05);--font-display:"Barlow Condensed","Arial Narrow",system-ui,sans-serif;--sky-calm-1:#c9e0ee;--sky-calm-2:#dfeaf1;--sky-cold-1:#c8d9e8;--sky-cold-2:#dde7ef;--sky-cut-1:#b9c9da;--sky-cut-2:#d6e0e9;--sky-heat-1:#f5d2ab;--sky-heat-2:#f2e4d8;--sky-wind-1:#cfd8de;--sky-wind-2:#e1e7eb;--sky-water-1:#c6e4df;--sky-water-2:#dceeec;--sun:#fff2c9;--sun-hot:#ffc97f;--sun-op:.8;--sun-op-hot:.95;--flake:#ffffff;--hill:#dbe4ea}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0e151b;--panel:#141d25;--panel2:#22303a;--card:#18232c;--card2:#111a21;--track:#263540;--edge:#2c3c48;--ink:#e6edf2;--muted:#a3b3bf;--gold:#4f9d8e;--gold-d:#86d3c4;--gold2:#2d5f57;--green-d:#2b7a6e;--wine:#b65563;--sky-d:#5f89ad;--good:#93c483;--bad:#e8899a;--ok-bg:#2c3a26;--ok-ink:#bcd8ae;--todo-bg:#45381f;--todo-ink:#f1dcae;--sage-100:#24453f;--sage-200:#1b3833;--sage-900:#bfe8de;--field:#0f171d;--placeholder:#7f909c;--shadow-relief:0 1px 0 rgba(255,255,255,.04) inset,0 8px 18px rgba(0,0,0,.35);--shadow-card:0 0 0 1px rgba(255,255,255,.07),0 4px 12px rgba(0,0,0,.3);--shadow-inset:inset 0 0 0 1px rgba(255,255,255,.07),inset 0 2px 5px rgba(0,0,0,.3);--cold:#8db8dc;--cold-bg:#1f3040;--cut:#ef9aa6;--cut-bg:#45222a;--heat:#f0a274;--heat-bg:#46291b;--wind:#cfa6e2;--wind-bg:#36263f;--calm:#8fd1b0;--calm-bg:#183328;--grid:#2a3844;--sky-calm-1:#18304a;--sky-calm-2:#122030;--sky-cold-1:#183049;--sky-cold-2:#111f2d;--sky-cut-1:#1d2840;--sky-cut-2:#121b29;--sky-heat-1:#3d2817;--sky-heat-2:#1d1a16;--sky-wind-1:#202d37;--sky-wind-2:#141e26;--sky-water-1:#123432;--sky-water-2:#0f1f22;--sun:#c9d8e4;--sun-hot:#e9a75a;--sun-op:.22;--sun-op-hot:.4;--flake:#cfe3f5;--hill:#16212a;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0e151b;--panel:#141d25;--panel2:#22303a;--card:#18232c;--card2:#111a21;--track:#263540;--edge:#2c3c48;--ink:#e6edf2;--muted:#a3b3bf;--gold:#4f9d8e;--gold-d:#86d3c4;--gold2:#2d5f57;--green-d:#2b7a6e;--wine:#b65563;--sky-d:#5f89ad;--good:#93c483;--bad:#e8899a;--ok-bg:#2c3a26;--ok-ink:#bcd8ae;--todo-bg:#45381f;--todo-ink:#f1dcae;--sage-100:#24453f;--sage-200:#1b3833;--sage-900:#bfe8de;--field:#0f171d;--placeholder:#7f909c;--shadow-relief:0 1px 0 rgba(255,255,255,.04) inset,0 8px 18px rgba(0,0,0,.35);--shadow-card:0 0 0 1px rgba(255,255,255,.07),0 4px 12px rgba(0,0,0,.3);--shadow-inset:inset 0 0 0 1px rgba(255,255,255,.07),inset 0 2px 5px rgba(0,0,0,.3);--cold:#8db8dc;--cold-bg:#1f3040;--cut:#ef9aa6;--cut-bg:#45222a;--heat:#f0a274;--heat-bg:#46291b;--wind:#cfa6e2;--wind-bg:#36263f;--calm:#8fd1b0;--calm-bg:#183328;--grid:#2a3844;--sky-calm-1:#18304a;--sky-calm-2:#122030;--sky-cold-1:#183049;--sky-cold-2:#111f2d;--sky-cut-1:#1d2840;--sky-cut-2:#121b29;--sky-heat-1:#3d2817;--sky-heat-2:#1d1a16;--sky-wind-1:#202d37;--sky-wind-2:#141e26;--sky-water-1:#123432;--sky-water-2:#0f1f22;--sun:#c9d8e4;--sun-hot:#e9a75a;--sun-op:.22;--sun-op-hot:.4;--flake:#cfe3f5;--hill:#16212a;color-scheme:dark}
 /* Barre d'onglets : bascule rapide (l'original du design system durait 0,75 s avec rebond) */
 .ds-tabbar{transition:--nx .26s var(--ease-out)}
 .ds-tabbar .pill{transition:transform .26s var(--ease-out)}
@@ -165,21 +167,121 @@ legend.h{font:600 17px/1.2 var(--font-display);margin-bottom:4px;padding:0}
 .weekbox{display:grid;gap:14px}
 .week-legend{margin:-6px 2px 0;font-size:12px;color:var(--muted);line-height:1.4}
 .week-legend b{color:var(--ink)}
+
+/* ===== 0.3.0 : thème « vigie » (ciel, collines, papier froid) ===== */
+.sky{position:relative;overflow:hidden;display:grid;gap:14px;
+  margin:-16px calc(-1 * max(16px,env(safe-area-inset-right,0px))) -4px calc(-1 * max(16px,env(safe-area-inset-left,0px)));
+  padding:calc(14px + env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) 40px max(16px,env(safe-area-inset-left,0px));
+  background:linear-gradient(180deg,var(--sky-1) 0%,var(--sky-2) 62%,var(--bg) 100%)}
+.sky[data-mood="calm"]{--sky-1:var(--sky-calm-1);--sky-2:var(--sky-calm-2);--k:var(--calm);--k-bg:var(--calm-bg)}
+.sky[data-mood="cold"]{--sky-1:var(--sky-cold-1);--sky-2:var(--sky-cold-2);--k:var(--cold);--k-bg:var(--cold-bg)}
+.sky[data-mood="cut"]{--sky-1:var(--sky-cut-1);--sky-2:var(--sky-cut-2);--k:var(--cut);--k-bg:var(--cut-bg)}
+.sky[data-mood="heat"]{--sky-1:var(--sky-heat-1);--sky-2:var(--sky-heat-2);--k:var(--heat);--k-bg:var(--heat-bg)}
+.sky[data-mood="wind"]{--sky-1:var(--sky-wind-1);--sky-2:var(--sky-wind-2);--k:var(--wind);--k-bg:var(--wind-bg)}
+.sky[data-mood="water"]{--sky-1:var(--sky-water-1);--sky-2:var(--sky-water-2);--k:var(--water);--k-bg:var(--water-bg)}
+.sky > :not(.sky__art):not(.sky__hills){position:relative;z-index:1}
+.sky .top h1{font:700 34px/1 var(--font-display);letter-spacing:.01em}
+.sky .top .where,.sky .refresh small{color:var(--ink);opacity:.8}
+.sky__now{display:grid;gap:4px}
+.sky__kicker{margin:0;font:700 13px/1.3 var(--font-body);color:var(--ink);font-variant-numeric:tabular-nums}
+.sky__row{display:flex;align-items:center;gap:10px}
+.sky__ic{flex:none;width:40px;height:40px;border-radius:50%;display:grid;place-items:center;background:var(--k-bg);color:var(--k);box-shadow:var(--shadow-card)}
+.sky__ic svg{width:22px;height:22px}
+.sky__ic:empty{display:none}
+.sky__title{margin:0;font:700 32px/1.02 var(--font-display);color:var(--ink);text-wrap:balance}
+.sky__sub{margin:0;font-size:15px;line-height:1.4;color:var(--ink);max-width:34ch}
+.sky__hills{position:absolute;left:0;right:0;bottom:-1px;width:100%;height:44px;z-index:0}
+.sky__hills path,.sky__hills circle{fill:var(--bg)}
+.sky__hills .far{fill:var(--hill);opacity:.7}
+.sky__art{position:absolute;inset:0;z-index:0;pointer-events:none}
+.sky .fx{position:absolute;display:none}
+.sky .sun{right:-50px;top:-40px;width:170px;height:170px;border-radius:50%;background:radial-gradient(circle,var(--sun) 0 30%,transparent 31%),radial-gradient(circle,var(--sun) 0,transparent 68%);opacity:var(--sun-op)}
+.sky[data-mood="calm"] .sun,.sky[data-mood="water"] .sun{display:block}
+.sky[data-mood="heat"] .sun{display:block;--sun:var(--sun-hot);opacity:var(--sun-op-hot);animation:halo 5s ease-in-out infinite alternate}
+.sky .cloud{right:70px;top:84px;width:90px;height:26px;border-radius:20px;background:var(--card);opacity:.55;box-shadow:24px -10px 0 2px var(--card);animation:drift 40s linear infinite alternate}
+.sky[data-mood="calm"] .cloud{display:block}
+.sky .flake{top:-10px;width:5px;height:5px;border-radius:50%;background:var(--flake);opacity:.9;animation:fall var(--d) linear var(--o) infinite}
+.sky[data-mood="cold"] .flake,.sky[data-mood="cut"] .flake{display:block}
+.sky .streak{left:0;height:2px;border-radius:2px;background:var(--wind);opacity:.3;animation:gust var(--d) linear var(--o) infinite}
+.sky[data-mood="wind"] .streak{display:block}
+.sky .drop{top:-12px;width:2px;height:10px;border-radius:2px;background:var(--water);opacity:.45;animation:fall var(--d) linear var(--o) infinite}
+.sky[data-mood="water"] .drop{display:block}
+@keyframes halo{from{transform:scale(.96)}to{transform:scale(1.04)}}
+@keyframes drift{from{transform:translateX(0)}to{transform:translateX(-60px)}}
+@keyframes fall{from{transform:translateY(0)}to{transform:translateY(230px)}}
+@keyframes gust{from{transform:translateX(-140px)}to{transform:translateX(480px)}}
+
+/* Typo d'accent et cartes */
+.sec-title{font:700 24px/1.05 var(--font-display);letter-spacing:.01em}
+.panel h2{font:700 24px/1.05 var(--font-display)}
+legend.h{font:700 19px/1.2 var(--font-display)}
+.alert__head h3,.plant__head h3{font:700 21px/1.1 var(--font-display)}
+.calm b{font:700 21px/1.1 var(--font-display)}
+.alert__num{font:700 32px/1 var(--font-display)}
+.day__d b{font:700 18px/1.05 var(--font-display)}
+.alert,.plant,.calm,.chart,.week{border-radius:20px}
+.alert__ic{border-radius:50%}
+.alerts,.water{gap:12px}
+.week button{font:700 15px/1.1 var(--font-display);letter-spacing:0}
+.ds-tabbar{filter:drop-shadow(0 8px 16px rgba(20,40,60,.14)) drop-shadow(0 1px 2px rgba(20,40,60,.12))}
+.ds-tabbar .pill{background:radial-gradient(circle at 35% 30%,var(--sage-100),var(--sage-200) 70%);box-shadow:0 6px 12px rgba(29,92,85,.25),inset 0 1px 0 rgba(255,255,255,.6)}
+
+/* Mouvements : courts, utiles, jamais bloquants (contenu visible au repos) */
+@keyframes rise{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:none}}
+@keyframes pop{from{opacity:0;transform:scale(.8)}to{opacity:1;transform:none}}
+@keyframes grow{from{transform:scaleX(0)}to{transform:none}}
+@keyframes barIn{from{transform:scaleY(.2);opacity:0}to{transform:none;opacity:1}}
+@keyframes pageIn{from{opacity:.35;transform:translateY(6px)}to{opacity:1;transform:none}}
+.page:not([hidden]){animation:pageIn .2s var(--ease-out)}
+.is-entering .sky__now{animation:rise .3s var(--ease-out) backwards}
+.is-entering .alerts > *,.is-entering .water > *,.is-entering .chart{animation:rise .28s var(--ease-out) backwards}
+.is-entering .alerts > :nth-child(2),.is-entering .water > :nth-child(2){animation-delay:.05s}
+.is-entering .alerts > :nth-child(3),.is-entering .water > :nth-child(3){animation-delay:.1s}
+.is-entering .alerts > :nth-child(n+4){animation-delay:.14s}
+.is-entering .week button{animation:pop .22s var(--ease-out) backwards;animation-delay:calc(var(--c,0) * 16ms)}
+.is-entering .chart rect{transform-box:fill-box;transform-origin:center;animation:barIn .3s var(--ease-out) backwards;animation-delay:calc(var(--c,0) * 12ms)}
+.gauge .ds-xp i{transform-origin:left center;animation:grow .3s var(--ease-out) backwards}
+.day[open] .day__body{animation:rise .22s var(--ease-out)}
+.ds-mini,.ds-btn,.week button,.day summary{transition:transform .12s var(--ease-out),background-color .12s}
+.ds-mini:active,.ds-btn:active{transform:scale(.96)}
+.day summary:active{background:var(--panel2);border-radius:var(--radius-m)}
+#reload:disabled svg{animation:spin .9s linear infinite}
+@keyframes spin{to{transform:rotate(360deg)}}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
 </style>
 </head>
 <body>
 <main class="app">
-  <header class="top">
-    <div>
-      <h1>Vigie<span>.</span></h1>
-      <span class="where" id="where">Wolfersdorf · Haut-Rhin</span>
+  <header class="sky" id="sky" data-mood="calm">
+    <div class="sky__art" aria-hidden="true">
+      <span class="fx sun"></span><span class="fx cloud"></span>
+      <span class="fx flake" style="left:12%;--d:9s;--o:-2s"></span><span class="fx flake" style="left:34%;--d:11s;--o:-6s"></span><span class="fx flake" style="left:58%;--d:8s;--o:-4s"></span><span class="fx flake" style="left:78%;--d:12s;--o:-9s"></span><span class="fx flake" style="left:90%;--d:10s;--o:-1s"></span>
+      <span class="fx streak" style="bottom:40px;--d:4.2s;--o:-1s;width:90px"></span><span class="fx streak" style="bottom:30px;--d:5.1s;--o:-3s;width:60px"></span><span class="fx streak" style="bottom:20px;--d:3.6s;--o:-2.2s;width:110px"></span>
+      <span class="fx drop" style="left:62%;--d:2.4s;--o:-.4s"></span><span class="fx drop" style="left:74%;--d:2.9s;--o:-1.6s"></span><span class="fx drop" style="left:86%;--d:2.2s;--o:-1s"></span>
     </div>
-    <div class="refresh">
-      <small id="updated">Chargement…</small>
-      <button class="ds-mini ds-mini--ghost" type="button" id="reload" aria-label="Actualiser les prévisions">
-        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 11a8 8 0 1 0-2.3 5.7"/><path d="M20 4v7h-7"/></svg>
-      </button>
+    <div class="top">
+      <div>
+        <h1>Vigie<span>.</span></h1>
+        <span class="where" id="where">Wolfersdorf · Haut-Rhin</span>
+      </div>
+      <div class="refresh">
+        <small id="updated">Chargement…</small>
+        <button class="ds-mini ds-mini--ghost" type="button" id="reload" aria-label="Actualiser les prévisions">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 11a8 8 0 1 0-2.3 5.7"/><path d="M20 4v7h-7"/></svg>
+        </button>
+      </div>
     </div>
+    <div class="sky__now" id="skyNow">
+      <p class="sky__kicker" id="skyKicker">Lecture du ciel…</p>
+      <div class="sky__row"><span class="sky__ic" id="skyIc" aria-hidden="true"></span><p class="sky__title" id="skyTitle">Vigie</p></div>
+      <p class="sky__sub" id="skySub">Gel, chaleur, vent et arrosage pour les 14 prochains jours.</p>
+    </div>
+    <svg class="sky__hills" viewBox="0 0 440 44" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
+      <path class="far" d="M0 44V24C40 16 90 14 140 20C190 26 230 14 280 15C330 16 380 24 440 18V44Z"/>
+      <path d="M0 44V32C50 22 100 22 150 28C200 34 240 24 290 23C340 22 390 31 440 28V44Z"/>
+      <path d="M332 24h22v-10h-22zM329 15l14-10 14 10zM348 5h3v6h-3z"/>
+      <circle cx="368" cy="17" r="6"/><path d="M367 20h2v6h-2z"/>
+    </svg>
   </header>
 
   <div class="ds-banner status" id="status" role="status" hidden></div>
@@ -263,7 +365,7 @@ legend.h{font:600 17px/1.2 var(--font-display);margin-bottom:4px;padding:0}
 <nav class="dock" aria-label="Navigation principale">
   <div class="ds-tabbar" id="tabbar">
     <span class="pill" aria-hidden="true"></span>
-    <button type="button" data-go="home" aria-current="page" aria-label="À anticiper"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3l9 16H3z"/><path d="M12 10v4M12 17h.01"/></svg><span class="tl">Anticiper</span></button>
+    <button type="button" data-go="home" aria-current="page" aria-label="À anticiper"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="6.5" cy="15.5" r="3.5"/><circle cx="17.5" cy="15.5" r="3.5"/><path d="M10 15h4M4 12.5L6 5h3.5l.5 7M20 12.5L18 5h-3.5l-.5 7"/></svg><span class="tl">Anticiper</span></button>
     <button type="button" data-go="days" aria-label="Jours"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="5" width="18" height="16" rx="2"/><path d="M3 10h18M8 3v4M16 3v4"/></svg><span class="tl">Jours</span></button>
     <button type="button" data-go="settings" aria-label="Réglages"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 6h10M18 6h2M4 12h4M12 12h8M4 18h12M20 18h0"/><circle cx="16" cy="6" r="2"/><circle cx="10" cy="12" r="2"/><circle cx="18" cy="18" r="2"/></svg><span class="tl">Réglages</span></button>
   </div>
@@ -303,6 +405,7 @@ Plantes grasses et albizia en pleine terre (confirmé par Damien le 25/11/2026).
 
 ## 3. Écrans
 
+- En-tête « ciel » (toutes les pages) : un pan de ciel au-dessus des collines et de la maison, dont la teinte et le petit décor animé disent l'état du moment. Humeur = le premier épisode qui commence dans les 7 jours (gel, couper l'eau, chaleur, vent) ; sinon « arrosage » si une plante est à arroser aujourd'hui ; sinon « calme ». Contenu : « Maintenant » (température et rafales de l'heure), titre de l'épisode (même titre que la carte) avec son icône, une phrase « quand : quoi faire », le nombre d'autres alertes. Lu dans les épisodes et l'arrosage déjà calculés, aucune règle propre. Hors ligne sans données : « Pas encore de prévisions ».
 - Anticiper :
   - « 10 prochains jours » : grille 10 jours (les 3 derniers plus pâles = tendance) × Gel / Chaleur / Vent. Chaque case montre la valeur du jour (heures à venir pour aujourd'hui) : minimum (gel), maximum (chaleur), rafales max (vent). Couleur = pire niveau du jour pour ce critère, lu dans les alertes du jour (aucune règle propre) : gris = rien à signaler, teinte claire + « ! » = niveau 1 (vigilance), aplat foncé + « !! » = niveau 2 et plus (couper l'eau, canicule, fortes rafales, tempête). Chaque case a un aria-label complet ; la toucher ouvre l'onglet Jours avec ce jour déplié. Légende courte dessous.
   - Cartes d'épisodes triées par date (quoi, quand, dans combien de jours, chiffre clé, quoi faire, fiabilité), puis graphique min/max sur 14 jours avec les seuils et les jours de rafales (≈).
@@ -310,6 +413,13 @@ Plantes grasses et albizia en pleine terre (confirmé par Damien le 25/11/2026).
 - Jours : 14 jours repliables (chevron), heures en tableau, valeurs au-delà des seuils en gras et en couleur.
 - Réglages : seuils (localStorage), retour aux seuils d'origine avec « Annuler » pendant 6 s, source des données, ce dossier.
 - États : chargement (carte d'attente), hors ligne avec données (bandeau qui donne leur date), hors ligne sans données (bandeau + carte « Pas encore de prévisions »), rien à signaler (carte calme).
+
+## 3 bis. Design
+
+- Direction : une vigie météo de la maison. Papier froid (`--bg` #eef2f4), cartes blanches, accent vert sapin (`--gold-d`, nom hérité du design system), titres et chiffres en Barlow Condensed (Google Fonts), texte en Inter. Les couleurs d'alerte (`--cold`, `--cut`, `--heat`, `--wind`, `--water`, `--calm`) ne servent qu'aux alertes.
+- Ciel : tokens `--sky-<humeur>-1/-2`, `--sun`, `--sun-hot`, `--flake`, `--hill`, clairs sur `:root` et redéfinis dans les deux blocs sombres (nuit). Décor : soleil et nuage (calme), soleil qui pulse (chaleur), points de givre qui tombent (gel), traînées (vent), gouttes (arrosage). Transformations CSS seulement, peu d'éléments.
+- Mouvements : entrée des cartes, de la grille et des barres du graphique au premier affichage seulement (≤ 0,3 s, léger décalage), ouverture d'un jour, jauges d'arrosage qui se remplissent, retour au toucher (0,12 s), bouton d'actualisation qui tourne pendant le chargement, page qui apparaît au changement d'onglet (0,2 s). Bascule d'onglet : 0,26 s sans rebond, à ne pas rallonger. Tout est coupé avec `prefers-reduced-motion`. Le contenu reste visible si une animation ne joue pas.
+- Icône de l'onglet Anticiper : des jumelles.
 
 ## 4. Technique
 
@@ -333,6 +443,7 @@ Plantes grasses et albizia en pleine terre (confirmé par Damien le 25/11/2026).
 - 0.1.4 · 25/11/2026 · onglet Jours : jour en alerte encadré à la couleur du pire niveau (fond teinté si action), étiquettes « ! / !! », seules les valeurs hors seuil en couleur et en gras.
 - 0.2.0 · 25/11/2026 · arrosage d'été : réserve d'eau par groupe (plantes grasses, albizia, le reste), prochain arrosage et heure idéale, bouton « Arrosé aujourd'hui ».
 - 0.2.1 · 25/11/2026 · plantes grasses en pleine terre : réserve plus grande, 10 jours mini entre deux arrosages.
+- 0.3.0 · 25/11/2026 · nouveau thème « vigie » : en-tête ciel qui reflète l'état du moment (calme, gel, couper l'eau, chaleur, vent, arrosage) avec décor animé discret, papier froid et accent vert sapin, Barlow Condensed pour les titres et chiffres, jumelles pour Anticiper, sombre « nuit » retravaillé, animations courtes (cartes, grille, graphique, jours, jauges, toucher, actualisation). Règles de calcul, seuils et arrosage inchangés.
 </script>
 
 <script>
@@ -542,8 +653,9 @@ Plantes grasses et albizia en pleine terre (confirmé par Damien le 25/11/2026).
   function renderWater(days) {
     const box = $("waterBox"), list = $("water");
     const daily = DATA && DATA.daily;
-    if (!daily || !daily.et0_fao_evapotranspiration || !inSeason()) { box.hidden = true; return; }
+    if (!daily || !daily.et0_fao_evapotranspiration || !inSeason()) { box.hidden = true; return []; }
     list.textContent = ""; box.hidden = false;
+    const today = [];
     PLANTS.forEach(pl => {
       const plan = waterPlan(pl, daily, days); if (!plan) return;
       const pct = Math.max(0, Math.min(100, Math.round(plan.Rtoday / pl.cap * 100)));
@@ -573,7 +685,41 @@ Plantes grasses et albizia en pleine terre (confirmé par Damien le 25/11/2026).
         n != null && n <= 1 ? el("p", { class: "plant__how", text: pl.how }) : null,
         el("div", { class: "plant__act" }, btn)));
       list.append(card);
+      if (n === 0) today.push(pl.name);
     });
+    return today;
+  }
+
+  /* En-tête « ciel » : reflète ce qui arrive dans les 7 jours (affichage seulement, aucune règle propre) */
+  const cutEve = e => { const first = e.days.find(x => x.a.lvl === 2); const eve = prevDay(first.d.date);
+    return dayDiff(eve) < 0 ? "dès maintenant" : dayDiff(eve) === 0 ? "ce soir" : fmtDay(eve, { weekday: "long", day: "numeric" }) + " soir"; };
+  function renderSky(eps, days, waterToday) {
+    const sky = $("sky"), d0 = days[0], nowH = new Date().getHours();
+    const cur = d0.hours.find(x => x.h === nowH && x.t != null) || d0.live[0];
+    $("skyKicker").textContent = cur ? "Maintenant " + fmtT(cur.t) + " · rafales " + r0(cur.g) + " km/h" : "";
+    const soon = eps.filter(e => dayDiff(e.start) <= 6);
+    const e = soon[0];
+    let mood = "calm", title, sub;
+    if (e) {
+      mood = e.type; title = headline(e);
+      const rel = relDay(e.start), Rel = rel.charAt(0).toUpperCase() + rel.slice(1);
+      const act = e.type === "cut" ? "couper l’eau " + cutEve(e) + "."
+        : e.fam === "cold" ? "minimum " + fmtT(e.value) + "."
+        : e.fam === "heat" ? "jusqu’à " + fmtT(e.value) + ", volets fermés en journée."
+        : e.value >= S.gust ? "rafales jusqu’à " + r0(e.value) + " km/h, rentrer la chatte avant." : "vent soutenu, rafales jusqu’à " + r0(e.value) + " km/h.";
+      const more = eps.length - 1;
+      sub = Rel + " : " + act + (more > 0 ? " Et " + more + (more > 1 ? " autres alertes" : " autre alerte") + " plus bas." : "");
+    } else if (waterToday.length) {
+      mood = "water"; title = "Arrosage aujourd’hui";
+      sub = waterToday.join(", ") + " : l’heure idéale est plus bas.";
+    } else {
+      title = "Rien à signaler";
+      sub = "Pas de gel, de chaleur ni de rafales d’ici " + fmtDay(days[Math.min(6, days.length - 1)].date, { weekday: "long", day: "numeric" }) + "." + (eps.length ? " Une tendance plus loin, voir plus bas." : "");
+    }
+    sky.dataset.mood = mood;
+    $("skyTitle").textContent = title;
+    $("skySub").textContent = sub;
+    $("skyIc").innerHTML = ICONS[mood];
   }
 
   function renderAlerts(eps) {
@@ -593,9 +739,7 @@ Plantes grasses et albizia en pleine terre (confirmé par Damien le 25/11/2026).
       const when = el("p", { class: "alert__when" }, el("b", { text: rel.charAt(0).toUpperCase() + rel.slice(1) }), " · " + range);
       const ul = el("ul");
       if (e.type === "cut") {
-        const first = e.days.find(x => x.a.lvl === 2);
-        const eve = prevDay(first.d.date);
-        ul.append(el("li", {}, el("b", { text: "Couper l’eau " + (dayDiff(eve) < 0 ? "dès maintenant" : dayDiff(eve) === 0 ? "ce soir" : fmtDay(eve, { weekday: "long", day: "numeric" }) + " soir") + "." }), " Rouvrir quand le minimum repasse au-dessus de " + S.cut + " °C."));
+        ul.append(el("li", {}, el("b", { text: "Couper l’eau " + cutEve(e) + "." }), " Rouvrir quand le minimum repasse au-dessus de " + S.cut + " °C."));
       }
       if (e.fam === "wind" && e.value >= S.gust) ul.append(el("li", {}, el("b", { text: "Rentrer la chatte avant les rafales" }), " et lui préparer son coin calme."));
       e.days.slice(0, 5).forEach(({ d, a }) => ul.append(el("li", {}, el("b", { text: fmtDay(d.date) + " : " }), a.line)));
@@ -638,7 +782,7 @@ Plantes grasses et albizia en pleine terre (confirmé par Damien le 25/11/2026).
       const cx = padL + bw * i + bw / 2, w = Math.min(12, bw * 0.55);
       const col = d.tmin <= S.cut ? "var(--cut)" : d.tmin <= S.cold ? "var(--cold)" : d.tmax >= S.hot ? "var(--heat)" : "var(--muted)";
       const y1 = y(d.tmax), y2 = y(d.tmin);
-      s.append(svg("rect", { x: cx - w / 2, y: y1, width: w, height: Math.max(3, y2 - y1), rx: w / 2, fill: col, opacity: dayDiff(d.date) >= 7 ? 0.6 : 1 }));
+      s.append(svg("rect", { x: cx - w / 2, y: y1, width: w, height: Math.max(3, y2 - y1), rx: w / 2, fill: col, opacity: dayDiff(d.date) >= 7 ? 0.6 : 1, style: "--c:" + i }));
       const lbl = svg("text", { x: cx, y: H - padB + 15, "text-anchor": "middle", class: "lbl-day" });
       lbl.textContent = fmtDay(d.date, { weekday: "narrow" }).toUpperCase(); s.append(lbl);
       const num = svg("text", { x: cx, y: H - padB + 28, "text-anchor": "middle" });
@@ -677,6 +821,7 @@ Plantes grasses et albizia en pleine terre (confirmé par Damien le 25/11/2026).
         const label = day + (i >= 7 ? " (tendance)" : "") + " : " + r.name.toLowerCase() + ", " + (a ? TITLES[a.fam][a.lvl].toLowerCase() : "rien à signaler") + ", " + r.say(v);
         const b = el("button", { type: "button", class: trend(i).trim(), "data-k": a ? a.type : r.fam, "data-l": String(Math.min(lvl, 2)), "aria-label": label },
           r.txt(v), el("i", { "aria-hidden": "true", text: "!".repeat(Math.min(lvl, 2)) }));
+        b.style.setProperty("--c", i);
         b.addEventListener("click", () => openDay(d.date));
         box.append(b);
       });
@@ -729,13 +874,17 @@ Plantes grasses et albizia en pleine terre (confirmé par Damien le 25/11/2026).
     });
   }
 
+  let entered = false;
   function render() {
     if (!DATA) return;
     const days = buildDays(DATA.hourly);
     if (!days.length) return;
+    if (!entered) { entered = true; document.documentElement.classList.add("is-entering"); setTimeout(() => document.documentElement.classList.remove("is-entering"), 900); }
+    const eps = episodes(days);
     renderWeek(days);
-    renderAlerts(episodes(days));
-    renderWater(days);
+    renderAlerts(eps);
+    const waterToday = renderWater(days) || [];
+    renderSky(eps, days, waterToday);
     renderChart(days);
     renderDays(days);
     $("horizon").textContent = "Du " + fmtDay(days[0].date, { day: "numeric", month: "long" }) + " au " + fmtDay(days[days.length - 1].date, { day: "numeric", month: "long" }) + ", températures et rafales réelles.";
@@ -771,6 +920,9 @@ Plantes grasses et albizia en pleine terre (confirmé par Damien le 25/11/2026).
       } else {
         status("Impossible de joindre Open-Meteo. Vérifiez la connexion puis touchez le bouton d’actualisation en haut à droite.", "warn");
         $("updated").textContent = "Pas de données";
+        $("skyKicker").textContent = "Hors ligne";
+        $("skyTitle").textContent = "Pas encore de prévisions";
+        $("skySub").textContent = "Elles s’afficheront dès que le téléphone aura du réseau.";
         const box = $("alerts"); box.textContent = "";
         box.append(el("div", { class: "calm" }, icon("calm"), el("div", {},
           el("b", { text: "Pas encore de prévisions" }),
