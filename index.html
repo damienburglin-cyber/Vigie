@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="vigie-version" content="0.1.3">
+<meta name="vigie-version" content="0.1.4">
 <meta name="vigie-updated" content="2026-11-25">
 <meta name="theme-color" content="#f2ede3" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#1c1915" media="(prefers-color-scheme: dark)">
@@ -196,7 +196,14 @@ textarea.raw{width:100%;min-height:120px;border-radius:var(--radius-m);border:1p
 .day__d b{display:block;font:600 16px/1.1 var(--font-display);text-transform:capitalize}
 .day__d small{font-size:12px;color:var(--muted)}
 .day__t{font-variant-numeric:tabular-nums;font-size:15px}
-.day__t .mn{font-weight:800;color:var(--cold)}.day__t .mx{font-weight:800;color:var(--heat)}
+.day__t .v{font-weight:700;color:var(--ink)}
+.day .v.c,.day .v.x,.day .v.h,.day .v.w{font-weight:800;font-size:17px}
+.day .v.c{color:var(--cold)}.day .v.x{color:var(--cut)}.day .v.h{color:var(--heat)}.day .v.w{color:var(--wind)}
+.day[data-k="cold"]{--k:var(--cold);--k-bg:var(--cold-bg)}.day[data-k="cut"]{--k:var(--cut);--k-bg:var(--cut-bg)}
+.day[data-k="heat"]{--k:var(--heat);--k-bg:var(--heat-bg)}.day[data-k="wind"]{--k:var(--wind);--k-bg:var(--wind-bg)}
+.day[data-l="1"]{box-shadow:var(--shadow-card),inset 0 0 0 1.5px var(--k)}
+.day[data-l="2"]{background:var(--k-bg);box-shadow:var(--shadow-card),inset 0 0 0 2.5px var(--k)}
+.day__chips .tag[data-l="2"]{background:var(--k);color:var(--card)}
 .day__t small{display:block;font-size:12px;color:var(--muted)}
 .day__w{text-align:right;font-variant-numeric:tabular-nums;font-size:13px;color:var(--muted);line-height:1.3}
 .day__w b{display:block;font-size:15px;color:var(--ink)}
@@ -400,6 +407,7 @@ Données horaires Open-Meteo, 14 jours, fuseau Europe/Paris. Pour aujourd'hui, s
 - 0.1.1 · 25/11/2026 · passe design : grille « 10 prochains jours » (10 jours × gel/chaleur/vent, couleur + symbole + valeur, ouvre le jour), libellés clarifiés, étiquette de fiabilité explicite, chevron sur les jours, clavier avec signe moins pour les seuils de gel, « Annuler » après retour aux seuils d'origine, état sans données, graphique plus lisible, toast et barre d'état lisibles en sombre. Règles de calcul inchangées. Conseil « rentrer la chatte » dès les rafales de vigilance (40 km/h), plus seulement à 60.
 - 0.1.2 · 25/11/2026 · grille passée à 10 jours (icônes de ligne, valeurs sans « ° », jours 8 à 10 plus pâles = tendance).
 - 0.1.3 · 25/11/2026 · bascule d'onglet plus rapide (0,26 s sans rebond au lieu de 0,75 s).
+- 0.1.4 · 25/11/2026 · onglet Jours : jour en alerte encadré à la couleur du pire niveau (fond teinté si action), étiquettes « ! / !! », seules les valeurs hors seuil en couleur et en gras.
 </script>
 
 <script>
@@ -674,13 +682,19 @@ Données horaires Open-Meteo, 14 jours, fuseau Europe/Paris. Pour aujourd'hui, s
     const nowH = new Date().getHours();
     days.forEach((d, i) => {
       const det = el("details", { class: "day", id: "day-" + d.date });
+      // Le pire niveau du jour colore tout le jour ; seules les valeurs hors seuil sont en couleur
+      const worst = d.alerts.reduce((w, a) => (!w || Math.min(a.lvl, 2) > Math.min(w.lvl, 2) ? a : w), null);
+      if (worst) { det.dataset.k = worst.type; det.dataset.l = String(Math.min(worst.lvl, 2)); }
       const chips = el("div", { class: "day__chips" });
-      d.alerts.forEach(a => chips.append(el("span", { class: "tag", "data-k": a.type, text: TITLES[a.fam][a.lvl] })));
+      d.alerts.forEach(a => chips.append(el("span", { class: "tag", "data-k": a.type, "data-l": String(Math.min(a.lvl, 2)), text: "!".repeat(Math.min(a.lvl, 2)) + " " + TITLES[a.fam][a.lvl] })));
+      const hitMin = d.L.tmin <= S.cut ? "x" : d.L.tmin <= S.cold ? "c" : "";
+      const hitMax = d.L.tmax >= S.hot ? "h" : "";
+      const hitG = d.L.gmax >= S.gust || d.L.wmax >= S.wind ? "w" : "";
       const sum = el("summary", {},
         el("div", { class: "day__d" }, el("b", { text: i === 0 ? "Auj." : fmtDay(d.date, { weekday: "short" }) }), el("small", { text: fmtDay(d.date, { day: "numeric", month: "short" }) })),
-        el("div", { class: "day__t" }, el("span", { class: "mn", text: r0(d.tmin) + "°" }), " / ", el("span", { class: "mx", text: r0(d.tmax) + "°" }),
+        el("div", { class: "day__t" }, el("span", { class: "v " + hitMin, text: r0(d.tmin) + "°" }), " / ", el("span", { class: "v " + hitMax, text: r0(d.tmax) + "°" }),
           el("small", { text: "ressenti " + r0(d.amin) + "° / " + r0(d.amax) + "° · " + conf(d.date).toLowerCase() })),
-        el("div", { class: "day__w" }, el("b", { text: r0(d.gmax) + " km/h" }), "rafales · vent " + r0(d.wmax)),
+        el("div", { class: "day__w" }, el("b", { class: "v " + hitG, text: r0(d.gmax) + " km/h" }), "rafales · vent " + r0(d.wmax)),
         chips);
       const body = el("div", { class: "day__body" });
       d.alerts.forEach(a => body.append(el("p", {}, el("b", { text: TITLES[a.fam][a.lvl] + " : " }), a.line)));
