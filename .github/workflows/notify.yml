@@ -1,0 +1,52 @@
+name: Notifications Vigie
+
+on:
+  schedule:
+    # Heures UTC : 5 h et 17 h = 6 h / 18 h en hiver, 7 h / 19 h en été (Paris).
+    # GitHub peut décaler un déclenchement planifié de quelques minutes.
+    - cron: "0 5 * * *"
+    - cron: "0 17 * * *"
+  workflow_dispatch:
+    inputs:
+      test:
+        description: "Envoyer seulement une notification de test"
+        type: boolean
+        default: false
+
+permissions:
+  contents: read
+
+concurrency:
+  group: vigie-notify
+  cancel-in-progress: false
+
+jobs:
+  notify:
+    runs-on: ubuntu-latest
+    timeout-minutes: 5
+    steps:
+      - uses: actions/checkout@v4
+
+      - name: Restaurer l'état (alertes déjà envoyées)
+        uses: actions/cache/restore@v4
+        with:
+          path: state
+          key: vigie-state-${{ github.run_id }}
+          restore-keys: vigie-state-
+
+      - name: Vérifier les prévisions et notifier
+        env:
+          NTFY_TOPIC: ${{ secrets.NTFY_TOPIC }}
+        run: |
+          if [ "${{ inputs.test }}" = "true" ]; then
+            python3 notify/notify.py --test
+          else
+            python3 notify/notify.py
+          fi
+
+      - name: Sauvegarder l'état
+        if: always()
+        uses: actions/cache/save@v4
+        with:
+          path: state
+          key: vigie-state-${{ github.run_id }}

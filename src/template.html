@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="vigie-version" content="0.3.0">
+<meta name="vigie-version" content="0.3.1">
 <meta name="vigie-updated" content="2026-11-25">
 <meta name="theme-color" content="#d3e4ee" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#0e151b" media="(prefers-color-scheme: dark)">
@@ -429,9 +429,18 @@ Plantes grasses et albizia en pleine terre (confirmé par Damien le 25/11/2026).
 - Un artefact claude.ai ne peut pas appeler d'API externe : la page est hébergée sur GitHub Pages (repo damienburglin-cyber/Freeze) et s'ajoute à l'écran d'accueil (manifest.webmanifest, icônes, sw.js pour l'ouverture hors ligne).
 - Source : `src/template.html` + `src/ds.css`, assemblés par `python3 src/build.py` en `index.html`. `python3 src/make_tests.py` crée deux pages de test hors ligne (non versionnées).
 
+## 4 bis. Notifications (sans ouvrir l'app)
+
+- `.github/workflows/notify.yml` lance `notify/notify.py` (Python, stdlib) à 5 h et 17 h UTC (6 h / 18 h l'hiver, 7 h / 19 h l'été), et à la main (`workflow_dispatch`, option « test »).
+- Envoi via ntfy.sh sur un canal privé au nom aléatoire, rangé dans le secret GitHub `NTFY_TOPIC` (copie locale non versionnée : `NTFY.local.txt`). Toucher la notification ouvre l'app.
+- Mêmes règles et mêmes seuils PAR DÉFAUT que l'app ; les seuils changés dans Réglages restent sur le téléphone et n'agissent pas sur les notifications. Toute règle modifiée dans l'app doit l'être aussi dans `notify.py`.
+- Anticipation : épisode qui commence entre J+1 et J+7, envoyé une fois, puis seulement s'il s'aggrave (niveau supérieur).
+- Matin : couper l'eau aujourd'hui, rafales du jour (« rentrer la chatte avant … »), chaleur du jour (fermer / rouvrir), arrosage du jour (en saison ; le script suppose le conseil suivi).
+- Soir : « Ce soir : couper l'eau » si ≤ -10 °C cette nuit ou demain, rafales de demain.
+- Priorités ntfy : 5 couper l'eau, 4 niveau action, 3 vigilance. État (alertes déjà envoyées) gardé dans le cache GitHub Actions `vigie-state-*`, purgé après 21 jours.
+
 ## 5. Décisions ouvertes
 
-- Notifications push (sans ouvrir l'app) : tâche planifiée (Cloudflare Worker cron ou GitHub Actions) qui envoie une notification via ntfy.sh.
 - Orientation des façades : pour dire quel côté fermer selon l'heure du soleil.
 
 ## 6. Journal
@@ -444,6 +453,7 @@ Plantes grasses et albizia en pleine terre (confirmé par Damien le 25/11/2026).
 - 0.2.0 · 25/11/2026 · arrosage d'été : réserve d'eau par groupe (plantes grasses, albizia, le reste), prochain arrosage et heure idéale, bouton « Arrosé aujourd'hui ».
 - 0.2.1 · 25/11/2026 · plantes grasses en pleine terre : réserve plus grande, 10 jours mini entre deux arrosages.
 - 0.3.0 · 25/11/2026 · nouveau thème « vigie » : en-tête ciel qui reflète l'état du moment (calme, gel, couper l'eau, chaleur, vent, arrosage) avec décor animé discret, papier froid et accent vert sapin, Barlow Condensed pour les titres et chiffres, jumelles pour Anticiper, sombre « nuit » retravaillé, animations courtes (cartes, grille, graphique, jours, jauges, toucher, actualisation). Règles de calcul, seuils et arrosage inchangés.
+- 0.3.1 · 25/11/2026 · notifications ntfy matin et soir via GitHub Actions (anticipation à 7 jours, rappels du jour, arrosage en saison).
 </script>
 
 <script>
