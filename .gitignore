@@ -1,0 +1,5 @@
+src/test-*.html
+.DS_Store
+.claude/
+echo-*
+*.zip
