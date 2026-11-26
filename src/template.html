@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="vigie-version" content="0.5.2">
+<meta name="vigie-version" content="0.5.3">
 <meta name="vigie-updated" content="2026-11-26">
 <meta name="theme-color" content="#d3e4ee" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#0e151b" media="(prefers-color-scheme: dark)">
@@ -485,11 +485,11 @@ Plantes grasses et albizia en pleine terre (confirmé par Damien le 25/11/2026).
   - Données : bloc `current` d'Open-Meteo (`temperature_2m, apparent_temperature, weather_code, cloud_cover, precipitation, rain, showers, snowfall, wind_speed_10m, wind_gusts_10m, is_day`), gardé dans `DATA.current`. Utilisé s'il a moins de 3 h ; sinon repli sur l'heure courante des données horaires (température et rafales, sans code : ciel neutre). Recalcul toutes les 15 min app ouverte (rechargement si les données ont plus d'une heure), au retour sur l'app et au changement de thème.
   - Table `WMO` : 0 dégagé ; 1-2 voilé ; 3 couvert ; 45-48 brouillard ; 51-57 bruine ; 61-67 et 80-82 pluie ; 71-77 et 85-86 neige ; 95-99 orage ; pas de code : neutre. Intensité 1 à 3 = la plus forte entre le code (faible / modéré / fort) et `precipitation` (> 0 / ≥ 0,5 / ≥ 2,5 mm/h).
   - Couches qui s'ajoutent à toute ambiance : rafales ≥ 40 km/h = traînées de vent ; `is_day` = 0 = version nocturne (lune et étoiles par ciel clair ou voilé) ; température ≤ 0 °C = givre discret dans les coins.
-  - Table `WX_PALETTE` [haut, bas, nuages] : jour en thème clair, jour en thème sombre (désaturé), nuit (tous thèmes ; en thème clair le texte du ciel passe en clair). Le thème sombre système reste prioritaire. Contraste du texte ≥ 6,8:1 sur chaque fond et sur les nuages (vérifié par calcul).
+  - Table `WX_PALETTE` [haut, bas, nuages] : jour en thème clair, jour en thème sombre (tons profonds, saturés depuis 0.5.3), nuit (tous thèmes ; en thème clair le texte du ciel passe en clair). Le thème sombre système reste prioritaire. Contraste du texte ≥ 6,8:1 sur chaque fond et sur les nuages (vérifié par calcul).
   - Décor CSS (fondu 0,5 s) : soleil, lune, 3 nuages qui dérivent, 2 bandes de brume qui ondulent. Un seul canvas (~30 images/s, en pause si la page est cachée, le ciel hors écran ou le mouvement réduit) : pluie 25 / 50 / 80 gouttes selon l'intensité, bruine et neige 18 / 28 / 40, étoiles 30, traînées de vent 6, éclair = un halo doux (opacité ≤ 0,22), au plus un toutes les 8 à 14 s, jamais de clignotement. Couleurs du ciel en fondu 0,6 s (`@property --s1/--s2`), canvas en fondu ~0,55 s. Avec `prefers-reduced-motion` : une image fixe de l'ambiance.
   - Tests : `#ambiance` dans l'adresse affiche sous le ciel des boutons Auto / Soleil / Nuages / Pluie / Orage / Neige / Brouillard / Vent / Nuit / Aube / Coucher / Froid (-7 °C) / Chaud (33 °C) ; Vent, Nuit, Aube, Coucher, Froid et Chaud se cumulent aux autres (Aube et Coucher, Froid et Chaud s'excluent). `window.VIGIE_FORCE_WX` (objet `current` partiel) est fusionné au rendu ; `window.VIGIE_FORCE_NOW` (« AAAA-MM-JJTHH:MM ») fixe l'horloge de l'ambiance seulement (moment de la journée, soleil, prochaines heures), jamais celle des alertes. `make_tests.py` crée test-real, test-synth (neige faible à -1 °C) et une page par ambiance : test-dawn, test-dusk, test-night, test-sun, test-hot, test-rain, test-storm, test-snow, test-fog.
 - Toute la page vit avec la météo (0.5.0) :
-  - Lavis : le fond de page prend 22 % (20 % en sombre ; renforcé en 0.5.1 à la demande de Damien, 9 % se voyait à peine) d'une teinte du temps qu'il fait (`WASH` : soleil doré, voilé paille, couvert gris bleu, brouillard gris, bruine et pluie ardoise, orage ardoise foncée, neige bleu glace ; nuit : bleu nuit), elle-même tirée vers le bleu par le froid (de 4 °C à -10 °C) et vers l'ambre par la chaleur (de 22 °C à 34 °C). La barre d’onglets en prend 12 %. Cartes, valeurs et couleurs d'alerte ne bougent pas : l'alerte prime toujours. Fondu 0,6 s. Sans `color-mix` (vieux navigateur), fond d'origine. Contraste du texte secondaire sur le fond lavé ≥ 5:1 en clair (texte secondaire foncé à #44515b pour tenir) et ≥ 5,4:1 en sombre dans les cas extrêmes, texte du ciel ≥ 7,2:1 (clair) et ≥ 5,3:1 (sombre) à l’aube, au coucher et par froid ou chaleur extrêmes (vérifié par calcul).
+  - Lavis : le fond de page prend 22 % (20 % en sombre ; renforcé en 0.5.1 à la demande de Damien, 9 % se voyait à peine) d'une teinte du temps qu'il fait (`WASH` depuis 0.5.3 : soleil doré, voilé paille, couvert pervenche, brouillard nacré lilas, bruine sarcelle, pluie bleu frais, orage indigo, neige bleu glace ; nuit : bleu outremer, 30 % en thème sombre ; jamais de gris), elle-même tirée vers le bleu par le froid (de 4 °C à -10 °C) et vers l'ambre par la chaleur (de 22 °C à 34 °C). La barre d’onglets en prend 12 %. Cartes, valeurs et couleurs d'alerte ne bougent pas : l'alerte prime toujours. Fondu 0,6 s. Sans `color-mix` (vieux navigateur), fond d'origine. Contraste du texte secondaire sur le fond lavé ≥ 5:1 en clair (texte secondaire foncé à #44515b pour tenir) et ≥ 5,4:1 en sombre dans les cas extrêmes, texte du ciel ≥ 7,2:1 (clair) et ≥ 5,3:1 (sombre) à l’aube, au coucher et par froid ou chaleur extrêmes (vérifié par calcul).
   - Moment de la journée : lever et coucher du soleil (`daily.sunrise/sunset`). Aube = 40 min avant le lever → 50 min après ; coucher = 50 min avant → 40 min après. Le ciel se teinte (lavande en haut, pêche en bas ; 60 % par ciel clair, 20 % sous les nuages) et le soleil devient plus chaud. Le soleil glisse de gauche (lever) à droite (coucher), haut à midi, et passe derrière les collines aux extrémités.
   - Nuit = thème sombre automatique : `is_day` = 0 (ou, sans `current`, hors des heures de soleil) pose `data-theme="dark"`, retiré au jour (confirmé par Damien le 26/11/2026). Un thème posé explicitement n'est pas touché.
   - Température : bas du ciel bleuté par grand froid, ambré par forte chaleur (jusqu'à 40 %).
@@ -538,6 +538,7 @@ Plantes grasses et albizia en pleine terre (confirmé par Damien le 25/11/2026).
 - 0.5.0 · 26/11/2026 · toute la page vit avec la météo de l'instant : fond et barre d'onglets lavés de la couleur du temps et de la température, aube et coucher d'après le vrai lever et coucher du soleil, soleil qui suit sa course, nuit en thème sombre automatique, barre d'état du téléphone à la couleur du ciel, maison vivante (fenêtres la nuit, cheminée par froid, arbre au vent), pastilles « prochaines heures » (pluie, fin de pluie, rafales, vent qui retombe, gel, dégel, lever et coucher). Données ajoutées : `hourly.weather_code`, `hourly.precipitation`, `daily.sunset`. Règles, seuils, arrosage et notifications inchangés.
 - 0.5.1 · 26/11/2026 · fond de page plus marqué par la météo (22 % au lieu de 9 %, 20 % en sombre ; barre d’onglets 12 %), texte secondaire un peu plus foncé pour garder le contraste. Rien d’autre ne change.
 - 0.5.2 · 26/11/2026 · nouvelle icône : ciel d’aube, soleil, rafales, flocon, collines, maison qui veille (au lieu du flocon seul sur fond crème). Fond de démarrage bleu nuit.
+- 0.5.3 · 26/11/2026 · couleurs plus vivantes sans trahir le temps : ciels et fonds sans gris (pluie bleu frais et aqua, orage indigo et lilas, couvert pervenche, brouillard nacré, neige glace rosée, nuit bleu outremer, sombre plus saturé). Contrastes revérifiés par calcul (texte du ciel ≥ 6,5:1, texte secondaire ≥ 5,2:1).
 </script>
 
 <script>
@@ -827,17 +828,19 @@ Plantes grasses et albizia en pleine terre (confirmé par Damien le 25/11/2026).
   };
   const CODE_LEVEL = { 51: 1, 53: 2, 55: 3, 56: 1, 57: 2, 61: 1, 63: 2, 65: 3, 66: 1, 67: 3, 71: 1, 73: 2, 75: 3, 77: 1, 80: 1, 81: 2, 82: 3, 85: 2, 86: 3, 95: 3, 96: 3, 99: 3 };
   // Ciel [haut, bas, nuages] : jour (thème clair), jour en thème sombre, nuit. Contraste du texte ≥ 6,8:1 sur chaque fond.
+  // Palette 0.5.3 : honnête sur le temps mais jamais grise (pluie bleu frais et aqua, orage indigo et lilas, brouillard nacré, neige glace rosée)
   const WX_PALETTE = {
-    day: { clear: ["#b6d8f0", "#d7e9f5", "rgba(255,255,255,.8)"], partly: ["#c4d9ea", "#dce8f1", "rgba(255,255,255,.8)"], cloudy: ["#cad3db", "#dfe5ea", "#eef2f5"],
-      fog: ["#d9dfe3", "#e8ecee", "#eef2f5"], drizzle: ["#c0ccd6", "#dae2e8", "#a9b5c0"], rain: ["#b3c1cd", "#d3dce4", "#a3b0bc"], storm: ["#a4afbd", "#cbd3db", "#8f9aa8"],
-      snow: ["#dbe4ec", "#ecf1f4", "#f4f7f9"], neutral: ["#c9e0ee", "#dfeaf1", "rgba(255,255,255,.8)"] },
-    dayDark: { clear: ["#1f4466", "#16293b", "#3b4a59"], partly: ["#233c55", "#172636", "#3b4a59"], cloudy: ["#2a3540", "#1a232c", "#3b4a59"],
-      fog: ["#323b42", "#1e262d", "#3b4a59"], drizzle: ["#263442", "#18222c", "#3b4a59"], rain: ["#22303e", "#161f29", "#36434f"], storm: ["#1d2432", "#131923", "#323c49"],
-      snow: ["#2c3a48", "#1b2631", "#46525e"], neutral: ["#18304a", "#122030", "#3b4a59"] },
-    night: { clear: ["#0d1a2e", "#172a42", "#2b3644"], partly: ["#131f30", "#1d2c3e", "#2b3644"], cloudy: ["#1b222b", "#252e38", "#2b3644"],
-      fog: ["#23292f", "#30373e", "#2b3644"], drizzle: ["#161f2a", "#212c38", "#2b3644"], rain: ["#131b25", "#1e2833", "#29333f"], storm: ["#0f141d", "#1b2230", "#262f3c"],
-      snow: ["#1d2631", "#2b3744", "#3a4552"], neutral: ["#13233a", "#1f3550", "#2b3644"] }
+    day: { clear: ["#7cc4f2", "#fde7b8", "rgba(255,255,255,.85)"], partly: ["#8ecaef", "#f3e6c8", "rgba(255,255,255,.85)"], cloudy: ["#a9c2dc", "#e6e2f0", "#f6f7fb"],
+      fog: ["#c9d2e6", "#f0e9ee", "#fbfbfd"], drizzle: ["#8fc3dc", "#d6eeee", "#b7cfe0"], rain: ["#7fb4dc", "#c6ebe8", "#a4bcd8"], storm: ["#a3a6e0", "#e6cfe8", "#8d90c8"],
+      snow: ["#b8d8f4", "#f4eaf6", "#ffffff"], neutral: ["#9fd0ef", "#e7f1f5", "rgba(255,255,255,.85)"] },
+    dayDark: { clear: ["#1d5d93", "#1b3550", "#3e5a78"], partly: ["#23557f", "#1c3048", "#3e5a78"], cloudy: ["#344a68", "#222d40", "#46597a"],
+      fog: ["#3d4560", "#262b3c", "#4d5675"], drizzle: ["#1e5068", "#18303e", "#365f78"], rain: ["#1d4c72", "#15303f", "#335a80"], storm: ["#3a3577", "#221f42", "#4b4690"],
+      snow: ["#34557a", "#233448", "#56739a"], neutral: ["#1d4b78", "#142a40", "#3e5a78"] },
+    night: { clear: ["#0b1d3f", "#1f3466", "#2c3d66"], partly: ["#10203f", "#233558", "#2c3d66"], cloudy: ["#1a2238", "#2a3250", "#343e60"],
+      fog: ["#222740", "#333a55", "#3c4462"], drizzle: ["#0f2236", "#1c3650", "#2c4562"], rain: ["#0d2034", "#183652", "#2a4462"], storm: ["#15123a", "#2a2350", "#3a3366"],
+      snow: ["#1b2a45", "#2f4263", "#475a80"], neutral: ["#102449", "#1f3a66", "#2c3d66"] }
   };
+
   const WX_PICK = [["auto", "Auto", {}], ["sun", "Soleil", { weather_code: 0, precipitation: 0 }], ["clouds", "Nuages", { weather_code: 3, precipitation: 0 }],
     ["rain", "Pluie", { weather_code: 63, precipitation: 1.6 }], ["storm", "Orage", { weather_code: 95, precipitation: 4 }], ["snow", "Neige", { weather_code: 73, precipitation: 0.8 }],
     ["fog", "Brouillard", { weather_code: 45, precipitation: 0 }], ["wind", "Vent", { wind_gusts_10m: 62 }], ["night", "Nuit", { is_day: 0 }],
@@ -890,15 +893,15 @@ Plantes grasses et albizia en pleine terre (confirmé par Damien le 25/11/2026).
   }
 
   // Lavis de la page : teinte du temps qu'il fait, puis de la température (froid bleuté, chaleur ambrée)
-  const WASH = { clear: "#f2c45e", partly: "#e3cd92", cloudy: "#8e9cab", fog: "#b4bcc3", drizzle: "#7590a8", rain: "#5f7f9c", storm: "#4a566b", snow: "#a6c4e0", neutral: null };
+  const WASH = { clear: "#ffc65c", partly: "#f2c98a", cloudy: "#9fb3d9", fog: "#c9c3dc", drizzle: "#6fb7c4", rain: "#4f9fd0", storm: "#7a6fc8", snow: "#9fd0f5", neutral: null };
   const coldW = t => t == null ? 0 : clamp01((4 - t) / 14);   // 4 °C → 0, -10 °C → 1
   const hotW = t => t == null ? 0 : clamp01((t - 22) / 12);   // 22 °C → 0, 34 °C → 1
   function washOf(wx) {
     let w = WASH[wx.kind];
-    if (wx.night) w = mixHex(w || "#2f4a78", "#2f4a78", 0.6);
+    if (wx.night) w = mixHex(w || "#3a55c8", "#3a55c8", 0.85);
     const c = coldW(wx.t), h = hotW(wx.t);
-    if (c) w = mixHex(w || "#5b9bd5", "#5b9bd5", 0.8 * c);
-    if (h) w = mixHex(w || "#f08a3c", "#f08a3c", 0.8 * h);
+    if (c) w = mixHex(w || "#4f9fe8", "#4f9fe8", 0.8 * c);
+    if (h) w = mixHex(w || "#ff8a3c", "#ff8a3c", 0.8 * h);
     return w;
   }
   // Teintes d'aube et de coucher [haut, bas] sur ciel clair (jour) ou sombre (nuit, thème sombre)
@@ -959,6 +962,8 @@ Plantes grasses et albizia en pleine terre (confirmé par Damien le 25/11/2026).
     sky.style.setProperty("--s1", s1); sky.style.setProperty("--s2", s2); sky.style.setProperty("--cloud", cloud);
     const wash = washOf(wx);
     if (wash) root.style.setProperty("--wash", wash); else root.style.removeProperty("--wash");
+    // La nuit en sombre, le lavis bleu outremer monte à 30 % (sinon il se perd dans le noir)
+    if (wash && wx.night && isDark()) root.style.setProperty("--wash-amt", "30%"); else root.style.removeProperty("--wash-amt");
     document.querySelectorAll('meta[name="theme-color"]').forEach(m => m.setAttribute("content", s1));
     sky.dataset.wx = wx.kind; sky.dataset.phase = wx.phase; sky.dataset.onsky = wx.night && !dark ? "light" : "";
     const flag = (k, v) => { if (v) sky.dataset[k] = v === true ? "" : v; else delete sky.dataset[k]; };
