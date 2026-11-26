@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="vigie-version" content="0.3.1">
+<meta name="vigie-version" content="0.4.0">
 <meta name="vigie-updated" content="2026-11-25">
 <meta name="theme-color" content="#d3e4ee" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#0e151b" media="(prefers-color-scheme: dark)">
@@ -132,9 +132,9 @@ textarea.raw{width:100%;min-height:120px;border-radius:var(--radius-m);border:1p
 @media (prefers-reduced-motion:reduce){.toast{transition:none}}
 
 /* --- Vigie : tokens propres + thème sombre --- */
-:root{--cold:#3f6f97;--cold-bg:#e3edf5;--cut:#8e3b46;--cut-bg:#f5e1e3;--heat:#a24f22;--heat-bg:#f8e6d8;--wind:#6d4a80;--wind-bg:#ece2f1;--calm:#2f6b4f;--calm-bg:#dcefe4;--grid:#dbe3e8;--bg:#eef2f4;--panel:#f7f9fa;--panel2:#e6edf1;--card:#ffffff;--card2:#f4f7f9;--track:#dde5ea;--edge:#d3dce2;--ink:#1c2731;--muted:#53616c;--gold:#4f9d8e;--gold-d:#1d5c55;--gold2:#a9d6cc;--green-d:#1d5c55;--sage-100:#e6f3f0;--sage-200:#c3e2db;--sage-900:#15443e;--field:#ffffff;--placeholder:#7a8892;--shadow-relief:0 1px 2px rgba(20,40,60,.06),0 8px 24px rgba(20,40,60,.07);--shadow-card:0 0 0 1px rgba(30,60,80,.08),0 1px 2px rgba(20,40,60,.05),0 6px 16px rgba(20,40,60,.06);--shadow-inset:inset 0 0 0 1px rgba(30,60,80,.10),inset 0 1px 3px rgba(20,40,60,.05);--font-display:"Barlow Condensed","Arial Narrow",system-ui,sans-serif;--sky-calm-1:#c9e0ee;--sky-calm-2:#dfeaf1;--sky-cold-1:#c8d9e8;--sky-cold-2:#dde7ef;--sky-cut-1:#b9c9da;--sky-cut-2:#d6e0e9;--sky-heat-1:#f5d2ab;--sky-heat-2:#f2e4d8;--sky-wind-1:#cfd8de;--sky-wind-2:#e1e7eb;--sky-water-1:#c6e4df;--sky-water-2:#dceeec;--sun:#fff2c9;--sun-hot:#ffc97f;--sun-op:.8;--sun-op-hot:.95;--flake:#ffffff;--hill:#dbe4ea}
-@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0e151b;--panel:#141d25;--panel2:#22303a;--card:#18232c;--card2:#111a21;--track:#263540;--edge:#2c3c48;--ink:#e6edf2;--muted:#a3b3bf;--gold:#4f9d8e;--gold-d:#86d3c4;--gold2:#2d5f57;--green-d:#2b7a6e;--wine:#b65563;--sky-d:#5f89ad;--good:#93c483;--bad:#e8899a;--ok-bg:#2c3a26;--ok-ink:#bcd8ae;--todo-bg:#45381f;--todo-ink:#f1dcae;--sage-100:#24453f;--sage-200:#1b3833;--sage-900:#bfe8de;--field:#0f171d;--placeholder:#7f909c;--shadow-relief:0 1px 0 rgba(255,255,255,.04) inset,0 8px 18px rgba(0,0,0,.35);--shadow-card:0 0 0 1px rgba(255,255,255,.07),0 4px 12px rgba(0,0,0,.3);--shadow-inset:inset 0 0 0 1px rgba(255,255,255,.07),inset 0 2px 5px rgba(0,0,0,.3);--cold:#8db8dc;--cold-bg:#1f3040;--cut:#ef9aa6;--cut-bg:#45222a;--heat:#f0a274;--heat-bg:#46291b;--wind:#cfa6e2;--wind-bg:#36263f;--calm:#8fd1b0;--calm-bg:#183328;--grid:#2a3844;--sky-calm-1:#18304a;--sky-calm-2:#122030;--sky-cold-1:#183049;--sky-cold-2:#111f2d;--sky-cut-1:#1d2840;--sky-cut-2:#121b29;--sky-heat-1:#3d2817;--sky-heat-2:#1d1a16;--sky-wind-1:#202d37;--sky-wind-2:#141e26;--sky-water-1:#123432;--sky-water-2:#0f1f22;--sun:#c9d8e4;--sun-hot:#e9a75a;--sun-op:.22;--sun-op-hot:.4;--flake:#cfe3f5;--hill:#16212a;color-scheme:dark}}
-:root[data-theme="dark"]{--bg:#0e151b;--panel:#141d25;--panel2:#22303a;--card:#18232c;--card2:#111a21;--track:#263540;--edge:#2c3c48;--ink:#e6edf2;--muted:#a3b3bf;--gold:#4f9d8e;--gold-d:#86d3c4;--gold2:#2d5f57;--green-d:#2b7a6e;--wine:#b65563;--sky-d:#5f89ad;--good:#93c483;--bad:#e8899a;--ok-bg:#2c3a26;--ok-ink:#bcd8ae;--todo-bg:#45381f;--todo-ink:#f1dcae;--sage-100:#24453f;--sage-200:#1b3833;--sage-900:#bfe8de;--field:#0f171d;--placeholder:#7f909c;--shadow-relief:0 1px 0 rgba(255,255,255,.04) inset,0 8px 18px rgba(0,0,0,.35);--shadow-card:0 0 0 1px rgba(255,255,255,.07),0 4px 12px rgba(0,0,0,.3);--shadow-inset:inset 0 0 0 1px rgba(255,255,255,.07),inset 0 2px 5px rgba(0,0,0,.3);--cold:#8db8dc;--cold-bg:#1f3040;--cut:#ef9aa6;--cut-bg:#45222a;--heat:#f0a274;--heat-bg:#46291b;--wind:#cfa6e2;--wind-bg:#36263f;--calm:#8fd1b0;--calm-bg:#183328;--grid:#2a3844;--sky-calm-1:#18304a;--sky-calm-2:#122030;--sky-cold-1:#183049;--sky-cold-2:#111f2d;--sky-cut-1:#1d2840;--sky-cut-2:#121b29;--sky-heat-1:#3d2817;--sky-heat-2:#1d1a16;--sky-wind-1:#202d37;--sky-wind-2:#141e26;--sky-water-1:#123432;--sky-water-2:#0f1f22;--sun:#c9d8e4;--sun-hot:#e9a75a;--sun-op:.22;--sun-op-hot:.4;--flake:#cfe3f5;--hill:#16212a;color-scheme:dark}
+:root{--cold:#3f6f97;--cold-bg:#e3edf5;--cut:#8e3b46;--cut-bg:#f5e1e3;--heat:#a24f22;--heat-bg:#f8e6d8;--wind:#6d4a80;--wind-bg:#ece2f1;--calm:#2f6b4f;--calm-bg:#dcefe4;--grid:#dbe3e8;--bg:#eef2f4;--panel:#f7f9fa;--panel2:#e6edf1;--card:#ffffff;--card2:#f4f7f9;--track:#dde5ea;--edge:#d3dce2;--ink:#1c2731;--muted:#53616c;--gold:#4f9d8e;--gold-d:#1d5c55;--gold2:#a9d6cc;--green-d:#1d5c55;--sage-100:#e6f3f0;--sage-200:#c3e2db;--sage-900:#15443e;--field:#ffffff;--placeholder:#7a8892;--shadow-relief:0 1px 2px rgba(20,40,60,.06),0 8px 24px rgba(20,40,60,.07);--shadow-card:0 0 0 1px rgba(30,60,80,.08),0 1px 2px rgba(20,40,60,.05),0 6px 16px rgba(20,40,60,.06);--shadow-inset:inset 0 0 0 1px rgba(30,60,80,.10),inset 0 1px 3px rgba(20,40,60,.05);--font-display:"Barlow Condensed","Arial Narrow",system-ui,sans-serif;--sun:#fff2c9;--sun-op:.8;--hill:#dbe4ea}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#0e151b;--panel:#141d25;--panel2:#22303a;--card:#18232c;--card2:#111a21;--track:#263540;--edge:#2c3c48;--ink:#e6edf2;--muted:#a3b3bf;--gold:#4f9d8e;--gold-d:#86d3c4;--gold2:#2d5f57;--green-d:#2b7a6e;--wine:#b65563;--sky-d:#5f89ad;--good:#93c483;--bad:#e8899a;--ok-bg:#2c3a26;--ok-ink:#bcd8ae;--todo-bg:#45381f;--todo-ink:#f1dcae;--sage-100:#24453f;--sage-200:#1b3833;--sage-900:#bfe8de;--field:#0f171d;--placeholder:#7f909c;--shadow-relief:0 1px 0 rgba(255,255,255,.04) inset,0 8px 18px rgba(0,0,0,.35);--shadow-card:0 0 0 1px rgba(255,255,255,.07),0 4px 12px rgba(0,0,0,.3);--shadow-inset:inset 0 0 0 1px rgba(255,255,255,.07),inset 0 2px 5px rgba(0,0,0,.3);--cold:#8db8dc;--cold-bg:#1f3040;--cut:#ef9aa6;--cut-bg:#45222a;--heat:#f0a274;--heat-bg:#46291b;--wind:#cfa6e2;--wind-bg:#36263f;--calm:#8fd1b0;--calm-bg:#183328;--grid:#2a3844;--sun:#c9d8e4;--sun-op:.22;--hill:#16212a;color-scheme:dark}}
+:root[data-theme="dark"]{--bg:#0e151b;--panel:#141d25;--panel2:#22303a;--card:#18232c;--card2:#111a21;--track:#263540;--edge:#2c3c48;--ink:#e6edf2;--muted:#a3b3bf;--gold:#4f9d8e;--gold-d:#86d3c4;--gold2:#2d5f57;--green-d:#2b7a6e;--wine:#b65563;--sky-d:#5f89ad;--good:#93c483;--bad:#e8899a;--ok-bg:#2c3a26;--ok-ink:#bcd8ae;--todo-bg:#45381f;--todo-ink:#f1dcae;--sage-100:#24453f;--sage-200:#1b3833;--sage-900:#bfe8de;--field:#0f171d;--placeholder:#7f909c;--shadow-relief:0 1px 0 rgba(255,255,255,.04) inset,0 8px 18px rgba(0,0,0,.35);--shadow-card:0 0 0 1px rgba(255,255,255,.07),0 4px 12px rgba(0,0,0,.3);--shadow-inset:inset 0 0 0 1px rgba(255,255,255,.07),inset 0 2px 5px rgba(0,0,0,.3);--cold:#8db8dc;--cold-bg:#1f3040;--cut:#ef9aa6;--cut-bg:#45222a;--heat:#f0a274;--heat-bg:#46291b;--wind:#cfa6e2;--wind-bg:#36263f;--calm:#8fd1b0;--calm-bg:#183328;--grid:#2a3844;--sun:#c9d8e4;--sun-op:.22;--hill:#16212a;color-scheme:dark}
 /* Barre d'onglets : bascule rapide (l'original du design system durait 0,75 s avec rebond) */
 .ds-tabbar{transition:--nx .26s var(--ease-out)}
 .ds-tabbar .pill{transition:transform .26s var(--ease-out)}
@@ -279,19 +279,25 @@ legend.h{font:600 17px/1.2 var(--font-display);margin-bottom:4px;padding:0}
 .week-legend b{color:var(--ink)}
 
 /* ===== 0.3.0 : thème « vigie » (ciel, collines, papier froid) ===== */
+/* Ciel : l'AMBIANCE (couleurs, décor) suit la météo actuelle ; le MESSAGE (titre, icône) suit les alertes.
+   --s1/--s2/--cloud sont posés par JS depuis la table WX_PALETTE (jour / jour en thème sombre / nuit). */
+@property --s1{syntax:'<color>';inherits:true;initial-value:#c9e0ee}
+@property --s2{syntax:'<color>';inherits:true;initial-value:#dfeaf1}
 .sky{position:relative;overflow:hidden;display:grid;gap:14px;
   margin:-16px calc(-1 * max(16px,env(safe-area-inset-right,0px))) -4px calc(-1 * max(16px,env(safe-area-inset-left,0px)));
   padding:calc(14px + env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) 40px max(16px,env(safe-area-inset-left,0px));
-  background:linear-gradient(180deg,var(--sky-1) 0%,var(--sky-2) 62%,var(--bg) 100%)}
-.sky[data-mood="calm"]{--sky-1:var(--sky-calm-1);--sky-2:var(--sky-calm-2);--k:var(--calm);--k-bg:var(--calm-bg)}
-.sky[data-mood="cold"]{--sky-1:var(--sky-cold-1);--sky-2:var(--sky-cold-2);--k:var(--cold);--k-bg:var(--cold-bg)}
-.sky[data-mood="cut"]{--sky-1:var(--sky-cut-1);--sky-2:var(--sky-cut-2);--k:var(--cut);--k-bg:var(--cut-bg)}
-.sky[data-mood="heat"]{--sky-1:var(--sky-heat-1);--sky-2:var(--sky-heat-2);--k:var(--heat);--k-bg:var(--heat-bg)}
-.sky[data-mood="wind"]{--sky-1:var(--sky-wind-1);--sky-2:var(--sky-wind-2);--k:var(--wind);--k-bg:var(--wind-bg)}
-.sky[data-mood="water"]{--sky-1:var(--sky-water-1);--sky-2:var(--sky-water-2);--k:var(--water);--k-bg:var(--water-bg)}
+  background:linear-gradient(180deg,var(--s1) 0,var(--s2) calc(100% - 44px),var(--bg) 100%);
+  color:var(--ink);transition:--s1 .6s ease,--s2 .6s ease}
+.sky[data-onsky="light"]{--ink:#eef3f7;--muted:#c5d1db;--gold-d:#86d3c4}
+.sky[data-mood="calm"]{--k:var(--calm);--k-bg:var(--calm-bg)}
+.sky[data-mood="cold"]{--k:var(--cold);--k-bg:var(--cold-bg)}
+.sky[data-mood="cut"]{--k:var(--cut);--k-bg:var(--cut-bg)}
+.sky[data-mood="heat"]{--k:var(--heat);--k-bg:var(--heat-bg)}
+.sky[data-mood="wind"]{--k:var(--wind);--k-bg:var(--wind-bg)}
+.sky[data-mood="water"]{--k:var(--water);--k-bg:var(--water-bg)}
 .sky > :not(.sky__art):not(.sky__hills){position:relative;z-index:1}
 .sky .top h1{font:700 34px/1 var(--font-display);letter-spacing:.01em}
-.sky .top .where,.sky .refresh small{color:var(--ink);opacity:.8}
+.sky .top .where,.sky .refresh small{color:var(--ink)}
 .sky__now{display:grid;gap:4px}
 .sky__kicker{margin:0;font:700 13px/1.3 var(--font-body);color:var(--ink);font-variant-numeric:tabular-nums}
 .sky__row{display:flex;align-items:center;gap:10px}
@@ -304,22 +310,35 @@ legend.h{font:600 17px/1.2 var(--font-display);margin-bottom:4px;padding:0}
 .sky__hills path,.sky__hills circle{fill:var(--bg)}
 .sky__hills .far{fill:var(--hill);opacity:.7}
 .sky__art{position:absolute;inset:0;z-index:0;pointer-events:none}
-.sky .fx{position:absolute;display:none}
-.sky .sun{right:-50px;top:-40px;width:170px;height:170px;border-radius:50%;background:radial-gradient(circle,var(--sun) 0 30%,transparent 31%),radial-gradient(circle,var(--sun) 0,transparent 68%);opacity:var(--sun-op)}
-.sky[data-mood="calm"] .sun,.sky[data-mood="water"] .sun{display:block}
-.sky[data-mood="heat"] .sun{display:block;--sun:var(--sun-hot);opacity:var(--sun-op-hot);animation:halo 5s ease-in-out infinite alternate}
-.sky .cloud{right:70px;top:84px;width:90px;height:26px;border-radius:20px;background:var(--card);opacity:.55;box-shadow:24px -10px 0 2px var(--card);animation:drift 40s linear infinite alternate}
-.sky[data-mood="calm"] .cloud{display:block}
-.sky .flake{top:-10px;width:5px;height:5px;border-radius:50%;background:var(--flake);opacity:.9;animation:fall var(--d) linear var(--o) infinite}
-.sky[data-mood="cold"] .flake,.sky[data-mood="cut"] .flake{display:block}
-.sky .streak{left:0;height:2px;border-radius:2px;background:var(--wind);opacity:.3;animation:gust var(--d) linear var(--o) infinite}
-.sky[data-mood="wind"] .streak{display:block}
-.sky .drop{top:-12px;width:2px;height:10px;border-radius:2px;background:var(--water);opacity:.45;animation:fall var(--d) linear var(--o) infinite}
-.sky[data-mood="water"] .drop{display:block}
-@keyframes halo{from{transform:scale(.96)}to{transform:scale(1.04)}}
-@keyframes drift{from{transform:translateX(0)}to{transform:translateX(-60px)}}
-@keyframes fall{from{transform:translateY(0)}to{transform:translateY(230px)}}
-@keyframes gust{from{transform:translateX(-140px)}to{transform:translateX(480px)}}
+.sky__art canvas{position:absolute;inset:0;width:100%;height:100%;transition:opacity .28s ease}
+/* Décor CSS : visible selon l'ambiance, fondu .5 s */
+.sky .fx{position:absolute;opacity:0;visibility:hidden;transition:opacity .5s ease,visibility 0s .5s}
+.sky .fx.on{opacity:var(--fx-op,1);visibility:visible;transition:opacity .5s ease}
+.sky .sun{right:-50px;top:-40px;width:170px;height:170px;border-radius:50%;--fx-op:var(--sun-op);background:radial-gradient(circle,var(--sun) 0 30%,transparent 31%),radial-gradient(circle,var(--sun) 0,transparent 68%)}
+.sky .sun.on{animation:halo 6s ease-in-out infinite alternate}
+.sky .moon{left:52%;top:14px;width:30px;height:30px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#f4f1e6,#d9d6cb 70%);box-shadow:0 0 18px 4px rgba(230,236,245,.18);--fx-op:.9}
+.sky .moon::after{content:"";position:absolute;inset:-2px -2px 0 9px;border-radius:50%;background:var(--s1);opacity:.85}
+.sky .cl{height:28px;border-radius:20px;background:var(--cloud);box-shadow:22px -11px 0 3px var(--cloud),48px -2px 0 -2px var(--cloud);--fx-op:.85}
+.sky .cl.on{animation:drift var(--d,50s) linear infinite alternate}
+.sky .cl1{right:96px;top:26px;width:96px;--d:55s}
+.sky .cl2{left:38%;top:96px;width:74px;--d:70s}
+.sky .cl3{right:-24px;top:142px;width:120px;--d:62s}
+.sky .fog{left:-50%;width:200%;height:46px;border-radius:50%;background:radial-gradient(ellipse at center,var(--fogc) 0,transparent 70%);--fx-op:1}
+.sky .fog.on{animation:mist 18s ease-in-out infinite alternate}
+.sky .fog1{top:46px}.sky .fog2.on{top:118px;animation-duration:24s;animation-direction:alternate-reverse}
+.sky .fog2{top:118px}
+.sky{--fogc:rgba(255,255,255,.65);--frost:rgba(255,255,255,.75)}
+.sky[data-onsky="light"],:root[data-theme="dark"] .sky{--fogc:rgba(150,165,178,.22);--frost:rgba(200,225,245,.16)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]) .sky{--fogc:rgba(150,165,178,.22);--frost:rgba(200,225,245,.16)}}
+.sky::before{content:"";position:absolute;inset:0;z-index:0;pointer-events:none;opacity:0;transition:opacity .6s ease;
+  background:radial-gradient(150px 90px at 0 0,var(--frost),transparent 70%),radial-gradient(150px 90px at 100% 0,var(--frost),transparent 70%),radial-gradient(120px 60px at 0 100%,var(--frost),transparent 70%)}
+.sky[data-frost]::before{opacity:1}
+@keyframes halo{from{transform:scale(.97)}to{transform:scale(1.03)}}
+@keyframes drift{from{transform:translateX(0)}to{transform:translateX(-70px)}}
+@keyframes mist{from{transform:translateX(-6%)}to{transform:translateX(6%)}}
+/* Sélecteur d'ambiance pour les tests : visible seulement avec #ambiance dans l'adresse */
+.wxpick{display:flex;flex-wrap:wrap;gap:6px;margin-top:-4px}
+.wxpick .ds-chip{font-size:13px;padding:6px 12px}
 
 /* Typo d'accent et cartes */
 .sec-title{font:700 24px/1.05 var(--font-display);letter-spacing:.01em}
@@ -364,10 +383,10 @@ legend.h{font:700 19px/1.2 var(--font-display)}
 <main class="app">
   <header class="sky" id="sky" data-mood="calm">
     <div class="sky__art" aria-hidden="true">
-      <span class="fx sun"></span><span class="fx cloud"></span>
-      <span class="fx flake" style="left:12%;--d:9s;--o:-2s"></span><span class="fx flake" style="left:34%;--d:11s;--o:-6s"></span><span class="fx flake" style="left:58%;--d:8s;--o:-4s"></span><span class="fx flake" style="left:78%;--d:12s;--o:-9s"></span><span class="fx flake" style="left:90%;--d:10s;--o:-1s"></span>
-      <span class="fx streak" style="bottom:40px;--d:4.2s;--o:-1s;width:90px"></span><span class="fx streak" style="bottom:30px;--d:5.1s;--o:-3s;width:60px"></span><span class="fx streak" style="bottom:20px;--d:3.6s;--o:-2.2s;width:110px"></span>
-      <span class="fx drop" style="left:62%;--d:2.4s;--o:-.4s"></span><span class="fx drop" style="left:74%;--d:2.9s;--o:-1.6s"></span><span class="fx drop" style="left:86%;--d:2.2s;--o:-1s"></span>
+      <span class="fx sun"></span><span class="fx moon"></span>
+      <span class="fx fog fog1"></span><span class="fx fog fog2"></span>
+      <span class="fx cl cl1"></span><span class="fx cl cl2"></span><span class="fx cl cl3"></span>
+      <canvas id="skyFx"></canvas>
     </div>
     <div class="top">
       <div>
@@ -393,6 +412,8 @@ legend.h{font:700 19px/1.2 var(--font-display)}
       <circle cx="368" cy="17" r="6"/><path d="M367 20h2v6h-2z"/>
     </svg>
   </header>
+
+  <div class="wxpick" id="wxPick" role="group" aria-label="Forcer une ambiance (test)" hidden></div>
 
   <div class="ds-banner status" id="status" role="status" hidden></div>
 
@@ -515,7 +536,9 @@ Plantes grasses et albizia en pleine terre (confirmé par Damien le 25/11/2026).
 
 ## 3. Écrans
 
-- En-tête « ciel » (toutes les pages) : un pan de ciel au-dessus des collines et de la maison, dont la teinte et le petit décor animé disent l'état du moment. Humeur = le premier épisode qui commence dans les 7 jours (gel, couper l'eau, chaleur, vent) ; sinon « arrosage » si une plante est à arroser aujourd'hui ; sinon « calme ». Contenu : « Maintenant » (température et rafales de l'heure), titre de l'épisode (même titre que la carte) avec son icône, une phrase « quand : quoi faire », le nombre d'autres alertes. Lu dans les épisodes et l'arrosage déjà calculés, aucune règle propre. Hors ligne sans données : « Pas encore de prévisions ».
+- En-tête « ciel » (toutes les pages) : un pan de ciel au-dessus des collines et de la maison, avec deux rôles séparés.
+  - AMBIANCE = la météo à l'instant T : couleurs du ciel, nuages, soleil ou lune, étoiles, pluie, neige, brouillard, orage, traînées de vent, givre (détail en 3 bis). Ligne « Maintenant : pluie faible, 6 °C, rafales 35 km/h ».
+  - MESSAGE = les alertes. Humeur du message = le premier épisode qui commence dans les 7 jours (gel, couper l'eau, chaleur, vent) ; sinon « arrosage » si une plante est à arroser aujourd'hui ; sinon « calme ». Contenu : « Maintenant » (température et rafales de l'heure), titre de l'épisode (même titre que la carte) avec son icône, une phrase « quand : quoi faire », le nombre d'autres alertes. Lu dans les épisodes et l'arrosage déjà calculés, aucune règle propre. Hors ligne sans données : « Pas encore de prévisions ».
 - Anticiper :
   - « 10 prochains jours » : grille 10 jours (les 3 derniers plus pâles = tendance) × Gel / Chaleur / Vent. Chaque case montre la valeur du jour (heures à venir pour aujourd'hui) : minimum (gel), maximum (chaleur), rafales max (vent). Couleur = pire niveau du jour pour ce critère, lu dans les alertes du jour (aucune règle propre) : gris = rien à signaler, teinte claire + « ! » = niveau 1 (vigilance), aplat foncé + « !! » = niveau 2 et plus (couper l'eau, canicule, fortes rafales, tempête). Chaque case a un aria-label complet ; la toucher ouvre l'onglet Jours avec ce jour déplié. Légende courte dessous.
   - Cartes d'épisodes triées par date (quoi, quand, dans combien de jours, chiffre clé, quoi faire, fiabilité), puis graphique min/max sur 14 jours avec les seuils et les jours de rafales (≈).
@@ -527,7 +550,13 @@ Plantes grasses et albizia en pleine terre (confirmé par Damien le 25/11/2026).
 ## 3 bis. Design
 
 - Direction : une vigie météo de la maison. Papier froid (`--bg` #eef2f4), cartes blanches, accent vert sapin (`--gold-d`, nom hérité du design system), titres et chiffres en Barlow Condensed (Google Fonts), texte en Inter. Les couleurs d'alerte (`--cold`, `--cut`, `--heat`, `--wind`, `--water`, `--calm`) ne servent qu'aux alertes.
-- Ciel : tokens `--sky-<humeur>-1/-2`, `--sun`, `--sun-hot`, `--flake`, `--hill`, clairs sur `:root` et redéfinis dans les deux blocs sombres (nuit). Décor : soleil et nuage (calme), soleil qui pulse (chaleur), points de givre qui tombent (gel), traînées (vent), gouttes (arrosage). Transformations CSS seulement, peu d'éléments.
+- Ambiance météo du ciel (0.4.0) :
+  - Données : bloc `current` d'Open-Meteo (`temperature_2m, apparent_temperature, weather_code, cloud_cover, precipitation, rain, showers, snowfall, wind_speed_10m, wind_gusts_10m, is_day`), gardé dans `DATA.current`. Utilisé s'il a moins de 3 h ; sinon repli sur l'heure courante des données horaires (température et rafales, sans code : ciel neutre). Recalcul toutes les 15 min app ouverte (rechargement si les données ont plus d'une heure), au retour sur l'app et au changement de thème.
+  - Table `WMO` : 0 dégagé ; 1-2 voilé ; 3 couvert ; 45-48 brouillard ; 51-57 bruine ; 61-67 et 80-82 pluie ; 71-77 et 85-86 neige ; 95-99 orage ; pas de code : neutre. Intensité 1 à 3 = la plus forte entre le code (faible / modéré / fort) et `precipitation` (> 0 / ≥ 0,5 / ≥ 2,5 mm/h).
+  - Couches qui s'ajoutent à toute ambiance : rafales ≥ 40 km/h = traînées de vent ; `is_day` = 0 = version nocturne (lune et étoiles par ciel clair ou voilé) ; température ≤ 0 °C = givre discret dans les coins.
+  - Table `WX_PALETTE` [haut, bas, nuages] : jour en thème clair, jour en thème sombre (désaturé), nuit (tous thèmes ; en thème clair le texte du ciel passe en clair). Le thème sombre système reste prioritaire. Contraste du texte ≥ 6,8:1 sur chaque fond et sur les nuages (vérifié par calcul).
+  - Décor CSS (fondu 0,5 s) : soleil, lune, 3 nuages qui dérivent, 2 bandes de brume qui ondulent. Un seul canvas (~30 images/s, en pause si la page est cachée, le ciel hors écran ou le mouvement réduit) : pluie 25 / 50 / 80 gouttes selon l'intensité, bruine et neige 18 / 28 / 40, étoiles 30, traînées de vent 6, éclair = un halo doux (opacité ≤ 0,22), au plus un toutes les 8 à 14 s, jamais de clignotement. Couleurs du ciel en fondu 0,6 s (`@property --s1/--s2`), canvas en fondu ~0,55 s. Avec `prefers-reduced-motion` : une image fixe de l'ambiance.
+  - Tests : `#ambiance` dans l'adresse affiche sous le ciel des boutons Auto / Soleil / Nuages / Pluie / Orage / Neige / Brouillard / Vent / Nuit (Vent et Nuit se cumulent aux autres). `window.VIGIE_FORCE_WX` (objet `current` partiel) est fusionné au rendu. `make_tests.py` met le `current` réel dans test-real et une neige faible par vent modéré à -1 °C dans test-synth.
 - Mouvements : entrée des cartes, de la grille et des barres du graphique au premier affichage seulement (≤ 0,3 s, léger décalage), ouverture d'un jour, jauges d'arrosage qui se remplissent, retour au toucher (0,12 s), bouton d'actualisation qui tourne pendant le chargement, page qui apparaît au changement d'onglet (0,2 s). Bascule d'onglet : 0,26 s sans rebond, à ne pas rallonger. Tout est coupé avec `prefers-reduced-motion`. Le contenu reste visible si une animation ne joue pas.
 - Icône de l'onglet Anticiper : des jumelles.
 
@@ -564,6 +593,7 @@ Plantes grasses et albizia en pleine terre (confirmé par Damien le 25/11/2026).
 - 0.2.1 · 25/11/2026 · plantes grasses en pleine terre : réserve plus grande, 10 jours mini entre deux arrosages.
 - 0.3.0 · 25/11/2026 · nouveau thème « vigie » : en-tête ciel qui reflète l'état du moment (calme, gel, couper l'eau, chaleur, vent, arrosage) avec décor animé discret, papier froid et accent vert sapin, Barlow Condensed pour les titres et chiffres, jumelles pour Anticiper, sombre « nuit » retravaillé, animations courtes (cartes, grille, graphique, jours, jauges, toucher, actualisation). Règles de calcul, seuils et arrosage inchangés.
 - 0.3.1 · 25/11/2026 · notifications ntfy matin et soir via GitHub Actions (anticipation à 7 jours, rappels du jour, arrosage en saison).
+- 0.4.0 · 26/11/2026 · le ciel suit la météo à l'instant T (soleil, nuages, couvert, brouillard, bruine, pluie, neige, orage, vent, nuit, givre), animé et en fondu ; le message reste piloté par les alertes ; ligne « Maintenant » en mots ; sélecteur d'ambiance `#ambiance` pour les tests. Règles, seuils, arrosage et notifications inchangés.
 </script>
 
 <script>
@@ -814,9 +844,7 @@ Plantes grasses et albizia en pleine terre (confirmé par Damien le 25/11/2026).
   const cutEve = e => { const first = e.days.find(x => x.a.lvl === 2); const eve = prevDay(first.d.date);
     return dayDiff(eve) < 0 ? "dès maintenant" : dayDiff(eve) === 0 ? "ce soir" : fmtDay(eve, { weekday: "long", day: "numeric" }) + " soir"; };
   function renderSky(eps, days, waterToday) {
-    const sky = $("sky"), d0 = days[0], nowH = new Date().getHours();
-    const cur = d0.hours.find(x => x.h === nowH && x.t != null) || d0.live[0];
-    $("skyKicker").textContent = cur ? "Maintenant " + fmtT(cur.t) + " · rafales " + r0(cur.g) + " km/h" : "";
+    const sky = $("sky");
     const soon = eps.filter(e => dayDiff(e.start) <= 6);
     const e = soon[0];
     let mood = "calm", title, sub;
@@ -840,6 +868,185 @@ Plantes grasses et albizia en pleine terre (confirmé par Damien le 25/11/2026).
     $("skyTitle").textContent = title;
     $("skySub").textContent = sub;
     $("skyIc").innerHTML = ICONS[mood];
+  }
+
+  /* ---------- Ambiance : la météo à l'instant T (affichage seulement, aucune règle d'alerte) ---------- */
+  // Codes WMO (Open-Meteo) → [ambiance, mots]
+  const WMO = {
+    0: ["clear", "ciel dégagé"], 1: ["partly", "plutôt dégagé"], 2: ["partly", "quelques nuages"], 3: ["cloudy", "ciel couvert"],
+    45: ["fog", "brouillard"], 48: ["fog", "brouillard givrant"],
+    51: ["drizzle", "bruine faible"], 53: ["drizzle", "bruine"], 55: ["drizzle", "bruine dense"], 56: ["drizzle", "bruine verglaçante"], 57: ["drizzle", "bruine verglaçante"],
+    61: ["rain", "pluie faible"], 63: ["rain", "pluie"], 65: ["rain", "forte pluie"], 66: ["rain", "pluie verglaçante"], 67: ["rain", "forte pluie verglaçante"],
+    71: ["snow", "neige faible"], 73: ["snow", "neige"], 75: ["snow", "forte neige"], 77: ["snow", "grains de neige"],
+    80: ["rain", "averses faibles"], 81: ["rain", "averses"], 82: ["rain", "fortes averses"], 85: ["snow", "averses de neige"], 86: ["snow", "fortes averses de neige"],
+    95: ["storm", "orage"], 96: ["storm", "orage avec grêle"], 99: ["storm", "orage avec grêle"]
+  };
+  const CODE_LEVEL = { 51: 1, 53: 2, 55: 3, 56: 1, 57: 2, 61: 1, 63: 2, 65: 3, 66: 1, 67: 3, 71: 1, 73: 2, 75: 3, 77: 1, 80: 1, 81: 2, 82: 3, 85: 2, 86: 3, 95: 3, 96: 3, 99: 3 };
+  // Ciel [haut, bas, nuages] : jour (thème clair), jour en thème sombre, nuit. Contraste du texte ≥ 6,8:1 sur chaque fond.
+  const WX_PALETTE = {
+    day: { clear: ["#b6d8f0", "#d7e9f5", "rgba(255,255,255,.8)"], partly: ["#c4d9ea", "#dce8f1", "rgba(255,255,255,.8)"], cloudy: ["#cad3db", "#dfe5ea", "#eef2f5"],
+      fog: ["#d9dfe3", "#e8ecee", "#eef2f5"], drizzle: ["#c0ccd6", "#dae2e8", "#a9b5c0"], rain: ["#b3c1cd", "#d3dce4", "#a3b0bc"], storm: ["#a4afbd", "#cbd3db", "#8f9aa8"],
+      snow: ["#dbe4ec", "#ecf1f4", "#f4f7f9"], neutral: ["#c9e0ee", "#dfeaf1", "rgba(255,255,255,.8)"] },
+    dusk: { clear: ["#1f4466", "#16293b", "#3b4a59"], partly: ["#233c55", "#172636", "#3b4a59"], cloudy: ["#2a3540", "#1a232c", "#3b4a59"],
+      fog: ["#323b42", "#1e262d", "#3b4a59"], drizzle: ["#263442", "#18222c", "#3b4a59"], rain: ["#22303e", "#161f29", "#36434f"], storm: ["#1d2432", "#131923", "#323c49"],
+      snow: ["#2c3a48", "#1b2631", "#46525e"], neutral: ["#18304a", "#122030", "#3b4a59"] },
+    night: { clear: ["#0d1a2e", "#172a42", "#2b3644"], partly: ["#131f30", "#1d2c3e", "#2b3644"], cloudy: ["#1b222b", "#252e38", "#2b3644"],
+      fog: ["#23292f", "#30373e", "#2b3644"], drizzle: ["#161f2a", "#212c38", "#2b3644"], rain: ["#131b25", "#1e2833", "#29333f"], storm: ["#0f141d", "#1b2230", "#262f3c"],
+      snow: ["#1d2631", "#2b3744", "#3a4552"], neutral: ["#13233a", "#1f3550", "#2b3644"] }
+  };
+  const WX_PICK = [["auto", "Auto", {}], ["sun", "Soleil", { weather_code: 0, precipitation: 0 }], ["clouds", "Nuages", { weather_code: 3, precipitation: 0 }],
+    ["rain", "Pluie", { weather_code: 63, precipitation: 1.6 }], ["storm", "Orage", { weather_code: 95, precipitation: 4 }], ["snow", "Neige", { weather_code: 73, precipitation: 0.8, temperature_2m: -2 }],
+    ["fog", "Brouillard", { weather_code: 45, precipitation: 0 }], ["wind", "Vent", { wind_gusts_10m: 62 }], ["night", "Nuit", { is_day: 0 }]];
+  let pickWx = {}; // ambiance forcée par le sélecteur de test (#ambiance)
+  const isDark = () => { const t = document.documentElement.dataset.theme; return t === "dark" || (t !== "light" && matchMedia("(prefers-color-scheme: dark)").matches); };
+
+  function currentWx() {
+    let c = null;
+    if (DATA && DATA.current && DATA.current.time) {
+      const age = (Date.now() - new Date(DATA.current.time).getTime()) / 36e5;
+      if (age < 3) c = Object.assign({}, DATA.current);
+    }
+    if (!c && DATA && DATA.hourly) { // repli : l'heure courante des données horaires (pas de code météo → ciel neutre)
+      const H = DATA.hourly, i = H.time.indexOf(todayStr() + "T" + String(new Date().getHours()).padStart(2, "0") + ":00");
+      if (i >= 0) c = { temperature_2m: H.temperature_2m[i], wind_gusts_10m: H.wind_gusts_10m[i], wind_speed_10m: H.wind_speed_10m[i] };
+    }
+    c = Object.assign(c || {}, window.VIGIE_FORCE_WX || {}, pickWx);
+    const code = c.weather_code, w = WMO[code], kind = w ? w[0] : "neutral", p = +c.precipitation || 0;
+    const lvl = ["drizzle", "rain", "snow", "storm"].includes(kind) ? Math.max(p >= 2.5 ? 3 : p >= 0.5 ? 2 : p > 0 ? 1 : 0, CODE_LEVEL[code] || 1) : 0;
+    return { kind, lvl, words: w ? w[1] : "", t: c.temperature_2m, g: c.wind_gusts_10m,
+      night: c.is_day === 0, windy: c.wind_gusts_10m >= 40, frost: c.temperature_2m != null && c.temperature_2m <= 0 };
+  }
+
+  let lastWxKey = "";
+  function applyAmbiance() {
+    const sky = $("sky"), wx = currentWx(), dark = isDark();
+    const set = wx.night ? "night" : dark ? "dusk" : "day";
+    const [s1, s2, cloud] = WX_PALETTE[set][wx.kind];
+    sky.style.setProperty("--s1", s1); sky.style.setProperty("--s2", s2); sky.style.setProperty("--cloud", cloud);
+    sky.dataset.wx = wx.kind; sky.dataset.onsky = wx.night && !dark ? "light" : "";
+    if (wx.night) sky.dataset.night = ""; else delete sky.dataset.night;
+    if (wx.frost) sky.dataset.frost = ""; else delete sky.dataset.frost;
+    const on = (sel, v) => sky.querySelectorAll(sel).forEach(n => n.classList.toggle("on", !!v));
+    const cloudy = ["cloudy", "drizzle", "rain", "storm", "snow"].includes(wx.kind);
+    on(".sun", !wx.night && (wx.kind === "clear" || wx.kind === "partly"));
+    on(".moon", wx.night && ["clear", "partly", "neutral"].includes(wx.kind));
+    on(".fog", wx.kind === "fog");
+    on(".cl1, .cl2", cloudy || wx.kind === "partly");
+    on(".cl3", cloudy);
+    // « Maintenant : pluie faible, 6 °C, rafales 35 km/h »
+    const bits = [];
+    if (wx.words) bits.push(wx.night && wx.kind === "clear" ? "nuit claire" : wx.words);
+    if (wx.t != null) bits.push(r0(wx.t) + " °C");
+    if (wx.g != null) bits.push("rafales " + r0(wx.g) + " km/h");
+    if (bits.length) $("skyKicker").textContent = "Maintenant : " + bits.join(", ");
+    const key = [wx.kind, wx.lvl, wx.night, wx.windy, dark].join("|");
+    if (key !== lastWxKey) { lastWxKey = key; skyFx.set(wx, set); }
+  }
+
+  /* Particules : un seul canvas, ~30 images/s, en pause si la page est cachée, le ciel hors écran ou le mouvement réduit.
+     Pluie ≤ 80 gouttes, bruine ≤ 40, neige ≤ 40, étoiles 30, traînées de vent 6, éclair doux (au plus un toutes les 8 s). */
+  const skyFx = (() => {
+    const cv = $("skyFx"), ctx = cv.getContext("2d"), sky = $("sky");
+    const still = matchMedia("(prefers-reduced-motion: reduce)");
+    let W = 0, H = 0, parts = [], stars = [], streaks = [], cfg = null, raf = 0, last = 0, visible = true, flash = 0, nextFlash = 0;
+    const rnd = (a, b) => a + Math.random() * (b - a);
+    function size() {
+      const r = sky.getBoundingClientRect(), dpr = Math.min(2, window.devicePixelRatio || 1);
+      W = r.width; H = r.height; cv.width = Math.round(W * dpr); cv.height = Math.round(H * dpr); ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      if (cfg) { seed(); draw(0); }
+    }
+    function seed() {
+      const c = cfg; parts = []; stars = []; streaks = [];
+      const n = c.kind === "rain" || c.kind === "storm" ? [0, 25, 50, 80][c.lvl] : c.kind === "drizzle" || c.kind === "snow" ? [0, 18, 28, 40][c.lvl] : 0;
+      for (let i = 0; i < n; i++) parts.push({ x: rnd(0, W), y: rnd(0, H), v: c.kind === "snow" ? rnd(18, 40) : c.kind === "drizzle" ? rnd(160, 220) : rnd(380, 520), r: rnd(1.2, 2.8), ph: rnd(0, 6.3) });
+      if (c.night && ["clear", "partly", "neutral"].includes(c.kind)) for (let i = 0; i < 30; i++) stars.push({ x: rnd(0, W), y: rnd(0, H * 0.6), r: rnd(0.5, 1.4), ph: rnd(0, 6.3) });
+      if (c.windy) for (let i = 0; i < 6; i++) streaks.push({ x: rnd(0, W + 100), y: rnd(H * 0.15, H - 30), len: rnd(40, 110), v: rnd(260, 420) });
+      nextFlash = performance.now() + rnd(2500, 6000);
+    }
+    function draw(dt) {
+      const c = cfg; ctx.clearRect(0, 0, W, H); if (!c) return;
+      const t = performance.now() / 1000, slant = c.windy ? 0.35 : 0.12;
+      ctx.fillStyle = "#f3f6fb";
+      for (const s of stars) { ctx.globalAlpha = 0.45 + 0.35 * Math.sin(t * 0.8 + s.ph); ctx.beginPath(); ctx.arc(s.x, s.y, s.r, 0, 6.29); ctx.fill(); }
+      ctx.globalAlpha = 1;
+      if (c.kind === "snow") {
+        ctx.fillStyle = c.light ? "rgba(235,242,250,.6)" : "rgba(96,122,148,.65)";
+        for (const p of parts) {
+          p.y += p.v * dt; p.x += Math.sin(t + p.ph) * 12 * dt + (c.windy ? 30 * dt : 0);
+          if (p.y > H) { p.y = -6; p.x = rnd(0, W); } if (p.x > W) p.x -= W;
+          ctx.beginPath(); ctx.arc(p.x, p.y, p.r, 0, 6.29); ctx.fill();
+        }
+      } else if (parts.length) {
+        const len = c.kind === "drizzle" ? 6 : 13;
+        ctx.strokeStyle = c.light ? "rgba(200,220,238,.32)" : "rgba(45,75,105,.34)"; ctx.lineWidth = c.kind === "drizzle" ? 1 : 1.3; ctx.lineCap = "round"; ctx.beginPath();
+        for (const p of parts) {
+          p.y += p.v * dt; p.x += p.v * slant * dt;
+          if (p.y > H) { p.y = rnd(-40, -5); p.x = rnd(-20, W); } if (p.x > W) p.x -= W;
+          ctx.moveTo(p.x, p.y); ctx.lineTo(p.x - len * slant, p.y - len);
+        }
+        ctx.stroke();
+      }
+      if (streaks.length) {
+        ctx.strokeStyle = c.light ? "rgba(220,230,240,.28)" : "rgba(60,80,100,.25)"; ctx.lineWidth = 2; ctx.lineCap = "round"; ctx.beginPath();
+        for (const s of streaks) {
+          s.x += s.v * dt; if (s.x - s.len > W) { s.x = rnd(-W * 0.6, 0); s.y = rnd(H * 0.15, H - 30); }
+          ctx.moveTo(s.x - s.len, s.y); ctx.quadraticCurveTo(s.x - s.len / 2, s.y - 4, s.x, s.y);
+        }
+        ctx.stroke();
+      }
+      if (c.kind === "storm" && dt > 0) { // éclair : un halo bref et doux, jamais de clignotement, au plus un toutes les 8 à 14 s
+        const now = performance.now();
+        if (now > nextFlash) { flash = 1; nextFlash = now + rnd(8000, 14000); }
+        if (flash > 0) {
+          const g = ctx.createRadialGradient(W * 0.7, 0, 10, W * 0.7, 0, W * 0.9);
+          g.addColorStop(0, "rgba(255,255,255," + (0.22 * flash).toFixed(3) + ")"); g.addColorStop(1, "rgba(255,255,255,0)");
+          ctx.fillStyle = g; ctx.fillRect(0, 0, W, H); flash = Math.max(0, flash - dt * 4);
+        }
+      }
+    }
+    function loop(now) {
+      raf = 0; if (!cfg || !visible || document.hidden || still.matches) return;
+      if (now - last >= 32) { draw(Math.min(0.05, (now - last) / 1000)); last = now; }
+      raf = requestAnimationFrame(loop);
+    }
+    function kick() { if (!raf && cfg && cfg.moving && visible && !document.hidden && !still.matches) { last = performance.now(); raf = requestAnimationFrame(loop); } }
+    function set(wx, palette) {
+      const apply = () => {
+        cfg = { kind: wx.kind, lvl: wx.lvl, night: wx.night, windy: wx.windy, light: palette !== "day" };
+        cfg.moving = !!(cfg.lvl || cfg.windy || cfg.kind === "storm" || (cfg.night && ["clear", "partly", "neutral"].includes(cfg.kind)));
+        seed(); draw(0); cv.style.opacity = 1; kick();
+      };
+      if (!cfg || still.matches) apply(); else { cv.style.opacity = 0; setTimeout(apply, 280); }
+    }
+    new ResizeObserver(size).observe(sky);
+    new IntersectionObserver(es => { visible = es[0].isIntersecting; kick(); }).observe(sky);
+    document.addEventListener("visibilitychange", kick);
+    still.addEventListener("change", () => { if (cfg) { seed(); draw(0); kick(); } });
+    return { set };
+  })();
+
+  function setupPicker() {
+    const box = $("wxPick"), show = /ambiance/.test(location.hash);
+    box.hidden = !show;
+    if (!show) { if (Object.keys(pickWx).length) { pickWx = {}; applyAmbiance(); } return; }
+    if (box.childElementCount) return;
+    const sync = () => box.querySelectorAll("button").forEach(x => {
+      const o = WX_PICK.find(w => w[0] === x.dataset.id)[2];
+      x.setAttribute("aria-pressed", String(x.dataset.id === "auto" ? !Object.keys(pickWx).length : Object.keys(o).every(k => pickWx[k] === o[k])));
+    });
+    WX_PICK.forEach(([id, label, obj]) => {
+      const b = el("button", { type: "button", class: "ds-chip", "data-id": id, "aria-pressed": "false", text: label });
+      b.addEventListener("click", () => {
+        const toggle = id === "wind" || id === "night";
+        if (id === "auto") pickWx = {};
+        else if (toggle && b.getAttribute("aria-pressed") === "true") Object.keys(obj).forEach(k => delete pickWx[k]);
+        else if (toggle) Object.assign(pickWx, obj);
+        else { const keep = {}; ["wind_gusts_10m", "is_day"].forEach(k => { if (k in pickWx) keep[k] = pickWx[k]; }); pickWx = Object.assign(keep, obj); }
+        sync(); applyAmbiance();
+      });
+      box.append(b);
+    });
+    sync();
   }
 
   function renderAlerts(eps) {
@@ -1005,6 +1212,7 @@ Plantes grasses et albizia en pleine terre (confirmé par Damien le 25/11/2026).
     renderAlerts(eps);
     const waterToday = renderWater(days) || [];
     renderSky(eps, days, waterToday);
+    applyAmbiance();
     renderChart(days);
     renderDays(days);
     $("horizon").textContent = "Du " + fmtDay(days[0].date, { day: "numeric", month: "long" }) + " au " + fmtDay(days[days.length - 1].date, { day: "numeric", month: "long" }) + ", températures et rafales réelles.";
@@ -1021,14 +1229,15 @@ Plantes grasses et albizia en pleine terre (confirmé par Damien le 25/11/2026).
     if (loading) return; loading = true;
     $("reload").disabled = true;
     const url = "https://api.open-meteo.com/v1/forecast?latitude=" + LAT + "&longitude=" + LON +
-      "&hourly=temperature_2m,apparent_temperature,wind_speed_10m,wind_gusts_10m&daily=precipitation_sum,et0_fao_evapotranspiration,sunrise&past_days=14&timezone=Europe%2FParis&forecast_days=14";
+      "&hourly=temperature_2m,apparent_temperature,wind_speed_10m,wind_gusts_10m&daily=precipitation_sum,et0_fao_evapotranspiration,sunrise&past_days=14&timezone=Europe%2FParis&forecast_days=14" +
+      "&current=temperature_2m,apparent_temperature,weather_code,cloud_cover,precipitation,rain,showers,snowfall,wind_speed_10m,wind_gusts_10m,is_day";
     try {
       const ctrl = new AbortController(); const timer = setTimeout(() => ctrl.abort(), 12000);
       const res = await fetch(url, { signal: ctrl.signal }); clearTimeout(timer);
       if (!res.ok) throw new Error("HTTP " + res.status);
       const j = await res.json();
       if (!j.hourly || !Array.isArray(j.hourly.time)) throw new Error("format");
-      DATA = { fetchedAt: Date.now(), hourly: j.hourly, daily: j.daily || null };
+      DATA = { fetchedAt: Date.now(), hourly: j.hourly, daily: j.daily || null, current: j.current || null };
       store.set(KEY_D, DATA);
       status("");
       render();
@@ -1099,6 +1308,13 @@ Plantes grasses et albizia en pleine terre (confirmé par Damien le 25/11/2026).
   load();
   if ("serviceWorker" in navigator && location.protocol === "https:") navigator.serviceWorker.register("sw.js").catch(() => {});
   document.addEventListener("visibilitychange", () => { if (!document.hidden && (!DATA || Date.now() - DATA.fetchedAt > 36e5)) load(); });
+  // Ambiance : recalculée toutes les 15 min app ouverte (rechargée si les données ont plus d'une heure) et au changement de thème
+  setInterval(() => { if (document.hidden) return; if (DATA && Date.now() - DATA.fetchedAt > 36e5) load(); else applyAmbiance(); }, 15 * 60e3);
+  matchMedia("(prefers-color-scheme: dark)").addEventListener("change", applyAmbiance);
+  new MutationObserver(applyAmbiance).observe(document.documentElement, { attributes: true, attributeFilter: ["data-theme"] });
+  window.addEventListener("hashchange", setupPicker);
+  setupPicker();
+  if (!DATA) applyAmbiance();
 }
 </script>
 </body>

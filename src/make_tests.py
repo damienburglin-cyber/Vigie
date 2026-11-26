@@ -1,8 +1,13 @@
-# Pages de test hors ligne : src/test-real.html (vraies prévisions) et src/test-synth.html (gel fort, rafales, canicule injectés).
+# Pages de test hors ligne : src/test-real.html (vraies prévisions et météo actuelle) et src/test-synth.html (gel fort, rafales, canicule, neige actuelle injectés).
 import json, sys, pathlib, urllib.request
 root = pathlib.Path(__file__).resolve().parent.parent
-url = "https://api.open-meteo.com/v1/forecast?latitude=47.639&longitude=7.1127&hourly=temperature_2m,apparent_temperature,wind_speed_10m,wind_gusts_10m&daily=precipitation_sum,et0_fao_evapotranspiration,sunrise&past_days=14&timezone=Europe%2FParis&forecast_days=14"
+url = "https://api.open-meteo.com/v1/forecast?latitude=47.639&longitude=7.1127&hourly=temperature_2m,apparent_temperature,wind_speed_10m,wind_gusts_10m&daily=precipitation_sum,et0_fao_evapotranspiration,sunrise&past_days=14&timezone=Europe%2FParis&forecast_days=14&current=temperature_2m,apparent_temperature,weather_code,cloud_cover,precipitation,rain,showers,snowfall,wind_speed_10m,wind_gusts_10m,is_day"
 j = json.load(urllib.request.urlopen(url)); real = json.dumps(j); H = j["hourly"]
+# Météo actuelle simulée (ambiance du ciel) : neige faible par vent modéré, -1 °C, de jour
+import datetime
+j["current"] = {"time": datetime.datetime.now().strftime("%Y-%m-%dT%H:%M"), "interval": 900, "temperature_2m": -1.0, "apparent_temperature": -5.2,
+                "weather_code": 71, "cloud_cover": 100, "precipitation": 0.3, "rain": 0.0, "showers": 0.0, "snowfall": 0.21,
+                "wind_speed_10m": 14.0, "wind_gusts_10m": 28.0, "is_day": 1}
 for i, t in enumerate(H["time"]):
     hr = int(t[11:13]); day = i // 24 - 14  # 14 jours passés en tête
     if day in (3, 4) and (hr >= 21 or hr <= 8): H["temperature_2m"][i] = -12 + abs(hr - 4) * 0.4
