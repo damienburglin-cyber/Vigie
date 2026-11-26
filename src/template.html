@@ -491,7 +491,7 @@ Plantes grasses et albizia en pleine terre (confirmé par Damien le 25/11/2026).
 - Toute la page vit avec la météo (0.5.0) :
   - Lavis : le fond de page prend 9 % (12 % en sombre) d'une teinte du temps qu'il fait (`WASH` : soleil doré, voilé paille, couvert gris bleu, brouillard gris, bruine et pluie ardoise, orage ardoise foncée, neige bleu glace ; nuit : bleu nuit), elle-même tirée vers le bleu par le froid (de 4 °C à -10 °C) et vers l'ambre par la chaleur (de 22 °C à 34 °C). La barre d'onglets en prend 6 %. Cartes, valeurs et couleurs d'alerte ne bougent pas : l'alerte prime toujours. Fondu 0,6 s. Sans `color-mix` (vieux navigateur), fond d'origine. Contraste du texte secondaire sur le fond lavé ≥ 4,9:1 en clair et ≥ 7:1 en sombre dans les cas extrêmes, texte du ciel ≥ 7,2:1 (clair) et ≥ 5,3:1 (sombre) à l’aube, au coucher et par froid ou chaleur extrêmes (vérifié par calcul).
   - Moment de la journée : lever et coucher du soleil (`daily.sunrise/sunset`). Aube = 40 min avant le lever → 50 min après ; coucher = 50 min avant → 40 min après. Le ciel se teinte (lavande en haut, pêche en bas ; 60 % par ciel clair, 20 % sous les nuages) et le soleil devient plus chaud. Le soleil glisse de gauche (lever) à droite (coucher), haut à midi, et passe derrière les collines aux extrémités.
-  - Nuit = thème sombre automatique : `is_day` = 0 (ou, sans `current`, hors des heures de soleil) pose `data-theme="dark"`, retiré au jour. Un thème posé explicitement n'est pas touché.
+  - Nuit = thème sombre automatique : `is_day` = 0 (ou, sans `current`, hors des heures de soleil) pose `data-theme="dark"`, retiré au jour (confirmé par Damien le 26/11/2026). Un thème posé explicitement n'est pas touché.
   - Température : bas du ciel bleuté par grand froid, ambré par forte chaleur (jusqu'à 40 %).
   - Barre d'état du téléphone (`theme-color`) = couleur du haut du ciel.
   - Maison : fenêtres allumées la nuit, fumée de cheminée à 8 °C et moins (penchée par vent), arbre qui plie dès les rafales `gust` (40) et plus fort dès `strong` (60). Animations CSS seules ; mouvement réduit : arbre immobile, fumée figée.
@@ -521,7 +521,6 @@ Plantes grasses et albizia en pleine terre (confirmé par Damien le 25/11/2026).
 ## 5. Décisions ouvertes
 
 - Orientation des façades : pour dire quel côté fermer selon l'heure du soleil.
-- Nuit = thème sombre automatique (0.5.0) : à garder si Damien préfère un thème clair fixe la nuit, il faudra un réglage.
 
 ## 6. Journal
 
