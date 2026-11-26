@@ -23,7 +23,7 @@ from zoneinfo import ZoneInfo
 
 LAT, LON = 47.639, 7.1127
 TZ = ZoneInfo("Europe/Paris")
-APP_URL = "https://damienburglin-cyber.github.io/Freeze/"
+APP_URL = "https://damienburglin-cyber.github.io/Vigie/"
 API = ("https://api.open-meteo.com/v1/forecast?latitude=%s&longitude=%s"
        "&hourly=temperature_2m,apparent_temperature,wind_speed_10m,wind_gusts_10m"
        "&daily=precipitation_sum,et0_fao_evapotranspiration,sunrise&past_days=14"
