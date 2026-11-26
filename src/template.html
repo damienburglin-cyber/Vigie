@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="vigie-version" content="0.5.3">
+<meta name="vigie-version" content="0.5.4">
 <meta name="vigie-updated" content="2026-11-26">
 <meta name="theme-color" content="#d3e4ee" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#0e151b" media="(prefers-color-scheme: dark)">
@@ -226,6 +226,7 @@ legend.h{font:600 17px/1.2 var(--font-display);margin-bottom:4px;padding:0}
 @keyframes halo{from{transform:scale(.97)}to{transform:scale(1.03)}}
 @keyframes drift{from{transform:translateX(0)}to{transform:translateX(-70px)}}
 @keyframes mist{from{transform:translateX(-6%)}to{transform:translateX(6%)}}
+.app-version{margin:18px 0 4px;text-align:center;font:600 13px/1.4 var(--font-body);color:var(--muted);letter-spacing:.02em}
 /* Sélecteur d'ambiance pour les tests : visible seulement avec #ambiance dans l'adresse */
 .wxpick{display:flex;flex-wrap:wrap;gap:6px;margin-top:-4px}
 .wxpick .ds-chip{font-size:13px;padding:6px 12px}
@@ -421,6 +422,7 @@ legend.h{font:700 19px/1.2 var(--font-display)}
         <pre id="specView"></pre>
       </details>
     </div>
+    <p class="app-version" id="appVersion"></p>
   </section>
 </main>
 
@@ -539,6 +541,7 @@ Plantes grasses et albizia en pleine terre (confirmé par Damien le 25/11/2026).
 - 0.5.1 · 26/11/2026 · fond de page plus marqué par la météo (22 % au lieu de 9 %, 20 % en sombre ; barre d’onglets 12 %), texte secondaire un peu plus foncé pour garder le contraste. Rien d’autre ne change.
 - 0.5.2 · 26/11/2026 · nouvelle icône : ciel d’aube, soleil, rafales, flocon, collines, maison qui veille (au lieu du flocon seul sur fond crème). Fond de démarrage bleu nuit.
 - 0.5.3 · 26/11/2026 · couleurs plus vivantes sans trahir le temps : ciels et fonds sans gris (pluie bleu frais et aqua, orage indigo et lilas, couvert pervenche, brouillard nacré, neige glace rosée, nuit bleu outremer, sombre plus saturé). Contrastes revérifiés par calcul (texte du ciel ≥ 6,5:1, texte secondaire ≥ 5,2:1).
+- 0.5.4 · 26/11/2026 · numéro de version affiché en bas de l’onglet Réglages (lu dans la balise meta vigie-version), pour savoir quelle version tourne sur le téléphone.
 </script>
 
 <script>
@@ -1350,6 +1353,7 @@ Plantes grasses et albizia en pleine terre (confirmé par Damien le 25/11/2026).
 
   /* ---------- Démarrage ---------- */
   $("specView").textContent = ($("appSpec").textContent || "").trim();
+  $("appVersion").textContent = "Vigie " + (document.querySelector('meta[name="vigie-version"]')?.content || "");
   fillForm();
   let start = store.get(KEY_T) || "home";
   if (!document.querySelector('[data-tab="' + start + '"]')) start = "home";
