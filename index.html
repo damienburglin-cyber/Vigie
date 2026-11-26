@@ -3,8 +3,8 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="vigie-version" content="0.4.0">
-<meta name="vigie-updated" content="2026-11-25">
+<meta name="vigie-version" content="0.5.0">
+<meta name="vigie-updated" content="2026-11-26">
 <meta name="theme-color" content="#d3e4ee" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#0e151b" media="(prefers-color-scheme: dark)">
 <meta name="apple-mobile-web-app-capable" content="yes">
@@ -286,7 +286,7 @@ legend.h{font:600 17px/1.2 var(--font-display);margin-bottom:4px;padding:0}
 .sky{position:relative;overflow:hidden;display:grid;gap:14px;
   margin:-16px calc(-1 * max(16px,env(safe-area-inset-right,0px))) -4px calc(-1 * max(16px,env(safe-area-inset-left,0px)));
   padding:calc(14px + env(safe-area-inset-top,0px)) max(16px,env(safe-area-inset-right,0px)) 40px max(16px,env(safe-area-inset-left,0px));
-  background:linear-gradient(180deg,var(--s1) 0,var(--s2) calc(100% - 44px),var(--bg) 100%);
+  background:linear-gradient(180deg,var(--s1) 0,var(--s2) calc(100% - 44px),var(--page) 100%);
   color:var(--ink);transition:--s1 .6s ease,--s2 .6s ease}
 .sky[data-onsky="light"]{--ink:#eef3f7;--muted:#c5d1db;--gold-d:#86d3c4}
 .sky[data-mood="calm"]{--k:var(--calm);--k-bg:var(--calm-bg)}
@@ -307,14 +307,14 @@ legend.h{font:600 17px/1.2 var(--font-display);margin-bottom:4px;padding:0}
 .sky__title{margin:0;font:700 32px/1.02 var(--font-display);color:var(--ink);text-wrap:balance}
 .sky__sub{margin:0;font-size:15px;line-height:1.4;color:var(--ink);max-width:34ch}
 .sky__hills{position:absolute;left:0;right:0;bottom:-1px;width:100%;height:44px;z-index:0}
-.sky__hills path,.sky__hills circle{fill:var(--bg)}
+.sky__hills path,.sky__hills circle,.sky__hills rect{fill:var(--page);transition:fill .6s ease}
 .sky__hills .far{fill:var(--hill);opacity:.7}
 .sky__art{position:absolute;inset:0;z-index:0;pointer-events:none}
 .sky__art canvas{position:absolute;inset:0;width:100%;height:100%;transition:opacity .28s ease}
 /* Décor CSS : visible selon l'ambiance, fondu .5 s */
 .sky .fx{position:absolute;opacity:0;visibility:hidden;transition:opacity .5s ease,visibility 0s .5s}
 .sky .fx.on{opacity:var(--fx-op,1);visibility:visible;transition:opacity .5s ease}
-.sky .sun{right:-50px;top:-40px;width:170px;height:170px;border-radius:50%;--fx-op:var(--sun-op);background:radial-gradient(circle,var(--sun) 0 30%,transparent 31%),radial-gradient(circle,var(--sun) 0,transparent 68%)}
+.sky .sun{left:calc(var(--sx,calc(100% - 35px)) - 85px);top:calc(var(--sy,45px) - 85px);width:170px;height:170px;border-radius:50%;--fx-op:var(--sun-op);background:radial-gradient(circle,var(--sun) 0 30%,transparent 31%),radial-gradient(circle,var(--sun) 0,transparent 68%)}
 .sky .sun.on{animation:halo 6s ease-in-out infinite alternate}
 .sky .moon{left:52%;top:14px;width:30px;height:30px;border-radius:50%;background:radial-gradient(circle at 35% 35%,#f4f1e6,#d9d6cb 70%);box-shadow:0 0 18px 4px rgba(230,236,245,.18);--fx-op:.9}
 .sky .moon::after{content:"";position:absolute;inset:-2px -2px 0 9px;border-radius:50%;background:var(--s1);opacity:.85}
@@ -339,6 +339,44 @@ legend.h{font:600 17px/1.2 var(--font-display);margin-bottom:4px;padding:0}
 /* Sélecteur d'ambiance pour les tests : visible seulement avec #ambiance dans l'adresse */
 .wxpick{display:flex;flex-wrap:wrap;gap:6px;margin-top:-4px}
 .wxpick .ds-chip{font-size:13px;padding:6px 12px}
+
+/* ===== 0.5.0 : toute la page vit avec la météo de l'instant ===== */
+/* Lavis : le fond de page (et la barre d'onglets, plus légèrement) prend une pointe de la couleur du temps qu'il fait
+   (--wash, posé par JS). Les cartes restent neutres : les couleurs d'alerte gardent tout leur contraste. */
+:root{--wash:var(--bg);--wash-amt:0%;--page:var(--bg);--chip:rgba(255,255,255,.72);--smoke:#9aa7b2}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--chip:rgba(20,30,38,.72);--smoke:#6d7a86}}
+:root[data-theme="dark"]{--chip:rgba(20,30,38,.72);--smoke:#6d7a86}
+@supports (color:color-mix(in oklab,red,blue)){
+  :root{--wash-amt:9%;--page:color-mix(in oklab,var(--bg),var(--wash) var(--wash-amt))}
+  @media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--wash-amt:12%}}
+  :root[data-theme="dark"]{--wash-amt:12%}
+  .ds-tabbar::after{background:color-mix(in oklab,var(--card),var(--wash) 6%);transition:background-color .6s ease}
+}
+body{background:var(--page);transition:background-color .6s ease}
+/* Moment de la journée : soleil plus chaud à l'aube et au coucher */
+.sky[data-phase="dawn"],.sky[data-phase="dusk"]{--sun:#ffd6a6}
+/* « Prochaines heures » : pastilles lisibles par-dessus les particules */
+.sky__soon{display:flex;flex-wrap:wrap;gap:6px;margin:6px 0 0;padding:0;list-style:none}
+.sky__soon:empty{display:none}
+.sky__soon li{display:inline-flex;align-items:center;gap:6px;padding:5px 11px 5px 8px;border-radius:var(--radius-pill);background:var(--chip);color:var(--ink);font:700 13px/1.25 var(--font-body);font-variant-numeric:tabular-nums;box-shadow:0 0 0 1px rgba(30,60,80,.08)}
+.sky[data-onsky="light"] .sky__soon li{background:rgba(10,18,28,.45)}
+.sky__soon svg{width:15px;height:15px;flex:none}
+.sky__soon [data-k="wind"] svg{color:var(--wind)}.sky__soon [data-k="cold"] svg{color:var(--cold)}
+.sky__soon [data-k="rain"] svg{color:var(--water)}.sky__soon [data-k="sun"] svg{color:var(--heat)}
+/* La maison vit aussi : fenêtres allumées la nuit, fumée de cheminée quand il fait froid, arbre qui plie au vent */
+.sky__hills{overflow:visible}
+.sky__hills .win{transition:fill .6s ease}
+.sky[data-night] .sky__hills .win{fill:#f3c76a}
+.sky__hills .smoke{fill:var(--smoke);opacity:0;transform-box:fill-box;transform-origin:center}
+.sky[data-smoke] .sky__hills .smoke{animation:smoke 4.2s ease-out infinite}
+.sky[data-smoke] .sky__hills .smoke.s2{animation-delay:2.1s}
+.sky__hills .tree{transform-box:fill-box;transform-origin:50% 100%}
+.sky[data-sway="1"] .sky__hills .tree{animation:sway 1.9s ease-in-out infinite alternate}
+.sky[data-sway="2"] .sky__hills .tree{animation:sway2 1.1s ease-in-out infinite alternate}
+@keyframes smoke{0%{opacity:0;transform:translate(0,0) scale(.6)}20%{opacity:.6}100%{opacity:0;transform:translate(var(--drift,3px),-15px) scale(1.9)}}
+@keyframes sway{from{transform:rotate(-3deg)}to{transform:rotate(4deg)}}
+@keyframes sway2{from{transform:rotate(-5deg)}to{transform:rotate(10deg)}}
+@media (prefers-reduced-motion:reduce){.sky[data-smoke] .sky__hills .smoke.s1{opacity:.45;transform:translateY(-5px) scale(1.2)}}
 
 /* Typo d'accent et cartes */
 .sec-title{font:700 24px/1.05 var(--font-display);letter-spacing:.01em}
@@ -404,12 +442,15 @@ legend.h{font:700 19px/1.2 var(--font-display)}
       <p class="sky__kicker" id="skyKicker">Lecture du ciel…</p>
       <div class="sky__row"><span class="sky__ic" id="skyIc" aria-hidden="true"></span><p class="sky__title" id="skyTitle">Vigie</p></div>
       <p class="sky__sub" id="skySub">Gel, chaleur, vent et arrosage pour les 14 prochains jours.</p>
+      <ul class="sky__soon" id="skySoon" aria-label="Dans les prochaines heures"></ul>
     </div>
     <svg class="sky__hills" viewBox="0 0 440 44" preserveAspectRatio="xMidYMax slice" aria-hidden="true">
       <path class="far" d="M0 44V24C40 16 90 14 140 20C190 26 230 14 280 15C330 16 380 24 440 18V44Z"/>
       <path d="M0 44V32C50 22 100 22 150 28C200 34 240 24 290 23C340 22 390 31 440 28V44Z"/>
+      <circle class="smoke s1" cx="349.5" cy="2" r="2"/><circle class="smoke s2" cx="349.5" cy="2" r="2"/>
       <path d="M332 24h22v-10h-22zM329 15l14-10 14 10zM348 5h3v6h-3z"/>
-      <circle cx="368" cy="17" r="6"/><path d="M367 20h2v6h-2z"/>
+      <rect class="win" x="336" y="17" width="4" height="4"/><rect class="win" x="346" y="17" width="4" height="4"/>
+      <g class="tree"><circle cx="368" cy="17" r="6"/><path d="M367 20h2v6h-2z"/></g>
     </svg>
   </header>
 
@@ -537,7 +578,7 @@ Plantes grasses et albizia en pleine terre (confirmé par Damien le 25/11/2026).
 ## 3. Écrans
 
 - En-tête « ciel » (toutes les pages) : un pan de ciel au-dessus des collines et de la maison, avec deux rôles séparés.
-  - AMBIANCE = la météo à l'instant T : couleurs du ciel, nuages, soleil ou lune, étoiles, pluie, neige, brouillard, orage, traînées de vent, givre (détail en 3 bis). Ligne « Maintenant : pluie faible, 6 °C, rafales 35 km/h ».
+  - AMBIANCE = la météo à l'instant T : couleurs du ciel, nuages, soleil ou lune, étoiles, pluie, neige, brouillard, orage, traînées de vent, givre (détail en 3 bis). Ligne « Maintenant : pluie faible, 6 °C, rafales 35 km/h ». Depuis 0.5.0, toute la page suit (lavis du fond, nuit en sombre, moment de la journée, maison vivante) et des pastilles « prochaines heures » disent ce qui va changer d'ici 12 h.
   - MESSAGE = les alertes. Humeur du message = le premier épisode qui commence dans les 7 jours (gel, couper l'eau, chaleur, vent) ; sinon « arrosage » si une plante est à arroser aujourd'hui ; sinon « calme ». Contenu : « Maintenant » (température et rafales de l'heure), titre de l'épisode (même titre que la carte) avec son icône, une phrase « quand : quoi faire », le nombre d'autres alertes. Lu dans les épisodes et l'arrosage déjà calculés, aucune règle propre. Hors ligne sans données : « Pas encore de prévisions ».
 - Anticiper :
   - « 10 prochains jours » : grille 10 jours (les 3 derniers plus pâles = tendance) × Gel / Chaleur / Vent. Chaque case montre la valeur du jour (heures à venir pour aujourd'hui) : minimum (gel), maximum (chaleur), rafales max (vent). Couleur = pire niveau du jour pour ce critère, lu dans les alertes du jour (aucune règle propre) : gris = rien à signaler, teinte claire + « ! » = niveau 1 (vigilance), aplat foncé + « !! » = niveau 2 et plus (couper l'eau, canicule, fortes rafales, tempête). Chaque case a un aria-label complet ; la toucher ouvre l'onglet Jours avec ce jour déplié. Légende courte dessous.
@@ -556,7 +597,16 @@ Plantes grasses et albizia en pleine terre (confirmé par Damien le 25/11/2026).
   - Couches qui s'ajoutent à toute ambiance : rafales ≥ 40 km/h = traînées de vent ; `is_day` = 0 = version nocturne (lune et étoiles par ciel clair ou voilé) ; température ≤ 0 °C = givre discret dans les coins.
   - Table `WX_PALETTE` [haut, bas, nuages] : jour en thème clair, jour en thème sombre (désaturé), nuit (tous thèmes ; en thème clair le texte du ciel passe en clair). Le thème sombre système reste prioritaire. Contraste du texte ≥ 6,8:1 sur chaque fond et sur les nuages (vérifié par calcul).
   - Décor CSS (fondu 0,5 s) : soleil, lune, 3 nuages qui dérivent, 2 bandes de brume qui ondulent. Un seul canvas (~30 images/s, en pause si la page est cachée, le ciel hors écran ou le mouvement réduit) : pluie 25 / 50 / 80 gouttes selon l'intensité, bruine et neige 18 / 28 / 40, étoiles 30, traînées de vent 6, éclair = un halo doux (opacité ≤ 0,22), au plus un toutes les 8 à 14 s, jamais de clignotement. Couleurs du ciel en fondu 0,6 s (`@property --s1/--s2`), canvas en fondu ~0,55 s. Avec `prefers-reduced-motion` : une image fixe de l'ambiance.
-  - Tests : `#ambiance` dans l'adresse affiche sous le ciel des boutons Auto / Soleil / Nuages / Pluie / Orage / Neige / Brouillard / Vent / Nuit (Vent et Nuit se cumulent aux autres). `window.VIGIE_FORCE_WX` (objet `current` partiel) est fusionné au rendu. `make_tests.py` met le `current` réel dans test-real et une neige faible par vent modéré à -1 °C dans test-synth.
+  - Tests : `#ambiance` dans l'adresse affiche sous le ciel des boutons Auto / Soleil / Nuages / Pluie / Orage / Neige / Brouillard / Vent / Nuit / Aube / Coucher / Froid (-7 °C) / Chaud (33 °C) ; Vent, Nuit, Aube, Coucher, Froid et Chaud se cumulent aux autres (Aube et Coucher, Froid et Chaud s'excluent). `window.VIGIE_FORCE_WX` (objet `current` partiel) est fusionné au rendu ; `window.VIGIE_FORCE_NOW` (« AAAA-MM-JJTHH:MM ») fixe l'horloge de l'ambiance seulement (moment de la journée, soleil, prochaines heures), jamais celle des alertes. `make_tests.py` crée test-real, test-synth (neige faible à -1 °C) et une page par ambiance : test-dawn, test-dusk, test-night, test-sun, test-hot, test-rain, test-storm, test-snow, test-fog.
+- Toute la page vit avec la météo (0.5.0) :
+  - Lavis : le fond de page prend 9 % (12 % en sombre) d'une teinte du temps qu'il fait (`WASH` : soleil doré, voilé paille, couvert gris bleu, brouillard gris, bruine et pluie ardoise, orage ardoise foncée, neige bleu glace ; nuit : bleu nuit), elle-même tirée vers le bleu par le froid (de 4 °C à -10 °C) et vers l'ambre par la chaleur (de 22 °C à 34 °C). La barre d'onglets en prend 6 %. Cartes, valeurs et couleurs d'alerte ne bougent pas : l'alerte prime toujours. Fondu 0,6 s. Sans `color-mix` (vieux navigateur), fond d'origine. Contraste du texte secondaire sur le fond lavé ≥ 4,9:1 en clair et ≥ 7:1 en sombre dans les cas extrêmes, texte du ciel ≥ 7,2:1 (clair) et ≥ 5,3:1 (sombre) à l’aube, au coucher et par froid ou chaleur extrêmes (vérifié par calcul).
+  - Moment de la journée : lever et coucher du soleil (`daily.sunrise/sunset`). Aube = 40 min avant le lever → 50 min après ; coucher = 50 min avant → 40 min après. Le ciel se teinte (lavande en haut, pêche en bas ; 60 % par ciel clair, 20 % sous les nuages) et le soleil devient plus chaud. Le soleil glisse de gauche (lever) à droite (coucher), haut à midi, et passe derrière les collines aux extrémités.
+  - Nuit = thème sombre automatique : `is_day` = 0 (ou, sans `current`, hors des heures de soleil) pose `data-theme="dark"`, retiré au jour. Un thème posé explicitement n'est pas touché.
+  - Température : bas du ciel bleuté par grand froid, ambré par forte chaleur (jusqu'à 40 %).
+  - Barre d'état du téléphone (`theme-color`) = couleur du haut du ciel.
+  - Maison : fenêtres allumées la nuit, fumée de cheminée à 8 °C et moins (penchée par vent), arbre qui plie dès les rafales `gust` (40) et plus fort dès `strong` (60). Animations CSS seules ; mouvement réduit : arbre immobile, fumée figée.
+  - « Prochaines heures » (pastilles sous le message, au plus 3, dans l'ordre) : sur 12 h de données horaires (`weather_code`, `precipitation` ajoutés à `hourly`) : « Pluie / Bruine / Neige / Orage possible vers 15 h » s'il ne tombe rien, « Fin de la pluie vers 16 h » s'il pleut (2 h sèches de suite) ; « Rafales 52 km/h dès 18 h » si les rafales passent `gust`, « Le vent retombe vers 21 h » si elles repassent dessous 2 h de suite ; « Gel dès 2 h » / « Dégel vers 11 h » au passage de 0 °C ; « Lever / Coucher du soleil à 7 h 52 » pendant l’aube ou le coucher, en dernier et seulement s’il n’y a qu’une autre pastille au plus. Rien ne change : pas de pastille. Affichage seulement, aucune règle d'alerte.
+  - Écartés : gouttes qui ruissellent sur les cartes et cartes qui frémissent par rafales (du mouvement sur les alertes gêne la lecture d'un coup d'œil) ; teinter les cartes (les couleurs d'alerte doivent rester seules à signifier quelque chose) ; un second canvas (batterie).
 - Mouvements : entrée des cartes, de la grille et des barres du graphique au premier affichage seulement (≤ 0,3 s, léger décalage), ouverture d'un jour, jauges d'arrosage qui se remplissent, retour au toucher (0,12 s), bouton d'actualisation qui tourne pendant le chargement, page qui apparaît au changement d'onglet (0,2 s). Bascule d'onglet : 0,26 s sans rebond, à ne pas rallonger. Tout est coupé avec `prefers-reduced-motion`. Le contenu reste visible si une animation ne joue pas.
 - Icône de l'onglet Anticiper : des jumelles.
 
@@ -566,7 +616,7 @@ Plantes grasses et albizia en pleine terre (confirmé par Damien le 25/11/2026).
 - Dernières prévisions gardées dans localStorage : l'app s'ouvre hors ligne avec un bandeau qui donne leur âge.
 - Rafraîchissement à l'ouverture et au retour sur l'app si les données ont plus d'une heure.
 - Un artefact claude.ai ne peut pas appeler d'API externe : la page est hébergée sur GitHub Pages (repo damienburglin-cyber/Vigie, https://damienburglin-cyber.github.io/Vigie/) et s'ajoute à l'écran d'accueil (manifest.webmanifest, icônes, sw.js pour l'ouverture hors ligne).
-- Source : `src/template.html` + `src/ds.css`, assemblés par `python3 src/build.py` en `index.html`. `python3 src/make_tests.py` crée deux pages de test hors ligne (non versionnées).
+- Source : `src/template.html` + `src/ds.css`, assemblés par `python3 src/build.py` en `index.html`. `python3 src/make_tests.py` crée des pages de test hors ligne (non versionnées, voir 3 bis).
 
 ## 4 bis. Notifications (sans ouvrir l'app)
 
@@ -581,6 +631,7 @@ Plantes grasses et albizia en pleine terre (confirmé par Damien le 25/11/2026).
 ## 5. Décisions ouvertes
 
 - Orientation des façades : pour dire quel côté fermer selon l'heure du soleil.
+- Nuit = thème sombre automatique (0.5.0) : à garder si Damien préfère un thème clair fixe la nuit, il faudra un réglage.
 
 ## 6. Journal
 
@@ -594,6 +645,7 @@ Plantes grasses et albizia en pleine terre (confirmé par Damien le 25/11/2026).
 - 0.3.0 · 25/11/2026 · nouveau thème « vigie » : en-tête ciel qui reflète l'état du moment (calme, gel, couper l'eau, chaleur, vent, arrosage) avec décor animé discret, papier froid et accent vert sapin, Barlow Condensed pour les titres et chiffres, jumelles pour Anticiper, sombre « nuit » retravaillé, animations courtes (cartes, grille, graphique, jours, jauges, toucher, actualisation). Règles de calcul, seuils et arrosage inchangés.
 - 0.3.1 · 25/11/2026 · notifications ntfy matin et soir via GitHub Actions (anticipation à 7 jours, rappels du jour, arrosage en saison).
 - 0.4.0 · 26/11/2026 · le ciel suit la météo à l'instant T (soleil, nuages, couvert, brouillard, bruine, pluie, neige, orage, vent, nuit, givre), animé et en fondu ; le message reste piloté par les alertes ; ligne « Maintenant » en mots ; sélecteur d'ambiance `#ambiance` pour les tests. Règles, seuils, arrosage et notifications inchangés.
+- 0.5.0 · 26/11/2026 · toute la page vit avec la météo de l'instant : fond et barre d'onglets lavés de la couleur du temps et de la température, aube et coucher d'après le vrai lever et coucher du soleil, soleil qui suit sa course, nuit en thème sombre automatique, barre d'état du téléphone à la couleur du ciel, maison vivante (fenêtres la nuit, cheminée par froid, arbre au vent), pastilles « prochaines heures » (pluie, fin de pluie, rafales, vent qui retombe, gel, dégel, lever et coucher). Données ajoutées : `hourly.weather_code`, `hourly.precipitation`, `daily.sunset`. Règles, seuils, arrosage et notifications inchangés.
 </script>
 
 <script>
@@ -887,7 +939,7 @@ Plantes grasses et albizia en pleine terre (confirmé par Damien le 25/11/2026).
     day: { clear: ["#b6d8f0", "#d7e9f5", "rgba(255,255,255,.8)"], partly: ["#c4d9ea", "#dce8f1", "rgba(255,255,255,.8)"], cloudy: ["#cad3db", "#dfe5ea", "#eef2f5"],
       fog: ["#d9dfe3", "#e8ecee", "#eef2f5"], drizzle: ["#c0ccd6", "#dae2e8", "#a9b5c0"], rain: ["#b3c1cd", "#d3dce4", "#a3b0bc"], storm: ["#a4afbd", "#cbd3db", "#8f9aa8"],
       snow: ["#dbe4ec", "#ecf1f4", "#f4f7f9"], neutral: ["#c9e0ee", "#dfeaf1", "rgba(255,255,255,.8)"] },
-    dusk: { clear: ["#1f4466", "#16293b", "#3b4a59"], partly: ["#233c55", "#172636", "#3b4a59"], cloudy: ["#2a3540", "#1a232c", "#3b4a59"],
+    dayDark: { clear: ["#1f4466", "#16293b", "#3b4a59"], partly: ["#233c55", "#172636", "#3b4a59"], cloudy: ["#2a3540", "#1a232c", "#3b4a59"],
       fog: ["#323b42", "#1e262d", "#3b4a59"], drizzle: ["#263442", "#18222c", "#3b4a59"], rain: ["#22303e", "#161f29", "#36434f"], storm: ["#1d2432", "#131923", "#323c49"],
       snow: ["#2c3a48", "#1b2631", "#46525e"], neutral: ["#18304a", "#122030", "#3b4a59"] },
     night: { clear: ["#0d1a2e", "#172a42", "#2b3644"], partly: ["#131f30", "#1d2c3e", "#2b3644"], cloudy: ["#1b222b", "#252e38", "#2b3644"],
@@ -895,39 +947,137 @@ Plantes grasses et albizia en pleine terre (confirmé par Damien le 25/11/2026).
       snow: ["#1d2631", "#2b3744", "#3a4552"], neutral: ["#13233a", "#1f3550", "#2b3644"] }
   };
   const WX_PICK = [["auto", "Auto", {}], ["sun", "Soleil", { weather_code: 0, precipitation: 0 }], ["clouds", "Nuages", { weather_code: 3, precipitation: 0 }],
-    ["rain", "Pluie", { weather_code: 63, precipitation: 1.6 }], ["storm", "Orage", { weather_code: 95, precipitation: 4 }], ["snow", "Neige", { weather_code: 73, precipitation: 0.8, temperature_2m: -2 }],
-    ["fog", "Brouillard", { weather_code: 45, precipitation: 0 }], ["wind", "Vent", { wind_gusts_10m: 62 }], ["night", "Nuit", { is_day: 0 }]];
+    ["rain", "Pluie", { weather_code: 63, precipitation: 1.6 }], ["storm", "Orage", { weather_code: 95, precipitation: 4 }], ["snow", "Neige", { weather_code: 73, precipitation: 0.8 }],
+    ["fog", "Brouillard", { weather_code: 45, precipitation: 0 }], ["wind", "Vent", { wind_gusts_10m: 62 }], ["night", "Nuit", { is_day: 0 }],
+    ["dawn", "Aube", { _phase: "dawn" }], ["dusk", "Coucher", { _phase: "dusk" }], ["cold", "Froid", { temperature_2m: -7 }], ["hot", "Chaud", { temperature_2m: 33 }]];
+  const PICK_TOGGLES = ["wind", "night", "dawn", "dusk", "cold", "hot"], PICK_KEEP = ["wind_gusts_10m", "is_day", "_phase", "temperature_2m"];
   let pickWx = {}; // ambiance forcée par le sélecteur de test (#ambiance)
   const isDark = () => { const t = document.documentElement.dataset.theme; return t === "dark" || (t !== "light" && matchMedia("(prefers-color-scheme: dark)").matches); };
+
+  /* Horloge de l'ambiance (window.VIGIE_FORCE_NOW pour les pages de test ; les règles d'alerte gardent l'heure réelle) */
+  const pad2 = n => String(n).padStart(2, "0");
+  const clock = () => window.VIGIE_FORCE_NOW ? new Date(window.VIGIE_FORCE_NOW) : new Date();
+  const ymd = d => d.getFullYear() + "-" + pad2(d.getMonth() + 1) + "-" + pad2(d.getDate());
+  const hm = d => d.getHours() + " h " + pad2(d.getMinutes());
+  const clamp01 = v => Math.max(0, Math.min(1, v));
+  const hex3 = x => [1, 3, 5].map(i => parseInt(x.slice(i, i + 2), 16));
+  const mixHex = (a, b, t) => { if (!/^#[0-9a-f]{6}$/i.test(a) || !/^#[0-9a-f]{6}$/i.test(b)) return a; const A = hex3(a), B = hex3(b);
+    return "#" + A.map((v, i) => pad2(Math.round(v + (B[i] - v) * t).toString(16))).join(""); };
+
+  // Moment de la journée d'après lever et coucher du soleil (Open-Meteo daily) : aube = lever −40 min → +50 min, coucher = coucher −50 min → +40 min
+  function dayPhase(forced) {
+    if (forced === "dawn") return { phase: "dawn", frac: 0.02 };
+    if (forced === "dusk") return { phase: "dusk", frac: 0.98 };
+    const D = DATA && DATA.daily; if (!D || !D.sunrise || !D.sunset) return null;
+    const now = clock(), i = D.time.indexOf(ymd(now)); if (i < 0 || !D.sunrise[i] || !D.sunset[i]) return null;
+    const rise = new Date(D.sunrise[i]), set = new Date(D.sunset[i]), t = now.getTime(), m = 6e4;
+    const phase = t < rise - 40 * m || t > set.getTime() + 40 * m ? "night" : t < rise.getTime() + 50 * m ? "dawn" : t > set - 50 * m ? "dusk" : "day";
+    return { phase, frac: (t - rise) / (set - rise), rise, set };
+  }
 
   function currentWx() {
     let c = null;
     if (DATA && DATA.current && DATA.current.time) {
-      const age = (Date.now() - new Date(DATA.current.time).getTime()) / 36e5;
-      if (age < 3) c = Object.assign({}, DATA.current);
+      const age = (clock().getTime() - new Date(DATA.current.time).getTime()) / 36e5;
+      if (age < 3 && age > -3) c = Object.assign({}, DATA.current);
     }
-    if (!c && DATA && DATA.hourly) { // repli : l'heure courante des données horaires (pas de code météo → ciel neutre)
-      const H = DATA.hourly, i = H.time.indexOf(todayStr() + "T" + String(new Date().getHours()).padStart(2, "0") + ":00");
-      if (i >= 0) c = { temperature_2m: H.temperature_2m[i], wind_gusts_10m: H.wind_gusts_10m[i], wind_speed_10m: H.wind_speed_10m[i] };
+    if (!c && DATA && DATA.hourly) { // repli : l'heure courante des données horaires
+      const H = DATA.hourly, now = clock(), i = H.time.indexOf(ymd(now) + "T" + pad2(now.getHours()) + ":00");
+      if (i >= 0) c = { temperature_2m: H.temperature_2m[i], wind_gusts_10m: H.wind_gusts_10m[i], wind_speed_10m: H.wind_speed_10m[i],
+        weather_code: H.weather_code ? H.weather_code[i] : undefined, precipitation: H.precipitation ? H.precipitation[i] : undefined };
     }
     c = Object.assign(c || {}, window.VIGIE_FORCE_WX || {}, pickWx);
     const code = c.weather_code, w = WMO[code], kind = w ? w[0] : "neutral", p = +c.precipitation || 0;
     const lvl = ["drizzle", "rain", "snow", "storm"].includes(kind) ? Math.max(p >= 2.5 ? 3 : p >= 0.5 ? 2 : p > 0 ? 1 : 0, CODE_LEVEL[code] || 1) : 0;
-    return { kind, lvl, words: w ? w[1] : "", t: c.temperature_2m, g: c.wind_gusts_10m,
-      night: c.is_day === 0, windy: c.wind_gusts_10m >= 40, frost: c.temperature_2m != null && c.temperature_2m <= 0 };
+    const ph = dayPhase(c._phase);
+    const night = c.is_day === 0 || (c.is_day == null && !!ph && ph.phase === "night");
+    // Aube et coucher débordent sur la nuit (avant le lever, après le coucher) : la phase « nuit » ne vaut que hors de ces fenêtres
+    const phase = ph && (ph.phase === "dawn" || ph.phase === "dusk") ? ph.phase : night ? "night" : "day";
+    return { kind, lvl, words: w ? w[1] : "", t: c.temperature_2m, g: c.wind_gusts_10m, ph, phase, night,
+      windy: c.wind_gusts_10m >= S.gust, strong: c.wind_gusts_10m >= S.strong, frost: c.temperature_2m != null && c.temperature_2m <= 0 };
+  }
+
+  // Lavis de la page : teinte du temps qu'il fait, puis de la température (froid bleuté, chaleur ambrée)
+  const WASH = { clear: "#f2c45e", partly: "#e3cd92", cloudy: "#8e9cab", fog: "#b4bcc3", drizzle: "#7590a8", rain: "#5f7f9c", storm: "#4a566b", snow: "#a6c4e0", neutral: null };
+  const coldW = t => t == null ? 0 : clamp01((4 - t) / 14);   // 4 °C → 0, -10 °C → 1
+  const hotW = t => t == null ? 0 : clamp01((t - 22) / 12);   // 22 °C → 0, 34 °C → 1
+  function washOf(wx) {
+    let w = WASH[wx.kind];
+    if (wx.night) w = mixHex(w || "#2f4a78", "#2f4a78", 0.6);
+    const c = coldW(wx.t), h = hotW(wx.t);
+    if (c) w = mixHex(w || "#5b9bd5", "#5b9bd5", 0.8 * c);
+    if (h) w = mixHex(w || "#f08a3c", "#f08a3c", 0.8 * h);
+    return w;
+  }
+  // Teintes d'aube et de coucher [haut, bas] sur ciel clair (jour) ou sombre (nuit, thème sombre)
+  const TWILIGHT = { light: { dawn: ["#cfc8e6", "#f8d2b0"], dusk: ["#d8c3dc", "#f6c49e"] }, dark: { dawn: ["#2c2b4c", "#4e3340"], dusk: ["#3a2b48", "#5a3436"] } };
+
+  /* Prochaines heures (12 h) : ce qui va changer dehors. Affichage seulement, aucune règle d'alerte. */
+  const SOON_IC = { rain: "water", cold: "cold", wind: "wind", calm: "wind", sun: "heat" };
+  function soonEvents(wx) {
+    const H = DATA && DATA.hourly; if (!H) return [];
+    const now = clock(), i0 = H.time.indexOf(ymd(now) + "T" + pad2(now.getHours()) + ":00"); if (i0 < 0) return [];
+    const end = Math.min(H.time.length, i0 + 13), out = [], code = H.weather_code, pr = H.precipitation, G = H.wind_gusts_10m, T = H.temperature_2m;
+    const hr = i => +H.time[i].slice(11, 13) + " h";
+    const wet = i => (pr && pr[i] != null && pr[i] >= 0.2) || (code && code[i] >= 51);
+    const what = i => { const c = code ? code[i] : null;
+      return c >= 95 ? "Orage possible" : (c >= 71 && c <= 77) || c === 85 || c === 86 || (c == null && T[i] <= 0.5) ? "Neige" : c >= 51 && c <= 57 ? "Bruine" : "Pluie"; };
+    if (pr || code) {
+      if (!wx.lvl) { for (let i = i0 + 1; i < end; i++) if (wet(i)) { const k = what(i); out.push({ i, k: k === "Neige" ? "cold" : "rain", txt: k + " vers " + hr(i) }); break; } }
+      else { for (let i = i0 + 1; i < end - 1; i++) if (!wet(i) && !wet(i + 1)) { out.push({ i, k: "rain", txt: (wx.kind === "snow" ? "Fin de la neige" : "Fin de la pluie") + " vers " + hr(i) }); break; } }
+    }
+    if (wx.g != null && G) {
+      if (wx.g < S.gust) { for (let i = i0 + 1; i < end; i++) if (G[i] >= S.gust) { out.push({ i, k: "wind", txt: "Rafales " + r0(Math.max(...G.slice(i, end))) + " km/h dès " + hr(i) }); break; } }
+      else { for (let i = i0 + 1; i < end - 1; i++) if (G[i] < S.gust && G[i + 1] < S.gust) { out.push({ i, k: "calm", txt: "Le vent retombe vers " + hr(i) }); break; } }
+    }
+    if (wx.t != null && T) {
+      if (wx.t > 0) { for (let i = i0 + 1; i < end; i++) if (T[i] <= 0) { out.push({ i, k: "cold", txt: "Gel dès " + hr(i) }); break; } }
+      else { for (let i = i0 + 1; i < end; i++) if (T[i] > 0.5) { out.push({ i, k: "cold", txt: "Dégel vers " + hr(i) }); break; } }
+    }
+    out.sort((a, b) => a.i - b.i);
+    // Lever / coucher : pour le plaisir, seulement s'il reste de la place (au plus une autre pastille)
+    const ph = wx.ph;
+    if (out.length <= 1 && ph && ph.rise && ph.phase === "dawn" && now < ph.rise) out.push({ k: "sun", txt: "Lever du soleil à " + hm(ph.rise) });
+    if (out.length <= 1 && ph && ph.set && ph.phase === "dusk" && now < ph.set) out.push({ k: "sun", txt: "Coucher du soleil à " + hm(ph.set) });
+    return out.slice(0, 3);
+  }
+  function renderSoon(wx) {
+    const ul = $("skySoon"), ev = soonEvents(wx); ul.textContent = "";
+    ev.forEach(e => { const li = el("li", { "data-k": e.k }); li.innerHTML = ICONS[SOON_IC[e.k]]; li.append(el("span", { text: e.txt })); ul.append(li); });
   }
 
   let lastWxKey = "";
   function applyAmbiance() {
-    const sky = $("sky"), wx = currentWx(), dark = isDark();
-    const set = wx.night ? "night" : dark ? "dusk" : "day";
-    const [s1, s2, cloud] = WX_PALETTE[set][wx.kind];
+    const sky = $("sky"), root = document.documentElement, wx = currentWx();
+    // Nuit = thème sombre automatique (sauf si un thème a été posé explicitement)
+    if (wx.night) { if (!root.dataset.theme) { root.dataset.theme = "dark"; root.dataset.autoTheme = ""; } }
+    else if ("autoTheme" in root.dataset) { delete root.dataset.theme; delete root.dataset.autoTheme; }
+    const dark = isDark();
+    const set = wx.night ? "night" : dark ? "dayDark" : "day";
+    let [s1, s2, cloud] = WX_PALETTE[set][wx.kind];
+    // Aube / coucher : franc par ciel clair, simple nuance sous les nuages
+    if (wx.phase === "dawn" || wx.phase === "dusk") {
+      const tw = TWILIGHT[set === "day" ? "light" : "dark"][wx.phase], a = ["clear", "partly", "neutral"].includes(wx.kind) ? 0.6 : 0.2;
+      s1 = mixHex(s1, tw[0], a); s2 = mixHex(s2, tw[1], a);
+    }
+    // Température : bas du ciel bleuté par grand froid, ambré par forte chaleur
+    const cw = coldW(wx.t), hw = hotW(wx.t), lightSky = set === "day";
+    if (cw) s2 = mixHex(s2, lightSky ? "#b9d3ee" : "#1d3552", 0.4 * cw);
+    if (hw) s2 = mixHex(s2, lightSky ? "#f6c58a" : "#4a3426", 0.4 * hw);
     sky.style.setProperty("--s1", s1); sky.style.setProperty("--s2", s2); sky.style.setProperty("--cloud", cloud);
-    sky.dataset.wx = wx.kind; sky.dataset.onsky = wx.night && !dark ? "light" : "";
-    if (wx.night) sky.dataset.night = ""; else delete sky.dataset.night;
-    if (wx.frost) sky.dataset.frost = ""; else delete sky.dataset.frost;
-    const on = (sel, v) => sky.querySelectorAll(sel).forEach(n => n.classList.toggle("on", !!v));
+    const wash = washOf(wx);
+    if (wash) root.style.setProperty("--wash", wash); else root.style.removeProperty("--wash");
+    document.querySelectorAll('meta[name="theme-color"]').forEach(m => m.setAttribute("content", s1));
+    sky.dataset.wx = wx.kind; sky.dataset.phase = wx.phase; sky.dataset.onsky = wx.night && !dark ? "light" : "";
+    const flag = (k, v) => { if (v) sky.dataset[k] = v === true ? "" : v; else delete sky.dataset[k]; };
+    flag("night", wx.night); flag("frost", wx.frost); flag("smoke", wx.t != null && wx.t <= 8);
+    flag("sway", wx.strong ? "2" : wx.windy ? "1" : "");
+    sky.style.setProperty("--drift", wx.windy ? "12px" : "3px");
+    // Soleil : se lève à gauche, haut à midi, se couche à droite derrière les collines
+    if (wx.ph && !wx.night) { const f = clamp01(wx.ph.frac); sky.style.setProperty("--sx", (8 + 84 * f).toFixed(1) + "%"); sky.style.setProperty("--sy", (78 - 70 * Math.sin(Math.PI * f)).toFixed(1) + "%"); }
+    else { sky.style.removeProperty("--sx"); sky.style.removeProperty("--sy"); }
     const cloudy = ["cloudy", "drizzle", "rain", "storm", "snow"].includes(wx.kind);
+    const on = (sel, v) => sky.querySelectorAll(sel).forEach(n => n.classList.toggle("on", !!v));
     on(".sun", !wx.night && (wx.kind === "clear" || wx.kind === "partly"));
     on(".moon", wx.night && ["clear", "partly", "neutral"].includes(wx.kind));
     on(".fog", wx.kind === "fog");
@@ -939,6 +1089,7 @@ Plantes grasses et albizia en pleine terre (confirmé par Damien le 25/11/2026).
     if (wx.t != null) bits.push(r0(wx.t) + " °C");
     if (wx.g != null) bits.push("rafales " + r0(wx.g) + " km/h");
     if (bits.length) $("skyKicker").textContent = "Maintenant : " + bits.join(", ");
+    renderSoon(wx);
     const key = [wx.kind, wx.lvl, wx.night, wx.windy, dark].join("|");
     if (key !== lastWxKey) { lastWxKey = key; skyFx.set(wx, set); }
   }
@@ -1037,11 +1188,15 @@ Plantes grasses et albizia en pleine terre (confirmé par Damien le 25/11/2026).
     WX_PICK.forEach(([id, label, obj]) => {
       const b = el("button", { type: "button", class: "ds-chip", "data-id": id, "aria-pressed": "false", text: label });
       b.addEventListener("click", () => {
-        const toggle = id === "wind" || id === "night";
+        const toggle = PICK_TOGGLES.includes(id);
         if (id === "auto") pickWx = {};
         else if (toggle && b.getAttribute("aria-pressed") === "true") Object.keys(obj).forEach(k => delete pickWx[k]);
-        else if (toggle) Object.assign(pickWx, obj);
-        else { const keep = {}; ["wind_gusts_10m", "is_day"].forEach(k => { if (k in pickWx) keep[k] = pickWx[k]; }); pickWx = Object.assign(keep, obj); }
+        else if (toggle) { // Aube / Coucher et Froid / Chaud s'excluent deux à deux
+          const rival = { dawn: "dusk", dusk: "dawn", cold: "hot", hot: "cold" }[id];
+          if (rival) Object.keys(WX_PICK.find(w => w[0] === rival)[2]).forEach(k => delete pickWx[k]);
+          Object.assign(pickWx, obj);
+        }
+        else { const keep = {}; PICK_KEEP.forEach(k => { if (k in pickWx) keep[k] = pickWx[k]; }); pickWx = Object.assign(keep, obj); }
         sync(); applyAmbiance();
       });
       box.append(b);
@@ -1229,7 +1384,7 @@ Plantes grasses et albizia en pleine terre (confirmé par Damien le 25/11/2026).
     if (loading) return; loading = true;
     $("reload").disabled = true;
     const url = "https://api.open-meteo.com/v1/forecast?latitude=" + LAT + "&longitude=" + LON +
-      "&hourly=temperature_2m,apparent_temperature,wind_speed_10m,wind_gusts_10m&daily=precipitation_sum,et0_fao_evapotranspiration,sunrise&past_days=14&timezone=Europe%2FParis&forecast_days=14" +
+      "&hourly=temperature_2m,apparent_temperature,wind_speed_10m,wind_gusts_10m,weather_code,precipitation&daily=precipitation_sum,et0_fao_evapotranspiration,sunrise,sunset&past_days=14&timezone=Europe%2FParis&forecast_days=14" +
       "&current=temperature_2m,apparent_temperature,weather_code,cloud_cover,precipitation,rain,showers,snowfall,wind_speed_10m,wind_gusts_10m,is_day";
     try {
       const ctrl = new AbortController(); const timer = setTimeout(() => ctrl.abort(), 12000);
