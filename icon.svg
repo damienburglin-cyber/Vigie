@@ -1,9 +1,63 @@
 <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
-  <rect width="512" height="512" fill="#f2ede3"/>
-  <circle cx="256" cy="256" r="176" fill="#fffdf9"/>
-  <g fill="none" stroke="#3f6f97" stroke-width="26" stroke-linecap="round">
-    <path d="M256 124v264M142 190l228 132M370 190L142 322"/>
-    <path d="M218 150l38 24 38-24M218 362l38-24 38 24"/>
+  <!-- Vigie : un pan de ciel au-dessus des collines du Sundgau.
+       Soleil d'aube, rafales et flocon (tracés « wind » et « snowflake » de Lucide, licence ISC), maison qui veille, fenêtre allumée. -->
+  <defs>
+    <linearGradient id="sky" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#173f66"/>
+      <stop offset=".45" stop-color="#3b7fb3"/>
+      <stop offset=".78" stop-color="#9cc3dc"/>
+      <stop offset="1" stop-color="#f4c98f"/>
+    </linearGradient>
+    <radialGradient id="glow" cx="340" cy="262" r="170" gradientUnits="userSpaceOnUse">
+      <stop offset="0" stop-color="#ffe7a3" stop-opacity=".95"/>
+      <stop offset=".45" stop-color="#ffd27a" stop-opacity=".35"/>
+      <stop offset="1" stop-color="#ffd27a" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="sun" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#fff3c4"/>
+      <stop offset="1" stop-color="#ffc14d"/>
+    </linearGradient>
+    <linearGradient id="hillB" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#4f9d8e"/>
+      <stop offset="1" stop-color="#2f6b5f"/>
+    </linearGradient>
+    <linearGradient id="hillF" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#1d5c55"/>
+      <stop offset="1" stop-color="#103a35"/>
+    </linearGradient>
+  </defs>
+
+  <rect width="512" height="512" fill="url(#sky)"/>
+  <circle cx="340" cy="262" r="170" fill="url(#glow)"/>
+  <circle cx="340" cy="262" r="70" fill="url(#sun)"/>
+
+  <!-- Rafales : Lucide « wind » (ISC), agrandi x10 -->
+  <g transform="translate(78 92) scale(10)" fill="none" stroke="#ffffff" stroke-width="2.1"
+     stroke-linecap="round" stroke-linejoin="round" opacity=".92">
+    <path d="M12.8 19.6A2 2 0 1 0 14 16H2"/>
+    <path d="M17.5 8a2.5 2.5 0 1 1 2 4H2"/>
+    <path d="M9.8 4.4A2 2 0 1 1 11 8H2"/>
   </g>
-  <circle cx="256" cy="256" r="30" fill="#8e3b46"/>
+
+  <!-- Gel : Lucide « snowflake » (ISC), x3,6 -->
+  <g transform="translate(328 72) scale(3.6)" fill="none" stroke="#ffffff" stroke-width="2"
+     stroke-linecap="round" stroke-linejoin="round" opacity=".95">
+    <path d="m10 20-1.25-2.5L6 18"/><path d="M10 4 8.75 6.5 6 6"/><path d="m14 20 1.25-2.5L18 18"/>
+    <path d="m14 4 1.25 2.5L18 6"/><path d="m17 21-3-6h-4"/><path d="m17 3-3 6 1.5 3"/>
+    <path d="M2 12h6.5L10 9"/><path d="m20 10-1.5 2 1.5 2"/><path d="M22 12h-6.5L14 15"/>
+    <path d="m4 10 1.5 2L4 14"/><path d="m7 21 3-6-1.5-3"/><path d="m7 3 3 6h4"/>
+  </g>
+
+  <!-- Collines -->
+  <path d="M0 352 C 90 300 170 318 250 340 S 420 300 512 322 V512 H0 Z" fill="url(#hillB)"/>
+  <path d="M0 420 C 110 372 210 376 300 396 S 450 380 512 392 V512 H0 Z" fill="url(#hillF)"/>
+
+  <!-- Maison qui veille + sapin -->
+  <g fill="#0b2a26">
+    <path d="M150 408 V362 L186 334 L222 362 V408 Z"/>
+    <rect x="200" y="330" width="11" height="22"/>
+    <path d="M262 400 L284 334 L306 400 Z"/>
+    <rect x="280" y="398" width="8" height="12"/>
+  </g>
+  <rect x="172" y="368" width="15" height="15" rx="2" fill="#ffd27a"/>
 </svg>

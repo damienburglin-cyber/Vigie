@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
-<meta name="vigie-version" content="0.5.1">
+<meta name="vigie-version" content="0.5.2">
 <meta name="vigie-updated" content="2026-11-26">
 <meta name="theme-color" content="#d3e4ee" media="(prefers-color-scheme: light)">
 <meta name="theme-color" content="#0e151b" media="(prefers-color-scheme: dark)">
@@ -499,6 +499,7 @@ Plantes grasses et albizia en pleine terre (confirmé par Damien le 25/11/2026).
   - Écartés : gouttes qui ruissellent sur les cartes et cartes qui frémissent par rafales (du mouvement sur les alertes gêne la lecture d'un coup d'œil) ; teinter les cartes (les couleurs d'alerte doivent rester seules à signifier quelque chose) ; un second canvas (batterie).
 - Mouvements : entrée des cartes, de la grille et des barres du graphique au premier affichage seulement (≤ 0,3 s, léger décalage), ouverture d'un jour, jauges d'arrosage qui se remplissent, retour au toucher (0,12 s), bouton d'actualisation qui tourne pendant le chargement, page qui apparaît au changement d'onglet (0,2 s). Bascule d'onglet : 0,26 s sans rebond, à ne pas rallonger. Tout est coupé avec `prefers-reduced-motion`. Le contenu reste visible si une animation ne joue pas.
 - Icône de l'onglet Anticiper : des jumelles.
+- Icône de l’app (0.5.2) : un pan de ciel d’aube au-dessus des collines du Sundgau, soleil levant, rafales et flocon (tracés « wind » et « snowflake » de Lucide, licence ISC), maison qui veille avec fenêtre allumée et sapin. Les trois risques suivis (gel, vent, chaleur) en une image. Source icon.svg, PNG 512 / 192 / 180 générés avec sips ; dessin gardé dans la zone sûre des icônes masquables.
 
 ## 4. Technique
 
@@ -536,6 +537,7 @@ Plantes grasses et albizia en pleine terre (confirmé par Damien le 25/11/2026).
 - 0.4.0 · 26/11/2026 · le ciel suit la météo à l'instant T (soleil, nuages, couvert, brouillard, bruine, pluie, neige, orage, vent, nuit, givre), animé et en fondu ; le message reste piloté par les alertes ; ligne « Maintenant » en mots ; sélecteur d'ambiance `#ambiance` pour les tests. Règles, seuils, arrosage et notifications inchangés.
 - 0.5.0 · 26/11/2026 · toute la page vit avec la météo de l'instant : fond et barre d'onglets lavés de la couleur du temps et de la température, aube et coucher d'après le vrai lever et coucher du soleil, soleil qui suit sa course, nuit en thème sombre automatique, barre d'état du téléphone à la couleur du ciel, maison vivante (fenêtres la nuit, cheminée par froid, arbre au vent), pastilles « prochaines heures » (pluie, fin de pluie, rafales, vent qui retombe, gel, dégel, lever et coucher). Données ajoutées : `hourly.weather_code`, `hourly.precipitation`, `daily.sunset`. Règles, seuils, arrosage et notifications inchangés.
 - 0.5.1 · 26/11/2026 · fond de page plus marqué par la météo (22 % au lieu de 9 %, 20 % en sombre ; barre d’onglets 12 %), texte secondaire un peu plus foncé pour garder le contraste. Rien d’autre ne change.
+- 0.5.2 · 26/11/2026 · nouvelle icône : ciel d’aube, soleil, rafales, flocon, collines, maison qui veille (au lieu du flocon seul sur fond crème). Fond de démarrage bleu nuit.
 </script>
 
 <script>
